@@ -1,0 +1,16 @@
+{
+  "brand": "Zunno.Digital",
+  "whatsappPhone": "5500000000000",
+  "seo": {
+    "title": "Zunno.Digital | Marketing digital para garagens e revendas",
+    "description": "Estratégia, conteúdo, tráfego pago, landing page e funil digital para garagens, revendas e multimarcas venderem mais carros pelo WhatsApp."
+  },
+  "hero": {
+    "videoUrl": "https://videos.pexels.com/video-files/29498827/29498827-hd_1920_1080_25fps.mp4"
+  },
+  "messages": {
+    "primary": "Quero vender mais carros com a Zunno.Digital",
+    "final": "Quero falar com a Zunno.Digital sobre minha garagem",
+    "default": "Quero falar com a Zunno.Digital"
+  }
+}
