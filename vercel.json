@@ -1,4 +1,10 @@
 {
   "outputDirectory": ".",
-  "buildCommand": null
+  "buildCommand": null,
+  "rewrites": [
+    {
+      "source": "/proposta-alfredo",
+      "destination": "/proposta-alfredo.html"
+    }
+  ]
 }

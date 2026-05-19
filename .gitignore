@@ -1,0 +1,4 @@
+.vercel
+node_modules/
+render-pdf.mjs
+*.log
