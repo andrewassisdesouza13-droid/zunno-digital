@@ -1645,6 +1645,13 @@ html, body {
     const dx = e.changedTouches[0].clientX - startX;
     if (Math.abs(dx) > 40) dx < 0 ? goTo(cur + 1) : goTo(cur - 1);
   }, { passive: true });
+
+  /* ── Click anywhere to advance (left 35% = prev, rest = next) ── */
+  document.getElementById('deck').addEventListener('click', e => {
+    if (e.target.closest('button, a, .ndot')) return;
+    const x = e.clientX - document.getElementById('deck').getBoundingClientRect().left;
+    x < document.getElementById('deck').offsetWidth * 0.35 ? goTo(cur - 1) : goTo(cur + 1);
+  });
 })();
 </script>
 </body>
