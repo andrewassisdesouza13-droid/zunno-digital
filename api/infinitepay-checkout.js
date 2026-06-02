@@ -2,7 +2,7 @@
 // Endpoint: POST /api/infinitepay-checkout
 // Body: { plano: "essencial" | "polaroid" | "prasempre" }
 
-const HANDLE = "andrew-assis";
+const HANDLE = "estudio-papuli";
 const REDIRECT_BASE = "https://zunno.digital/namoradosobrigado";
 
 // Preços já incluem R$ 15 de frete pra cidades vizinhas
