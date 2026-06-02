@@ -836,9 +836,20 @@
       // ---------- Read query params (?pedido=ABC&plano=Polaroid&total=97,90) ----------
       (function () {
         const params = new URLSearchParams(window.location.search);
-        const pedido = params.get("pedido");
+        const pedido = params.get("pedido")
+          || params.get("order_nsu")
+          || params.get("nsu")
+          || params.get("transaction_id");
         const plano = params.get("plano");
         const total = params.get("total");
+
+        const card = document.querySelector(".order-card");
+
+        // Se não veio nenhum dado real, esconde o card (evita mostrar placeholder fixo)
+        if (!pedido && !plano && !total) {
+          if (card) card.style.display = "none";
+          return;
+        }
 
         if (pedido) document.getElementById("orderId").textContent = "#" + pedido;
         if (plano) document.getElementById("orderPlan").textContent = plano;
