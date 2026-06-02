@@ -5,6 +5,14 @@
     {
       "source": "/proposta-alfredo",
       "destination": "/proposta-alfredo.html"
+    },
+    {
+      "source": "/namorados",
+      "destination": "/namorados.html"
+    },
+    {
+      "source": "/namoradosobrigado",
+      "destination": "/namoradosobrigado.html"
     }
   ]
 }

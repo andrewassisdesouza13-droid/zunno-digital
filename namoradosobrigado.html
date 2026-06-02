@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Obrigado! ♥ Amor em Figurinhas</title>
+    <meta name="description" content="Sua compra foi confirmada. Agora é só enviar as fotos pra gente começar a montar o álbum de vocês." />
+    <meta name="theme-color" content="#c8302a" />
+    <meta name="robots" content="noindex" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Yellowtail&display=swap" />
+
+    <style>
+      :root {
+        --cream: #efe3cf;
+        --cream-soft: #f7efe0;
+        --cream-deep: #e6d8c0;
+        --red: #c8302a;
+        --red-bright: #e04a3f;
+        --red-deep: #9b211d;
+        --ink: #2b2a28;
+        --ink-soft: #4a4844;
+        --paper: #fbf6ea;
+        --tape: rgba(43, 42, 40, 0.18);
+
+        --script: "Yellowtail", cursive;
+        --display: "Fraunces", "Times New Roman", serif;
+        --body: "Newsreader", Georgia, serif;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        font-family: var(--body);
+        font-size: 17px;
+        line-height: 1.55;
+        color: var(--ink);
+        background: var(--cream);
+        background-image:
+          radial-gradient(circle at 18% 14%, rgba(200, 48, 42, 0.5) 0, rgba(200, 48, 42, 0.5) 1.2px, transparent 1.4px),
+          radial-gradient(circle at 78% 9%, rgba(200, 48, 42, 0.4) 0, rgba(200, 48, 42, 0.4) 1px, transparent 1.2px),
+          radial-gradient(circle at 36% 62%, rgba(43, 42, 40, 0.3) 0, rgba(43, 42, 40, 0.3) 1px, transparent 1.2px),
+          radial-gradient(circle at 88% 78%, rgba(200, 48, 42, 0.45) 0, rgba(200, 48, 42, 0.45) 1.2px, transparent 1.4px),
+          radial-gradient(circle at 24% 92%, rgba(43, 42, 40, 0.28) 0, rgba(43, 42, 40, 0.28) 1px, transparent 1.2px);
+        background-size: 280px 280px;
+        background-attachment: fixed;
+        overflow-x: hidden;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.17 0 0 0 0 0.16 0 0 0 0 0.15 0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");
+        opacity: 0.22;
+        mix-blend-mode: multiply;
+        z-index: 1;
+      }
+
+      /* ---------- Confetti hearts ---------- */
+      .confetti {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 2;
+      }
+
+      .confetti span {
+        position: absolute;
+        top: -40px;
+        font-size: 14px;
+        color: var(--red);
+        animation: fall linear forwards;
+        opacity: 0;
+      }
+
+      .confetti span.dark { color: var(--ink); }
+      .confetti span.big { font-size: 22px; }
+
+      @keyframes fall {
+        0% { transform: translateY(-40px) rotate(0); opacity: 0; }
+        8% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateY(110vh) rotate(360deg); opacity: 0.4; }
+      }
+
+      main {
+        position: relative;
+        z-index: 3;
+        max-width: 540px;
+        margin: 0 auto;
+        padding: 28px 22px 60px;
+      }
+
+      /* ---------- Top ribbon ---------- */
+      .ribbon {
+        background: var(--ink);
+        color: var(--cream-soft);
+        font-family: var(--display);
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        font-size: 11px;
+        padding: 10px 16px;
+        text-align: center;
+        border-bottom: 2px solid var(--red);
+        position: relative;
+        z-index: 4;
+      }
+
+      .ribbon span { color: var(--red-bright); margin: 0 6px; }
+
+      /* ---------- Stamp ---------- */
+      .stamp-wrap {
+        text-align: center;
+        margin: 12px auto 26px;
+        animation: stamp-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+      }
+
+      @keyframes stamp-in {
+        0% { transform: scale(0) rotate(-30deg); opacity: 0; }
+        100% { transform: scale(1) rotate(-6deg); opacity: 1; }
+      }
+
+      .stamp {
+        width: 96px;
+        height: 96px;
+        margin: 0 auto 12px;
+        position: relative;
+        background: var(--red);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow:
+          0 18px 30px -16px rgba(155, 33, 29, 0.55),
+          0 0 0 6px var(--paper),
+          0 0 0 8px var(--red);
+      }
+
+      .stamp .heart {
+        font-size: 38px;
+        color: var(--cream-soft);
+        line-height: 1;
+        animation: beat 1.6s ease-in-out infinite;
+      }
+
+      .stamp .check {
+        position: absolute;
+        bottom: -6px;
+        right: -6px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--ink);
+        color: var(--cream-soft);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        border: 2px solid var(--paper);
+      }
+
+      @keyframes beat {
+        0%, 100% { transform: scale(1); }
+        14% { transform: scale(1.18); }
+        28% { transform: scale(1); }
+        42% { transform: scale(1.18); }
+        56% { transform: scale(1); }
+      }
+
+      .stamp-label {
+        display: inline-block;
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+      }
+
+      .stamp-label strong {
+        color: var(--red);
+        font-weight: 600;
+      }
+
+      /* ---------- Headline ---------- */
+      .hero-eyebrow {
+        display: inline-block;
+        background: var(--red);
+        color: var(--cream-soft);
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 500;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        padding: 6px 14px;
+        border-radius: 3px;
+        transform: rotate(-2deg);
+        box-shadow: 2px 2px 0 var(--ink);
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .hero-eyebrow-wrap {
+        text-align: center;
+        animation: rise 0.6s ease-out 0.5s both;
+      }
+
+      h1 {
+        font-family: var(--display);
+        font-weight: 400;
+        font-size: clamp(38px, 9vw, 52px);
+        line-height: 1.02;
+        letter-spacing: -0.025em;
+        text-align: center;
+        margin: 18px 0 8px;
+        text-wrap: balance;
+        animation: rise 0.6s ease-out 0.65s both;
+      }
+
+      h1 .script {
+        font-family: var(--script);
+        color: var(--red);
+        font-size: 1.2em;
+        line-height: 0.9;
+        display: inline-block;
+        transform: rotate(-2deg);
+      }
+
+      .hero-sub {
+        text-align: center;
+        font-size: 17px;
+        color: var(--ink-soft);
+        max-width: 420px;
+        margin: 18px auto 0;
+        text-wrap: pretty;
+        animation: rise 0.6s ease-out 0.8s both;
+      }
+
+      .hero-sub strong { color: var(--ink); font-weight: 600; }
+
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ---------- Card / receipt ---------- */
+      .order-card {
+        background: var(--paper);
+        margin: 36px 0 40px;
+        padding: 30px 26px 28px;
+        position: relative;
+        transform: rotate(-1deg);
+        box-shadow:
+          0 28px 50px -28px rgba(43, 42, 40, 0.45),
+          0 6px 12px -6px rgba(43, 42, 40, 0.18),
+          inset 0 0 0 1px var(--cream-deep);
+        animation: rise 0.7s ease-out 0.95s both;
+      }
+
+      .order-card::before {
+        content: "";
+        position: absolute;
+        top: -16px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-3deg);
+        width: 120px;
+        height: 28px;
+        background: var(--tape);
+      }
+
+      .order-card h2 {
+        font-family: var(--script);
+        font-weight: 400;
+        font-size: 28px;
+        color: var(--red);
+        margin: 0 0 18px;
+        line-height: 1;
+      }
+
+      .order-line {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 11px 0;
+        border-bottom: 1px dashed var(--cream-deep);
+        font-family: var(--display);
+        font-size: 15px;
+      }
+
+      .order-line:last-of-type {
+        border-bottom: none;
+        margin-top: 8px;
+        font-weight: 600;
+        color: var(--red);
+        font-size: 18px;
+      }
+
+      .order-line .label {
+        color: var(--ink-soft);
+        font-style: italic;
+      }
+
+      .order-line .value {
+        color: var(--ink);
+        font-weight: 500;
+        text-align: right;
+        max-width: 60%;
+      }
+
+      .order-line:last-of-type .label,
+      .order-line:last-of-type .value {
+        color: var(--red);
+        font-style: normal;
+      }
+
+      /* ---------- Next steps ---------- */
+      .next {
+        margin-top: 12px;
+      }
+
+      .next-head {
+        text-align: center;
+        margin-bottom: 26px;
+      }
+
+      .next-head .eyebrow {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 12px;
+        color: var(--red);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin: 0 0 10px;
+      }
+
+      .next-head h2 {
+        font-family: var(--display);
+        font-weight: 400;
+        font-size: clamp(28px, 7vw, 36px);
+        line-height: 1.05;
+        margin: 0;
+        text-wrap: balance;
+      }
+
+      .next-head h2 .script {
+        font-family: var(--script);
+        color: var(--red);
+        font-size: 1.15em;
+      }
+
+      .step-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .step-card {
+        background: var(--paper);
+        padding: 22px 22px 22px 70px;
+        position: relative;
+        border: 1.5px solid var(--ink);
+        box-shadow: 4px 4px 0 rgba(43, 42, 40, 0.12);
+      }
+
+      .step-card:nth-child(odd) { transform: rotate(-0.5deg); }
+      .step-card:nth-child(even) { transform: rotate(0.5deg); }
+
+      .step-card .num {
+        position: absolute;
+        top: 50%;
+        left: 18px;
+        transform: translateY(-50%);
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--ink);
+        color: var(--cream-soft);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: 17px;
+        border: 2px solid var(--cream-soft);
+        box-shadow: 0 0 0 2px var(--red);
+      }
+
+      .step-card.now {
+        background: var(--red);
+        color: var(--cream-soft);
+        border-color: var(--ink);
+      }
+
+      .step-card.now .num {
+        background: var(--cream-soft);
+        color: var(--red);
+        box-shadow: 0 0 0 2px var(--ink);
+      }
+
+      .step-card .title {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 17px;
+        line-height: 1.2;
+        margin: 0 0 6px;
+      }
+
+      .step-card .desc {
+        font-size: 14px;
+        line-height: 1.5;
+        color: var(--ink-soft);
+        margin: 0;
+      }
+
+      .step-card.now .desc { color: rgba(247, 239, 224, 0.9); }
+
+      .step-card .badge {
+        display: inline-block;
+        background: var(--ink);
+        color: var(--cream-soft);
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        margin-bottom: 8px;
+        border-radius: 2px;
+      }
+
+      .step-card.now .badge {
+        background: var(--cream-soft);
+        color: var(--red);
+      }
+
+      /* ---------- Primary CTA ---------- */
+      .cta-block {
+        margin: 36px 0 0;
+        text-align: center;
+      }
+
+      .cta-block .hint {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 14px;
+        color: var(--ink-soft);
+        margin: 0 0 14px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: var(--red);
+        color: var(--cream-soft);
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 17px;
+        letter-spacing: 0.02em;
+        padding: 18px 28px;
+        border: none;
+        border-radius: 999px;
+        text-decoration: none;
+        cursor: pointer;
+        box-shadow: 4px 4px 0 var(--ink);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        width: 100%;
+        max-width: 360px;
+      }
+
+      .btn:hover,
+      .btn:active {
+        background: var(--red-deep);
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0 var(--ink);
+      }
+
+      .btn .icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+
+      /* ---------- Countdown strip ---------- */
+      .countdown {
+        margin: 44px 0 28px;
+        padding: 24px 18px;
+        background: var(--ink);
+        color: var(--cream-soft);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        border-radius: 4px;
+      }
+
+      .countdown::before,
+      .countdown::after {
+        content: "♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥";
+        position: absolute;
+        left: 0;
+        right: 0;
+        color: var(--red);
+        font-size: 12px;
+        letter-spacing: 0.6em;
+        opacity: 0.5;
+        text-align: center;
+      }
+
+      .countdown::before { top: 8px; }
+      .countdown::after { bottom: 8px; }
+
+      .countdown .eyebrow {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--red-bright);
+        margin: 14px 0 10px;
+      }
+
+      .countdown .timer {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 10px 0 14px;
+      }
+
+      .countdown .unit {
+        background: var(--cream-soft);
+        color: var(--ink);
+        padding: 10px 12px;
+        min-width: 64px;
+        border-radius: 3px;
+        font-family: var(--display);
+      }
+
+      .countdown .unit strong {
+        display: block;
+        font-size: 26px;
+        line-height: 1;
+        font-weight: 700;
+        color: var(--red);
+      }
+
+      .countdown .unit span {
+        font-size: 10px;
+        font-style: italic;
+        color: var(--ink-soft);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-top: 2px;
+        display: block;
+      }
+
+      .countdown .note {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 13px;
+        color: rgba(247, 239, 224, 0.8);
+        margin: 0 0 10px;
+      }
+
+      /* ---------- Secondary ---------- */
+      .secondary {
+        background: var(--paper);
+        padding: 24px 22px;
+        margin: 0 0 32px;
+        text-align: center;
+        position: relative;
+        border: 1.5px dashed var(--ink);
+      }
+
+      .secondary h3 {
+        font-family: var(--script);
+        font-weight: 400;
+        font-size: 26px;
+        color: var(--red);
+        margin: 0 0 6px;
+        line-height: 1;
+      }
+
+      .secondary p {
+        font-size: 15px;
+        margin: 0 0 14px;
+        color: var(--ink-soft);
+        text-wrap: pretty;
+      }
+
+      .secondary-links {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .secondary-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: var(--ink);
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 14px;
+        text-decoration: none;
+        padding: 10px 14px;
+        border-bottom: 1.5px solid var(--ink);
+      }
+
+      .secondary-links a:hover { color: var(--red); }
+
+      /* ---------- Sign-off ---------- */
+      .signoff {
+        text-align: center;
+        margin: 12px auto 0;
+        max-width: 420px;
+      }
+
+      .signoff p {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 15px;
+        color: var(--ink-soft);
+        margin: 0 0 6px;
+      }
+
+      .signoff .sig {
+        font-family: var(--script);
+        color: var(--red);
+        font-size: 32px;
+        line-height: 1;
+        display: inline-block;
+        transform: rotate(-3deg);
+        margin-top: 4px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 30px 22px 24px;
+        font-family: var(--display);
+        font-size: 12px;
+        color: var(--ink-soft);
+        position: relative;
+        z-index: 3;
+      }
+
+      footer a { color: var(--red); text-decoration: none; }
+
+      /* Desktop polish: keep mobile-first feel but breathe */
+      @media (min-width: 600px) {
+        main { padding: 40px 28px 80px; }
+        .stamp { width: 160px; height: 160px; }
+        .stamp-circle .heart { font-size: 64px; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="ribbon">
+      pedido confirmado <span>♥</span> a história de vocês começou
+    </div>
+
+    <div class="confetti" aria-hidden="true" id="confetti"></div>
+
+    <main>
+
+      <div class="stamp-wrap">
+        <div class="stamp">
+          <span class="heart">♥</span>
+          <span class="check">✓</span>
+        </div>
+        <span class="stamp-label"><strong>pedido confirmado</strong></span>
+      </div>
+
+      <div class="hero-eyebrow-wrap">
+        <span class="hero-eyebrow">♥ obrigado, de verdade</span>
+      </div>
+
+      <h1>
+        agora a <span class="script">história</span> de vocês vira álbum.
+      </h1>
+
+      <p class="hero-sub">
+        A gente já recebeu o seu pedido e tá começando a preparar tudo com carinho. Falta um passo bem rapidinho pra começar a impressão. <strong>São 3 minutos.</strong>
+      </p>
+
+      <div class="order-card">
+        <h2>resumo do pedido</h2>
+        <div class="order-line">
+          <span class="label">pedido</span>
+          <span class="value" id="orderId">#AF-2026-0142</span>
+        </div>
+        <div class="order-line">
+          <span class="label">plano</span>
+          <span class="value" id="orderPlan">Álbum + Polaroids</span>
+        </div>
+        <div class="order-line">
+          <span class="label">valor pago</span>
+          <span class="value" id="orderTotal">R$ 97,90</span>
+        </div>
+      </div>
+
+      <div class="next">
+        <div class="next-head">
+          <p class="eyebrow">o que acontece agora</p>
+          <h2>3 passos e o álbum <span class="script">tá feito.</span></h2>
+        </div>
+
+        <div class="step-list">
+          <div class="step-card now">
+            <div class="num">1</div>
+            <span class="badge">agora</span>
+            <p class="title">Envie as fotos pelo WhatsApp</p>
+            <p class="desc">A gente abre uma conversa e você arrasta as fotos do celular. Sem cadastro, sem nuvem, sem complicação.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="num">2</div>
+            <p class="title">A gente imprime e monta</p>
+            <p class="desc">Capa e miolo em papel perolado branco 180g. Em até 48h o álbum tá pronto e sai pra entrega.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="num">3</div>
+            <p class="title">Chega na sua porta antes do dia 12</p>
+            <p class="desc">Embalado pra presente, com as figurinhas em um envelope separado. Domingo de manhã, café, cobertor, vocês dois.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-block">
+        <p class="hint">próximo passo, agora ♥</p>
+        <a class="btn" href="https://wa.me/5516997943381?text=Quero%20enviar%20minhas%20fotos" id="whatsapp">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/>
+          </svg>
+          Enviar as fotos agora
+        </a>
+      </div>
+
+      <div class="countdown">
+        <p class="eyebrow">enquanto a gente imprime</p>
+        <div class="timer">
+          <div class="unit"><strong id="cd-days">00</strong><span>dias</span></div>
+          <div class="unit"><strong id="cd-hours">00</strong><span>horas</span></div>
+          <div class="unit"><strong id="cd-mins">00</strong><span>min</span></div>
+          <div class="unit"><strong id="cd-secs">00</strong><span>seg</span></div>
+        </div>
+        <p class="note">pra entregar pra pessoa que você ama</p>
+      </div>
+
+      <div class="secondary">
+        <h3>uma última coisa…</h3>
+        <p>Salve nosso contato pra receber o código de rastreio assim que o álbum sair pra entrega.</p>
+        <div class="secondary-links">
+          <a href="contato-papouli.vcf" id="copyContact" download>♥ Salvar contato no celular</a>
+          <a href="https://www.instagram.com/estudiopapuli/" target="_blank" rel="noopener">♥ Seguir @estudiopapuli no Instagram</a>
+        </div>
+      </div>
+
+      <div class="signoff">
+        <p>com carinho,</p>
+        <p>o time por trás de cada figurinha colada.</p>
+        <div class="sig">papouli ♥</div>
+      </div>
+
+    </main>
+
+    <footer>
+      Edição especial Papouli × <a href="https://zunno.digital">Zunno.Digital</a> · Dia dos Namorados 2026
+    </footer>
+
+    <script>
+      // ---------- Confetti hearts (página inteira) ----------
+      (function () {
+        const container = document.getElementById("confetti");
+        if (!container) return;
+
+        const total = window.innerWidth < 600 ? 22 : 36;
+        const symbols = ["♥", "♡", "♥"];
+
+        for (let i = 0; i < total; i++) {
+          const el = document.createElement("span");
+          el.textContent = symbols[i % symbols.length];
+          el.style.left = Math.random() * 100 + "%";
+          el.style.animationDuration = 5 + Math.random() * 6 + "s";
+          el.style.animationDelay = Math.random() * 4 + "s";
+          if (Math.random() > 0.65) el.classList.add("dark");
+          if (Math.random() > 0.7) el.classList.add("big");
+          container.appendChild(el);
+        }
+      })();
+
+      // ---------- Countdown ----------
+      const target = new Date("2026-06-12T00:00:00-03:00").getTime();
+
+      function pad(n) { return String(n).padStart(2, "0"); }
+
+      function tick() {
+        const diff = Math.max(0, target - Date.now());
+        const days = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff / 3600000) % 24);
+        const mins = Math.floor((diff / 60000) % 60);
+        const secs = Math.floor((diff / 1000) % 60);
+
+        const setEl = (id, v) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = pad(v);
+        };
+        setEl("cd-days", days);
+        setEl("cd-hours", hours);
+        setEl("cd-mins", mins);
+        setEl("cd-secs", secs);
+      }
+
+      tick();
+      setInterval(tick, 1000);
+
+      // ---------- Read query params (?pedido=ABC&plano=Polaroid&total=97,90) ----------
+      (function () {
+        const params = new URLSearchParams(window.location.search);
+        const pedido = params.get("pedido");
+        const plano = params.get("plano");
+        const total = params.get("total");
+
+        if (pedido) document.getElementById("orderId").textContent = "#" + pedido;
+        if (plano) document.getElementById("orderPlan").textContent = plano;
+        if (total) document.getElementById("orderTotal").textContent = "R$ " + total;
+      })();
+
+    </script>
+  </body>
+</html>
