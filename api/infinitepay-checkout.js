@@ -5,20 +5,21 @@
 const HANDLE = "andrew-assis";
 const REDIRECT_BASE = "https://zunno.digital/namoradosobrigado";
 
+// Preços já incluem R$ 15 de frete pra cidades vizinhas
 const PLANOS = {
   essencial: {
-    description: "Album de Figurinhas (Edicao Namorados 2026)",
-    price: 5790,
+    description: "Album de Figurinhas (Edicao Namorados 2026) - com frete",
+    price: 7290,
     quantity: 1
   },
   polaroid: {
-    description: "Album de Figurinhas + 10 Polaroids (Edicao Namorados 2026)",
-    price: 9790,
+    description: "Album de Figurinhas + 10 Polaroids (Edicao Namorados 2026) - com frete",
+    price: 11290,
     quantity: 1
   },
   prasempre: {
-    description: "Album + Polaroids + Site Personalizado (Edicao Namorados 2026)",
-    price: 14790,
+    description: "Album + Polaroids + Site Personalizado (Edicao Namorados 2026) - com frete",
+    price: 16290,
     quantity: 1
   }
 };
