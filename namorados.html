@@ -1918,41 +1918,25 @@
       };
 
       async function iniciarCheckout(planoKey, btn) {
-        const produto = PLANOS[planoKey];
-        if (!produto) return;
-
         const labelOriginal = btn.textContent;
         btn.textContent = "Abrindo pagamento…";
         btn.style.pointerEvents = "none";
 
-        // gera um id único do pedido (timestamp + random) pra rastrear via order_nsu
-        const orderNsu = Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 6).toUpperCase();
-
-        const totalStr = (produto.price / 100).toFixed(2).replace(".", ",");
-        const redirectComParams = REDIRECT_URL
-          + "?pedido=" + encodeURIComponent(orderNsu)
-          + "&plano=" + encodeURIComponent(produto.description)
-          + "&total=" + encodeURIComponent(totalStr);
-
         try {
-          const resp = await fetch("https://api.checkout.infinitepay.io/links", {
+          const resp = await fetch("/api/infinitepay-checkout", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              handle: INFINITEPAY_HANDLE,
-              redirect_url: redirectComParams,
-              order_nsu: orderNsu,
-              items: [produto]
-            })
+            body: JSON.stringify({ plano: planoKey })
           });
 
-          if (!resp.ok) throw new Error("status " + resp.status);
           const data = await resp.json();
 
-          const url = data.url;
-          if (!url) throw new Error("URL de checkout não retornada");
+          if (!resp.ok || !data.url) {
+            console.error("checkout error:", resp.status, data);
+            throw new Error(data.error || "status " + resp.status);
+          }
 
-          window.location.href = url;
+          window.location.href = data.url;
         } catch (err) {
           console.error("Erro ao iniciar checkout:", err);
           alert("Tivemos um problema ao abrir o pagamento. Tenta de novo em alguns segundos ou chama a gente no WhatsApp.");
