@@ -17,6 +17,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Yellowtail&display=swap" />
 
+    <!-- Meta Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '3350637735316682');
+      fbq('track', 'PageView');
+      fbq('track', 'ViewContent', {
+        content_name: 'Landing Dia dos Namorados 2026',
+        content_category: 'Album Papuli',
+        currency: 'BRL'
+      });
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=3350637735316682&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
     <style>
       :root {
         --cream: #efe3cf;
@@ -1709,7 +1732,7 @@
                 <span class="value">72</span>
                 <span class="cents">,90</span>
               </div>
-              <p class="product-price-note">ou 5x de R$ 14,58 sem juros · frete incluso</p>
+              <p class="product-price-note">parcelado em até 12x · frete incluso</p>
               <ul class="product-list">
                 <li><strong>Álbum A5</strong>, capa em papel premium</li>
                 <li>Miolo em papel sofisticado, com brilho suave</li>
@@ -1985,10 +2008,31 @@
         }
       };
 
+      // valores pra evento de pixel (em reais, com frete)
+      const PLANO_VALORES = {
+        essencial: { value: 72.90, name: "Album Essencial" },
+        polaroid:  { value: 112.90, name: "Album + Polaroids" },
+        prasempre: { value: 162.90, name: "Album + Polaroids + Site" }
+      };
+
       async function iniciarCheckout(planoKey, btn) {
         const labelOriginal = btn.textContent;
         btn.textContent = "Abrindo pagamento…";
         btn.style.pointerEvents = "none";
+
+        // dispara evento InitiateCheckout no Meta Pixel
+        if (typeof fbq === "function") {
+          const info = PLANO_VALORES[planoKey];
+          if (info) {
+            fbq("track", "InitiateCheckout", {
+              content_name: info.name,
+              content_category: "Album Papuli",
+              value: info.value,
+              currency: "BRL",
+              num_items: 1
+            });
+          }
+        }
 
         try {
           const resp = await fetch("/api/infinitepay-checkout", {
