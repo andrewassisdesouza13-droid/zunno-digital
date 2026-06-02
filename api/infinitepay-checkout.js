@@ -8,8 +8,9 @@ const REDIRECT_BASE = "https://zunno.digital/namoradosobrigado";
 // Preços já incluem R$ 15 de frete pra cidades vizinhas
 const PLANOS = {
   essencial: {
-    description: "Album de Figurinhas (Edicao Namorados 2026) - com frete",
-    price: 7290,
+    description: "TESTE - Album de Figurinhas (Edicao Namorados 2026)",
+    // !!! MODO TESTE: R$ 1,00 (100 centavos). REVERTER PARA 7290 DEPOIS DO TESTE.
+    price: 100,
     quantity: 1
   },
   polaroid: {
