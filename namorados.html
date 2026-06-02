@@ -1358,6 +1358,47 @@
         letter-spacing: 0.1em;
       }
 
+      /* ---------- Policy ---------- */
+      .policy {
+        background: var(--cream-deep);
+        border-top: 2px solid var(--ink);
+      }
+
+      .policy .container { padding-top: clamp(48px, 7vw, 80px); padding-bottom: clamp(48px, 7vw, 80px); }
+
+      .policy-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        margin-top: 36px;
+      }
+
+      .policy-grid > div {
+        background: var(--paper);
+        padding: 24px 24px;
+        border: 1.5px solid var(--ink);
+        box-shadow: 4px 4px 0 rgba(43, 42, 40, 0.1);
+      }
+
+      .policy-grid h3 {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 18px;
+        margin: 0 0 10px;
+        color: var(--ink);
+      }
+
+      .policy-grid p {
+        font-size: 15px;
+        line-height: 1.55;
+        color: var(--ink-soft);
+        margin: 0;
+      }
+
+      @media (max-width: 720px) {
+        .policy-grid { grid-template-columns: 1fr; gap: 16px; }
+      }
+
       /* ---------- Footer ---------- */
       footer {
         background: var(--ink);
@@ -1522,7 +1563,7 @@
 
     <header class="site-header" data-reveal>
       <a class="brand" href="#top">
-        Amor em Figurinhas <span class="heart">♥</span>
+        Papuli <span class="heart">♥</span>
       </a>
       <a class="nav-cta" href="#planos">
         <span class="dot"></span>
@@ -1539,7 +1580,7 @@
             esse álbum guarda <span class="script">a história</span> <em>que vocês escreveram</em> juntos.
           </h1>
           <p class="hero-sub" data-reveal>
-            Um álbum de figurinhas físico, feito para vocês colarem em casal, no domingo de manhã, com as fotos que ficaram presas no celular. Em vez de mais um post, uma lembrança que ela vai guardar a vida toda.
+            Um álbum de figurinhas físico, feito para vocês colarem em casal, com as fotos que ficaram presas no celular. Em vez de mais um post, uma lembrança que vocês vão guardar a vida toda.
           </p>
           <div class="hero-cta-row" data-reveal>
             <a class="btn-primary" href="#planos">
@@ -1564,7 +1605,7 @@
             <span class="script">do jeitinho</span> que ele chega na sua casa.
           </h2>
           <p class="section-lead" data-reveal>
-            Capa especial, miolo em papel fotográfico, frases românticas já impressas e espaço para vocês colarem as figurinhas, uma a uma. Aperta o play.
+            Capa especial, papel premium, frases românticas já impressas e espaço para vocês colarem as figurinhas, uma a uma. Aperta o play.
           </p>
 
           <div class="video-wrap" data-reveal>
@@ -1592,7 +1633,7 @@
               Aquele final de tarde na praia. O primeiro encontro. O dia que choveu e vocês riram debaixo da marquise. Tudo isso ficou perdido entre prints da entrega do iFood, capturas de tela do trabalho e fotos de coisas que vocês iam mandar pro grupo da família.
             </p>
             <p class="section-lead" style="margin-top: 16px;">
-              O presente desse ano não precisa ser mais uma coisa pra ela guardar na gaveta. Pode ser a história de vocês, finalmente impressa.
+              O presente desse ano não precisa ser mais uma coisa pra guardar na gaveta. Pode ser a história de vocês, finalmente impressa.
             </p>
           </div>
 
@@ -1635,7 +1676,7 @@
             <div class="step" data-reveal>
               <div class="step-number">3</div>
               <h3>Receba e cole, em casal</h3>
-              <p>O álbum chega embalado pra presente, com as figurinhas em um envelope separado. Domingo de manhã, café, cobertor, vocês dois.</p>
+              <p>O álbum chega embalado pra presente, com as figurinhas em um envelope separado. Sexta dia 12, vocês dois, e a noite inteira pra colar a história.</p>
             </div>
           </div>
         </div>
@@ -1666,8 +1707,8 @@
               </div>
               <p class="product-price-note">ou 5x de R$ 11,58 sem juros</p>
               <ul class="product-list">
-                <li><strong>Álbum A5</strong>, capa em papel perolado branco 180g</li>
-                <li>Miolo em papel perolado branco 180g</li>
+                <li><strong>Álbum A5</strong>, capa em papel premium</li>
+                <li>Miolo em papel sofisticado, com brilho suave</li>
                 <li><strong>14 figurinhas 6×6 cm</strong> em papel fotográfico</li>
                 <li>Frases românticas já impressas no álbum</li>
                 <li>Embalagem pronta pra presente</li>
@@ -1687,7 +1728,7 @@
               <p class="product-price-note">ou 5x de R$ 19,58 sem juros</p>
               <ul class="product-list">
                 <li><strong>Tudo do plano Essencial</strong></li>
-                <li><strong>+ 10 polaroids 5,5×8,7 cm</strong> em papel premium</li>
+                <li><strong>+ 10 polaroids 5,5×8,7 cm</strong> em papel fotográfico</li>
                 <li>Pra espalhar pela geladeira, espelho, cabeceira</li>
                 <li>O presente que sobrevive ao dia seguinte</li>
               </ul>
@@ -1733,20 +1774,20 @@
           <div class="album-mosaic" data-reveal>
             <div class="album-card photo a1"><div class="photo-inner"><div class="number">01</div></div></div>
             <div class="album-card photo a2"><div class="photo-inner"><div class="number">02</div></div></div>
-            <div class="album-card phrase a5">a vida é boa com você</div>
-            <div class="album-card photo a3"><div class="photo-inner"><div class="number">04</div></div></div>
-            <div class="album-card photo a4"><div class="photo-inner"><div class="number">05</div></div></div>
-            <div class="album-card phrase dark a7">nos teus braços é onde quero estar</div>
-            <div class="album-card photo a6"><div class="photo-inner"><div class="number">07</div></div></div>
-            <div class="album-card photo a8"><div class="photo-inner"><div class="number">08</div></div></div>
-            <div class="album-card photo a9"><div class="photo-inner"><div class="number">10</div></div></div>
-            <div class="album-card phrase a2">vem revivê-las comigo</div>
-            <div class="album-card photo a10"><div class="photo-inner"><div class="number">12</div></div></div>
-            <div class="album-card photo a11"><div class="photo-inner"><div class="number">13</div></div></div>
-            <div class="album-card photo a12"><div class="photo-inner"><div class="number">14</div></div></div>
             <div class="album-card photo a3"><div class="photo-inner"><div class="number">03</div></div></div>
-            <div class="album-card phrase dark a5">e a história continua</div>
-            <div class="album-card photo a4"><div class="photo-inner"><div class="number">♥</div></div></div>
+            <div class="album-card phrase">a vida é boa com você</div>
+            <div class="album-card photo a4"><div class="photo-inner"><div class="number">04</div></div></div>
+            <div class="album-card photo a5"><div class="photo-inner"><div class="number">05</div></div></div>
+            <div class="album-card photo a6"><div class="photo-inner"><div class="number">06</div></div></div>
+            <div class="album-card photo a7"><div class="photo-inner"><div class="number">07</div></div></div>
+            <div class="album-card photo a8"><div class="photo-inner"><div class="number">08</div></div></div>
+            <div class="album-card phrase dark">nos teus braços é onde quero estar</div>
+            <div class="album-card photo a9"><div class="photo-inner"><div class="number">09</div></div></div>
+            <div class="album-card photo a10"><div class="photo-inner"><div class="number">10</div></div></div>
+            <div class="album-card photo a11"><div class="photo-inner"><div class="number">11</div></div></div>
+            <div class="album-card photo a12"><div class="photo-inner"><div class="number">12</div></div></div>
+            <div class="album-card photo a1"><div class="photo-inner"><div class="number">13</div></div></div>
+            <div class="album-card photo a2"><div class="photo-inner"><div class="number">14</div></div></div>
           </div>
         </div>
       </section>
@@ -1775,12 +1816,8 @@
 
             <div class="faq-list">
               <details class="faq-item" data-reveal>
-                <summary>Dá tempo de chegar antes do dia 12?</summary>
-                <p>Sim. Pedidos feitos até dia 10/06 saem com entrega garantida antes do Dia dos Namorados. A partir do dia 11, a gente combina com você caso a caso (a gente não fecha as portas, tlg, mas o prazo aperta).</p>
-              </details>
-              <details class="faq-item" data-reveal>
                 <summary>Como envio as fotos pra vocês?</summary>
-                <p>Depois da compra, você recebe um link no WhatsApp. É só abrir, arrastar as fotos do celular e pronto. Sem cadastro, sem nuvem, sem complicação. Leva uns 3 minutos.</p>
+                <p>Depois da compra, você abre a conversa com a gente no WhatsApp e manda as fotos por lá mesmo. Sem cadastro, sem nuvem, sem complicação. Leva uns 3 minutos.</p>
               </details>
               <details class="faq-item" data-reveal>
                 <summary>E se a foto que eu mandar estiver borrada?</summary>
@@ -1831,13 +1868,40 @@
 
     </main>
 
+    <section id="politica-troca" class="policy">
+      <div class="container">
+        <p class="section-eyebrow" data-reveal>letrinhas miúdas</p>
+        <h2 class="section-title" data-reveal>política de troca <span class="script">e prazo.</span></h2>
+        <div class="policy-grid">
+          <div data-reveal>
+            <h3>Produto chegou com defeito?</h3>
+            <p>A gente troca por um novo, sem custo. É só mandar uma foto pelo WhatsApp em até 7 dias após o recebimento que a gente resolve.</p>
+          </div>
+          <div data-reveal>
+            <h3>Errei na foto enviada?</h3>
+            <p>Antes da impressão, a gente sempre confirma com você. Depois que o álbum tá impresso, não dá pra trocar foto, mas tudo bem, vamos te ajudar a fazer dar certo.</p>
+          </div>
+          <div data-reveal>
+            <h3>Quero cancelar?</h3>
+            <p>Se a impressão ainda não começou, devolvemos 100% do valor pago. A partir do momento que entra na fila de impressão, não rola cancelar.</p>
+          </div>
+          <div data-reveal>
+            <h3>Prazo de entrega?</h3>
+            <p>Pedidos confirmados saem em até 48h. Frete via Correios ou Jadlog, com código de rastreio enviado pelo WhatsApp.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer>
       <div>
-        Amor em Figurinhas é uma edição limitada da
-        <a href="https://zunno.digital">Zunno.Digital</a>
+        Papuli ♥ Edição especial Dia dos Namorados 2026 · uma parceria com a Zunno.Digital
       </div>
       <div>
-        Dúvidas? <a href="#">WhatsApp</a> · <a href="#">Política de troca</a>
+        Dúvidas?
+        <a href="https://wa.me/5516997943381?text=Oi!%20Tenho%20uma%20d%C3%BAvida%20sobre%20o%20%C3%A1lbum.">WhatsApp</a>
+        ·
+        <a href="#politica-troca">Política de troca</a>
       </div>
     </footer>
 
