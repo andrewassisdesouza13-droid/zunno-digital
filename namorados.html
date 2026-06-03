@@ -203,6 +203,24 @@
         100% { box-shadow: 0 0 0 0 rgba(224, 74, 63, 0); }
       }
 
+      /* ---------- Hero parallax ---------- */
+      .hero-parallax {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .parallax-heart {
+        position: absolute;
+        color: var(--red);
+        line-height: 1;
+        will-change: transform;
+        user-select: none;
+        transition: transform 0.1s linear;
+      }
+
       /* ---------- Hero ---------- */
       .hero {
         max-width: 880px;
@@ -210,9 +228,16 @@
         padding: clamp(48px, 9vw, 110px) clamp(24px, 5vw, 64px) clamp(72px, 11vw, 140px);
         text-align: center;
         position: relative;
+        overflow: hidden;
       }
 
-      .hero-text { display: flex; flex-direction: column; align-items: center; }
+      .hero-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
 
 
       .hero-eyebrow {
@@ -765,12 +790,11 @@
         font-style: normal;
       }
 
-      /* ---------- How it works ---------- */
+      /* ---------- How it works — stack scroll ---------- */
       .how {
         background: var(--red);
         color: var(--cream-soft);
         position: relative;
-        overflow: hidden;
         border-top: 2px solid var(--ink);
         border-bottom: 2px solid var(--ink);
       }
@@ -784,6 +808,7 @@
         color: rgba(43, 42, 40, 0.08);
         line-height: 1;
         z-index: 0;
+        pointer-events: none;
       }
 
       .how::after {
@@ -795,6 +820,7 @@
         color: rgba(247, 239, 224, 0.08);
         line-height: 1;
         z-index: 0;
+        pointer-events: none;
       }
 
       .how .container { position: relative; z-index: 1; }
@@ -803,13 +829,25 @@
       .how .section-title .script { color: var(--ink); }
       .how .section-lead { color: rgba(247, 239, 224, 0.85); }
 
-      .how-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 32px;
+      /* Stack layout */
+      .how-stack {
         margin-top: 56px;
         position: relative;
       }
+
+      .step-sticky-wrap {
+        position: sticky;
+        padding-bottom: 200px;
+      }
+
+      .step-sticky-wrap:last-child {
+        padding-bottom: 40px;
+      }
+
+      /* cada card fica mais perto do topo e na frente */
+      .step-sticky-wrap:nth-child(1) { top: 80px; z-index: 1; }
+      .step-sticky-wrap:nth-child(2) { top: 94px; z-index: 2; }
+      .step-sticky-wrap:nth-child(3) { top: 108px; z-index: 3; }
 
       .step {
         background: var(--paper);
@@ -817,15 +855,20 @@
         padding: 36px 28px;
         border: 1.5px solid var(--ink);
         position: relative;
-        transition: transform 0.3s ease;
+        transform-origin: top center;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        will-change: transform;
       }
 
-      .step:nth-child(1) { transform: rotate(-1.5deg); }
-      .step:nth-child(2) { transform: rotate(0.8deg); }
-      .step:nth-child(3) { transform: rotate(-0.8deg); }
+      /* scale down cards underneath */
+      .step.is-under {
+        transform: scale(0.96) translateY(-8px);
+        box-shadow: 0 2px 8px -4px rgba(43,42,40,0.12);
+      }
 
-      .step:hover {
-        transform: rotate(0) translateY(-6px);
+      .step.is-under-2 {
+        transform: scale(0.92) translateY(-16px);
+        box-shadow: 0 1px 4px -4px rgba(43,42,40,0.08);
       }
 
       .step-number {
@@ -1611,18 +1654,11 @@
         .problem-text .section-lead { margin-left: auto; margin-right: auto; }
         .receipt { text-align: left; }
 
-        .how-grid {
-          grid-template-columns: 1fr;
-          gap: 36px;
-        }
-
-        .how .section-lead { margin-left: auto; margin-right: auto; }
+        .how .section-lead { margin-left: auto; margin-right: auto; text-align: center; }
 
         .step { text-align: center; }
         .step-number { left: 50%; transform: translateX(-50%); }
-        .step:nth-child(1),
-        .step:nth-child(2),
-        .step:nth-child(3) { transform: rotate(0); }
+        .step-sticky-wrap { top: 60px; }
 
         .product-grid {
           grid-template-columns: 1fr;
@@ -1726,6 +1762,7 @@
     <main id="top">
 
       <section class="hero">
+        <div class="hero-parallax" aria-hidden="true" id="heroParallax"></div>
         <div class="hero-text">
           <span class="hero-eyebrow" data-reveal>edição especial dia dos namorados</span>
           <h1 class="hero-title" data-reveal>
@@ -1809,21 +1846,27 @@
             Sem complicação, sem editor de fotos, sem você ter que aprender Photoshop. A gente cuida da parte chata. Vocês ficam com a parte gostosa.
           </p>
 
-          <div class="how-grid">
-            <div class="step" data-reveal>
-              <div class="step-number">1</div>
-              <h3>Escolha um plano</h3>
-              <p>Box de polaroids com chocolate, álbum completo ou o pacote com site personalizado. Você escolhe o tamanho do gesto.</p>
+          <div class="how-stack" id="howStack">
+            <div class="step-sticky-wrap">
+              <div class="step" data-reveal>
+                <div class="step-number">1</div>
+                <h3>Escolha um combo</h3>
+                <p>Box de polaroids com chocolate, álbum completo ou o pacote com site personalizado. Você escolhe o tamanho do gesto.</p>
+              </div>
             </div>
-            <div class="step" data-reveal>
-              <div class="step-number">2</div>
-              <h3>Envie as fotos</h3>
-              <p>A gente te manda um link bonitinho no WhatsApp. Você arrasta as fotos do celular e pronto, fim da sua parte difícil.</p>
+            <div class="step-sticky-wrap">
+              <div class="step" data-reveal>
+                <div class="step-number">2</div>
+                <h3>Envie as fotos</h3>
+                <p>A gente abre uma conversa no WhatsApp e você arrasta as fotos do celular. Sem cadastro, sem nuvem, fim da sua parte difícil.</p>
+              </div>
             </div>
-            <div class="step" data-reveal>
-              <div class="step-number">3</div>
-              <h3>Receba e cole, em casal</h3>
-              <p>Chega embalado pra presente, com as polaroids, figurinhas e os Ferrero dentro. Sexta dia 12, vocês dois, e a noite inteira pra revisitar a história.</p>
+            <div class="step-sticky-wrap">
+              <div class="step" data-reveal>
+                <div class="step-number">3</div>
+                <h3>Receba e abra juntos</h3>
+                <p>Chega embalado pra presente, com as polaroids, figurinhas e os Ferrero dentro. Sexta dia 12, vocês dois, e a noite inteira pra revisitar a história.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -2207,6 +2250,99 @@
           iniciarCheckout(plano, btn);
         });
       });
+
+      // ---------- Hero parallax hearts ----------
+      (function () {
+        const container = document.getElementById("heroParallax");
+        if (!container) return;
+
+        // Define hearts: [top%, left%, size, speed, opacity, rotation]
+        const hearts = [
+          [8,  5,  28, 0.15, 0.45, -12],
+          [12, 82, 20, 0.22, 0.35,  8],
+          [22, 18, 44, 0.08, 0.55, -6],
+          [18, 68, 16, 0.30, 0.40,  14],
+          [38, 3,  22, 0.18, 0.38, -18],
+          [42, 90, 36, 0.12, 0.50,  10],
+          [55, 25, 18, 0.25, 0.30, -8],
+          [60, 72, 30, 0.14, 0.45,  16],
+          [72, 10, 14, 0.28, 0.35, -20],
+          [75, 55, 40, 0.09, 0.52,  6],
+          [85, 85, 22, 0.20, 0.40, -10],
+          [90, 40, 16, 0.32, 0.30,  18],
+          [5,  45, 32, 0.10, 0.48, -4],
+          [50, 50, 12, 0.35, 0.28,  22],
+        ];
+
+        const els = hearts.map(([top, left, size, speed, opacity, rot]) => {
+          const el = document.createElement("span");
+          el.className = "parallax-heart";
+          el.textContent = "♥";
+          el.style.cssText = `
+            top:${top}%; left:${left}%;
+            font-size:${size}px;
+            opacity:${opacity};
+            transform: rotate(${rot}deg) translateY(0px);
+          `;
+          el._speed = speed;
+          el._rot = rot;
+          container.appendChild(el);
+          return el;
+        });
+
+        let ticking = false;
+        window.addEventListener("scroll", () => {
+          if (ticking) return;
+          requestAnimationFrame(() => {
+            const scrollY = window.scrollY;
+            els.forEach(el => {
+              const offsetY = scrollY * el._speed;
+              el.style.transform = `rotate(${el._rot}deg) translateY(${offsetY}px)`;
+            });
+            ticking = false;
+          });
+          ticking = true;
+        }, { passive: true });
+      })();
+
+      // ---------- How-to stack scroll ----------
+      (function () {
+        const stack = document.getElementById("howStack");
+        if (!stack) return;
+
+        const wraps = Array.from(stack.querySelectorAll(".step-sticky-wrap"));
+        const steps = wraps.map(w => w.querySelector(".step"));
+
+        function updateStack() {
+          const scrollY = window.scrollY;
+
+          steps.forEach((step, i) => {
+            const wrap = wraps[i];
+            const rect = wrap.getBoundingClientRect();
+            const stickyTop = parseInt(getComputedStyle(wrap).top) || 80;
+
+            // how far this card has been "passed" by the next one
+            const isPinned = rect.top <= stickyTop + 2;
+
+            step.classList.remove("is-under", "is-under-2");
+
+            if (isPinned) {
+              // check how many cards below are also pinned
+              let belowPinned = 0;
+              for (let j = i + 1; j < steps.length; j++) {
+                const nextRect = wraps[j].getBoundingClientRect();
+                const nextTop = parseInt(getComputedStyle(wraps[j]).top) || 80;
+                if (nextRect.top <= nextTop + 2) belowPinned++;
+              }
+              if (belowPinned >= 2) step.classList.add("is-under-2");
+              else if (belowPinned >= 1) step.classList.add("is-under");
+            }
+          });
+        }
+
+        window.addEventListener("scroll", updateStack, { passive: true });
+        updateStack();
+      })();
 
       // ---------- Video placeholder ----------
       const videoFrame = document.getElementById("videoFrame");
