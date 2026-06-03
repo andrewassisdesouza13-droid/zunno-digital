@@ -68,6 +68,10 @@
       body, p, li, blockquote, summary, span, a, button { text-wrap: pretty; }
       h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
 
+      /* Quebra de linha só no desktop */
+      .br-desktop { display: none; }
+      @media (min-width: 641px) { .br-desktop { display: inline; } }
+
       html {
         scroll-behavior: smooth;
       }
@@ -1177,7 +1181,7 @@
       .marquee-wrapper {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 16px;
         padding-bottom: clamp(64px, 9vw, 120px);
       }
 
@@ -1193,35 +1197,35 @@
         position: absolute;
         top: 0;
         bottom: 0;
-        width: 140px;
+        width: 80px;
         z-index: 2;
         pointer-events: none;
       }
 
       .marquee-row::before {
         left: 0;
-        background: linear-gradient(to right, var(--cream) 20%, transparent);
+        background: linear-gradient(to right, var(--cream) 30%, transparent);
       }
 
       .marquee-row::after {
         right: 0;
-        background: linear-gradient(to left, var(--cream) 20%, transparent);
+        background: linear-gradient(to left, var(--cream) 30%, transparent);
       }
 
       .marquee-track {
         display: flex;
-        gap: 22px;
+        gap: 14px;
         width: max-content;
         will-change: transform;
-        padding: 12px 0;
+        padding: 10px 0;
       }
 
       .marquee-row:not(.reverse) .marquee-track {
-        animation: marquee-fwd 30s linear infinite;
+        animation: marquee-fwd 28s linear infinite;
       }
 
       .marquee-row.reverse .marquee-track {
-        animation: marquee-bwd 34s linear infinite;
+        animation: marquee-bwd 32s linear infinite;
       }
 
       .marquee-row:hover .marquee-track {
@@ -1240,13 +1244,13 @@
 
       .marquee-slide {
         flex: 0 0 auto;
-        width: 220px;
+        width: 250px;
         background: var(--paper);
-        padding: 13px 13px 52px;
+        padding: 12px 12px 12px;
         position: relative;
         box-shadow:
-          0 12px 28px -14px rgba(43, 42, 40, 0.5),
-          0 4px 8px -4px rgba(43, 42, 40, 0.15);
+          0 10px 24px -12px rgba(43, 42, 40, 0.45),
+          0 3px 7px -3px rgba(43, 42, 40, 0.13);
         transform: rotate(-1.6deg);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         user-select: none;
@@ -1260,22 +1264,9 @@
       .marquee-slide:hover {
         transform: rotate(0) scale(1.02);
         box-shadow:
-          0 8px 20px -8px rgba(43, 42, 40, 0.35),
-          0 3px 6px -3px rgba(43, 42, 40, 0.12);
+          0 8px 20px -8px rgba(43, 42, 40, 0.3),
+          0 2px 5px -3px rgba(43, 42, 40, 0.1);
         z-index: 2;
-      }
-
-      .marquee-slide figcaption {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 14px;
-        text-align: center;
-        font-family: var(--script);
-        font-size: 20px;
-        color: var(--ink);
-        line-height: 1;
-        pointer-events: none;
       }
 
       .slide-img {
@@ -1784,15 +1775,16 @@
 
       /* ---- Breakpoint 640px: marquee mobile fixes ---- */
       @media (max-width: 640px) {
-        /* Fades mais estreitas pra não comer o conteúdo */
+        /* Fades mais estreitas no mobile */
         .marquee-row::before,
-        .marquee-row::after { width: 44px; }
+        .marquee-row::after { width: 28px; }
 
         .testimonial-marquee-row::before,
         .testimonial-marquee-row::after { width: 44px; }
 
-        /* Carrossel de fotos: menor no mobile */
-        .marquee-slide { width: 160px; padding: 10px 10px 44px; }
+        /* Carrossel de fotos: compacto e limpo no mobile */
+        .marquee-slide { width: 195px; padding: 10px 10px 10px; }
+        .marquee-track { gap: 10px; }
 
         /* Cards de testimonial: largura fixa, coluna */
         .testimonial-marquee-track .t-card {
@@ -1895,7 +1887,7 @@
           <span class="hero-eyebrow" data-reveal>As melhores memórias da história de vocês</span>
           <h1 class="hero-title" data-reveal>
             Nesse Dia dos Namorados,<br>não dê mais um presente.<br>
-            <span class="script">Dê a história de vocês</span> em forma de lembrança.
+            <span class="script">Dê a história de vocês</span><br class="br-desktop"> em forma de lembrança.
           </h1>
           <p class="hero-sub" data-reveal>
             O primeiro beijo, a viagem que vocês fizeram, selfies que ficaram fofas, fotos do primeiro encontro. Esse ano, isso vira presente. Fotos estilo Polaroid, álbum de figurinha e site personalizado, com entrega antes do dia dos namorados.
@@ -1919,7 +1911,7 @@
         <div class="container">
           <p class="section-eyebrow" data-reveal>veja em movimento</p>
           <h2 class="section-title" data-reveal>
-            esse presente contém muito <span class="script">amor</span><br>e ótimas memórias.
+            esse presente contém muito <span class="script">amor</span><br>e ótimas <span class="script">memórias.</span>
           </h2>
           <p class="section-lead" data-reveal>
             8 fotos estilo Polaroid. Um álbum com frases que parecem escritas pra vocês. Um site personalizado para eternizar seu amor no digital. Veja antes de comprar.
@@ -1942,7 +1934,7 @@
           <div class="problem-text" data-reveal>
             <p class="section-eyebrow">o pequeno problema</p>
             <h2 class="section-title">
-              pergunta de verdade: <span class="script">quando</span> foi a última foto de vocês que você imprimiu?
+              Qual foi a última <span class="script">lembrança</span> de vocês que saiu da galeria?
             </h2>
             <p class="section-lead">
               Qual foi a última lembrança de vocês que saiu da galeria?
@@ -2008,7 +2000,7 @@
           <div class="album-head" data-reveal>
             <p class="section-eyebrow">o que vai dentro</p>
             <h2 class="section-title">
-              cada foto é <span class="script">um capítulo.</span> vocês escreveram todos.
+              cada foto é <span class="script">um capítulo</span> que vocês escreveram.
             </h2>
             <p class="section-lead">
               8 fotos estilo Polaroid pra espalhar pela casa. 14 figurinhas com frases românticas dentro do álbum. 3 Ferrero pra abrir junto. Tudo impresso em papel premium, do jeito que a história aconteceu.
@@ -2017,52 +2009,52 @@
         </div>
 
         <!-- Dual infinite marquee — vai de borda a borda -->
-        <p class="carousel-label" data-reveal>fotos reais do produto ♥ (em breve)</p>
+        <p class="carousel-label" data-reveal>fotos reais do produto ♥</p>
         <div class="marquee-wrapper" data-reveal>
 
           <!-- Fila 1: indo para a direita → -->
           <div class="marquee-row">
             <div class="marquee-track">
-              <figure class="marquee-slide"><div class="slide-img s1"></div><figcaption>fotos estilo Polaroid 7×9</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s2"></div><figcaption>a capa do álbum</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s3"></div><figcaption>por dentro do álbum</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s4"></div><figcaption>3 Ferrero Rocher</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s5"></div><figcaption>figurinha por figurinha</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s6"></div><figcaption>embalado pra presente</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s7"></div><figcaption>cartão com QR Code</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s8"></div><figcaption>tudo junto, tudo seu</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s1"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s2"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s3"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s4"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s5"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s6"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s7"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s8"></div></figure>
               <!-- duplicados para loop infinito -->
-              <figure class="marquee-slide"><div class="slide-img s1"></div><figcaption>fotos estilo Polaroid 7×9</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s2"></div><figcaption>a capa do álbum</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s3"></div><figcaption>por dentro do álbum</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s4"></div><figcaption>3 Ferrero Rocher</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s5"></div><figcaption>figurinha por figurinha</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s6"></div><figcaption>embalado pra presente</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s7"></div><figcaption>cartão com QR Code</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s8"></div><figcaption>tudo junto, tudo seu</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s1"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s2"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s3"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s4"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s5"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s6"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s7"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s8"></div></figure>
             </div>
           </div>
 
           <!-- Fila 2: indo para a esquerda ← -->
           <div class="marquee-row reverse">
             <div class="marquee-track">
-              <figure class="marquee-slide"><div class="slide-img s5"></div><figcaption>embalado pra presente</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s8"></div><figcaption>tudo junto, tudo seu</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s3"></div><figcaption>por dentro do álbum</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s6"></div><figcaption>fotos estilo Polaroid 7×9</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s1"></div><figcaption>a capa do álbum</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s7"></div><figcaption>figurinha por figurinha</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s4"></div><figcaption>3 Ferrero Rocher</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s2"></div><figcaption>cartão com QR Code</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s5"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s8"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s3"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s6"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s1"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s7"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s4"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s2"></div></figure>
               <!-- duplicados para loop infinito -->
-              <figure class="marquee-slide"><div class="slide-img s5"></div><figcaption>embalado pra presente</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s8"></div><figcaption>tudo junto, tudo seu</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s3"></div><figcaption>por dentro do álbum</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s6"></div><figcaption>fotos estilo Polaroid 7×9</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s1"></div><figcaption>a capa do álbum</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s7"></div><figcaption>figurinha por figurinha</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s4"></div><figcaption>3 Ferrero Rocher</figcaption></figure>
-              <figure class="marquee-slide"><div class="slide-img s2"></div><figcaption>cartão com QR Code</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s5"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s8"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s3"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s6"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s1"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s7"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s4"></div></figure>
+              <figure class="marquee-slide"><div class="slide-img s2"></div></figure>
             </div>
           </div>
 
@@ -2074,7 +2066,7 @@
           <div class="products-head">
             <p class="section-eyebrow" data-reveal>escolha o seu</p>
             <h2 class="section-title" data-reveal>
-              três combos.<br>
+              três combos e<br>
               <span class="script">um propósito:</span> vocês nunca se esquecerem disso.
             </h2>
             <p class="section-lead" data-reveal>
