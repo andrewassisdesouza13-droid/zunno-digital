@@ -1296,6 +1296,67 @@
       .slide-img.s8 { background: linear-gradient(158deg, #4a2020 0%, #c8302a 80%); }
 
       /* ---------- Testimonial / Prova social ---------- */
+      .t-section-title {
+        color: var(--cream-soft) !important;
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto 8px;
+      }
+
+      .t-section-title .script {
+        color: rgba(247, 239, 224, 0.82) !important;
+      }
+
+      /* Infinite marquee for testimonials */
+      .testimonial-marquee-row {
+        overflow: hidden;
+        position: relative;
+        padding: 24px 0 40px;
+      }
+
+      .testimonial-marquee-row::before,
+      .testimonial-marquee-row::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 200px;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .testimonial-marquee-row::before {
+        left: 0;
+        background: linear-gradient(to right, var(--red) 15%, transparent);
+      }
+      .testimonial-marquee-row::after {
+        right: 0;
+        background: linear-gradient(to left, var(--red) 15%, transparent);
+      }
+
+      .testimonial-marquee-track {
+        display: flex;
+        gap: 28px;
+        width: max-content;
+        animation: marquee-fwd 44s linear infinite;
+      }
+
+      .testimonial-marquee-row:hover .testimonial-marquee-track {
+        animation-play-state: paused;
+      }
+
+      /* Card width fixo dentro do marquee */
+      .testimonial-marquee-track .t-card {
+        width: 520px;
+        flex-shrink: 0;
+        margin: 0;
+        cursor: default;
+      }
+
+      .testimonial-marquee-track .t-card p {
+        font-size: 17px;
+        line-height: 1.72;
+      }
+
       .testimonial {
         background: var(--red);
         color: var(--cream-soft);
@@ -1806,12 +1867,13 @@
 
       <section class="hero">
         <div class="hero-text">
-          <span class="hero-eyebrow" data-reveal>edição especial dia dos namorados</span>
+          <span class="hero-eyebrow" data-reveal>As melhores memórias da história de vocês</span>
           <h1 class="hero-title" data-reveal>
-            o melhor da relação de vocês <span class="script">ainda tá preso</span> num celular.
+            Nesse Dia dos Namorados,<br>não dê mais um presente.<br>
+            <span class="script">Dê a história de vocês</span> em forma de lembrança.
           </h1>
           <p class="hero-sub" data-reveal>
-            O primeiro beijo, a viagem, o dia que deu tudo errado e vocês riram mesmo assim. Esse ano, isso vira presente. Fotos estilo Polaroid, álbum e site personalizado, com Ferrero Rocher dentro e entrega antes da sexta dia 12.
+            O primeiro beijo, a viagem que vocês fizeram, selfies que ficaram fofas, fotos do primeiro encontro. Esse ano, isso vira presente. Fotos estilo Polaroid, álbum de figurinha e site personalizado, com entrega antes do dia dos namorados.
           </p>
           <div class="hero-cta-row" data-reveal>
             <a class="btn-primary" href="#planos">
@@ -1832,11 +1894,10 @@
         <div class="container">
           <p class="section-eyebrow" data-reveal>veja em movimento</p>
           <h2 class="section-title" data-reveal>
-            olha o que <span class="script">cabe</span><br>
-            dentro da caixinha.
+            esse presente contém muito <span class="script">amor</span><br>e ótimas memórias.
           </h2>
           <p class="section-lead" data-reveal>
-            8 fotos estilo Polaroid brilhantes no papel fotográfico. Um álbum com frases que parecem escritas pra vocês. Três Ferrero pra abrir junto. Aperta o play e vê antes de comprar.
+            8 fotos estilo Polaroid. Um álbum com frases que parecem escritas pra vocês. Um site personalizado para eternizar seu amor no digital. Veja antes de comprar.
           </p>
 
           <div class="video-wrap" data-reveal>
@@ -1845,7 +1906,7 @@
             <div class="video-frame" id="videoFrame">
               <button class="play-btn" aria-label="Reproduzir vídeo do álbum"></button>
             </div>
-            <div class="video-caption">vem revivê-las comigo</div>
+            <div class="video-caption">Veja antes de comprar.</div>
             <div class="video-badge">edição 2026</div>
           </div>
         </div>
@@ -1859,19 +1920,19 @@
               pergunta de verdade: <span class="script">quando</span> foi a última foto de vocês que você imprimiu?
             </h2>
             <p class="section-lead">
-              Provavelmente faz tempo. Talvez nunca. E não é culpa de vocês, é como o mundo virou. Mas as melhores lembranças de vocês merecem mais que um quadradinho no meio de 4 mil fotos. Merecem papel.
+              Qual foi a última lembrança de vocês que saiu da galeria?
             </p>
           </div>
 
           <div class="receipt" data-reveal>
             <h4>o que tá perdido no seu rolo de câmera:</h4>
             <ul>
-              <li><span>fotos do primeiro encontro</span><span class="qty">128</span></li>
-              <li><span>vídeos de aniversário</span><span class="qty">47</span></li>
+              <li><span>fotos do primeiro encontro</span><span class="qty">12</span></li>
+              <li><span>fotos de aniversário</span><span class="qty">36</span></li>
               <li><span>aquele pôr do sol em janeiro</span><span class="qty">12</span></li>
               <li><span>selfies que ficaram fofas</span><span class="qty">234</span></li>
-              <li><span>fotos da viagem que vocês fizeram</span><span class="qty">389</span></li>
-              <li><span>total nunca impresso</span><span>810</span></li>
+              <li><span>fotos da viagem que vocês fizeram</span><span class="qty">189</span></li>
+              <li><span>total nunca impresso</span><span>483</span></li>
             </ul>
           </div>
         </div>
@@ -2061,57 +2122,96 @@
       </section>
 
       <section class="testimonial">
-        <div class="container">
+        <div class="container" style="padding-bottom: 0;">
           <p class="section-eyebrow t-eyebrow" data-reveal>quem já recebeu</p>
-          <div class="testimonial-carousel" data-reveal>
-            <div class="testimonial-track" id="testimonialTrack">
-
-              <blockquote class="t-slide">
-                <div class="t-card">
-                  <div class="t-photo-wrap">
-                    <img class="t-photo" src="/feedback/mateus-cremon.png" alt="Mateus Cremon e namorada">
-                  </div>
-                  <div class="t-card-content">
-                    <p class="t-card-name">Mateus Cremon</p>
-                    <p class="t-card-source">Feedback pelo WhatsApp</p>
-                    <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-                    <p>"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
-                  </div>
-                </div>
-              </blockquote>
-
-              <blockquote class="t-slide">
-                <div class="t-card">
-                  <div class="t-photo-wrap">
-                    <img class="t-photo" src="/feedback/lucas-melso.png" alt="Lucas Melso e namorada">
-                  </div>
-                  <div class="t-card-content">
-                    <p class="t-card-name">Lucas Melso</p>
-                    <p class="t-card-source">Feedback pelo WhatsApp</p>
-                    <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-                    <p>"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
-                  </div>
-                </div>
-              </blockquote>
-
-              <blockquote class="t-slide">
-                <div class="t-card">
-                  <div class="t-photo-wrap">
-                    <img class="t-photo" src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer e namorada">
-                  </div>
-                  <div class="t-card-content">
-                    <p class="t-card-name">Gabriel Pitzer</p>
-                    <p class="t-card-source">Feedback pelo WhatsApp</p>
-                    <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-                    <p>"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
-                  </div>
-                </div>
-              </blockquote>
-
-            </div>
-          </div>
-          <div class="testimonial-dots" id="testimonialDots"></div>
+          <h2 class="section-title t-section-title" data-reveal>
+            Casais que <span class="script">confiaram</span> na gente.
+          </h2>
         </div>
+
+        <!-- Marquee infinito — sai do container pra ir de borda a borda -->
+        <div class="testimonial-marquee-row" data-reveal>
+          <div class="testimonial-marquee-track">
+
+            <!-- Card 1 -->
+            <div class="t-card">
+              <div class="t-photo-wrap">
+                <img class="t-photo" src="/feedback/mateus-cremon.png" alt="Mateus Cremon e namorada">
+              </div>
+              <div class="t-card-content">
+                <p class="t-card-name">Mateus Cremon</p>
+                <p class="t-card-source">Feedback pelo WhatsApp</p>
+                <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+                <p>"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="t-card">
+              <div class="t-photo-wrap">
+                <img class="t-photo" src="/feedback/lucas-melso.png" alt="Lucas Melso e namorada">
+              </div>
+              <div class="t-card-content">
+                <p class="t-card-name">Lucas Melso</p>
+                <p class="t-card-source">Feedback pelo WhatsApp</p>
+                <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+                <p>"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="t-card">
+              <div class="t-photo-wrap">
+                <img class="t-photo" src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer e namorada">
+              </div>
+              <div class="t-card-content">
+                <p class="t-card-name">Gabriel Pitzer</p>
+                <p class="t-card-source">Feedback pelo WhatsApp</p>
+                <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+                <p>"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
+              </div>
+            </div>
+
+            <!-- Duplicados para loop infinito -->
+            <div class="t-card">
+              <div class="t-photo-wrap">
+                <img class="t-photo" src="/feedback/mateus-cremon.png" alt="Mateus Cremon e namorada">
+              </div>
+              <div class="t-card-content">
+                <p class="t-card-name">Mateus Cremon</p>
+                <p class="t-card-source">Feedback pelo WhatsApp</p>
+                <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+                <p>"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
+              </div>
+            </div>
+
+            <div class="t-card">
+              <div class="t-photo-wrap">
+                <img class="t-photo" src="/feedback/lucas-melso.png" alt="Lucas Melso e namorada">
+              </div>
+              <div class="t-card-content">
+                <p class="t-card-name">Lucas Melso</p>
+                <p class="t-card-source">Feedback pelo WhatsApp</p>
+                <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+                <p>"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
+              </div>
+            </div>
+
+            <div class="t-card">
+              <div class="t-photo-wrap">
+                <img class="t-photo" src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer e namorada">
+              </div>
+              <div class="t-card-content">
+                <p class="t-card-name">Gabriel Pitzer</p>
+                <p class="t-card-source">Feedback pelo WhatsApp</p>
+                <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+                <p>"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div style="height: clamp(48px, 6vw, 80px);"></div>
       </section>
 
       <section class="final">
@@ -2342,47 +2442,7 @@
         });
       }
 
-      // ---------- Testimonial carousel (auto + swipe + dots) ----------
-      (function () {
-        const track = document.getElementById("testimonialTrack");
-        const dotsWrap = document.getElementById("testimonialDots");
-        if (!track || !dotsWrap) return;
-
-        const slides = track.children;
-        const total = slides.length;
-        let index = 0;
-        let timer;
-
-        // cria os dots
-        for (let i = 0; i < total; i++) {
-          const b = document.createElement("button");
-          b.setAttribute("aria-label", "Depoimento " + (i + 1));
-          b.addEventListener("click", () => { go(i); reset(); });
-          dotsWrap.appendChild(b);
-        }
-        const dots = dotsWrap.children;
-
-        function go(i) {
-          index = (i + total) % total;
-          track.style.transform = "translateX(-" + index * 100 + "%)";
-          for (let d = 0; d < dots.length; d++) dots[d].classList.toggle("active", d === index);
-        }
-        function next() { go(index + 1); }
-        function reset() { clearInterval(timer); timer = setInterval(next, 5500); }
-
-        go(0);
-        reset();
-
-        // swipe touch
-        let startX = null;
-        track.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
-        track.addEventListener("touchend", (e) => {
-          if (startX === null) return;
-          const dx = e.changedTouches[0].clientX - startX;
-          if (Math.abs(dx) > 40) { dx < 0 ? next() : go(index - 1); reset(); }
-          startX = null;
-        });
-      })();
+      // Testimonial marquee: CSS animation handles the infinite scroll (no JS needed)
     </script>
   </body>
 </html>
