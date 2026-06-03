@@ -8,12 +8,12 @@ const REDIRECT_BASE = "https://zunno.digital/namoradosobrigado";
 // Preços com frete embutido
 const PLANOS = {
   essencial: {
-    description: "Box de Polaroids + 3 Ferrero Rocher (Edicao Namorados 2026)",
+    description: "Box de 16 Polaroids + 3 Ferrero Rocher (Edicao Namorados 2026)",
     price: 5790,
     quantity: 1
   },
   polaroid: {
-    description: "Album de Figurinhas + 18 Polaroids + 3 Ferrero Rocher (Edicao Namorados 2026)",
+    description: "Album com 14 Figurinhas + 16 Polaroids + 3 Ferrero Rocher (Edicao Namorados 2026)",
     price: 9790,
     quantity: 1
   },
