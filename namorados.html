@@ -6,11 +6,11 @@
     <title>Papuli | Edição Dia dos Namorados 2026</title>
     <meta
       name="description"
-      content="Polaroids, álbum de figurinhas e cartão com QR Code feitos com as fotos de vocês. Embalado com chocolate Ferrero. Edição limitada, entrega garantida antes da sexta 12/06."
+      content="Fotos estilo Polaroid, álbum de figurinhas e cartão com QR Code feitos com as fotos de vocês. Embalado com chocolate Ferrero. Edição limitada, entrega garantida antes da sexta 12/06."
     />
     <meta name="theme-color" content="#c8302a" />
     <meta property="og:title" content="Papuli — Edição Dia dos Namorados 2026" />
-    <meta property="og:description" content="Tirem as fotos do celular. Finalmente. Polaroids, álbum e Ferrero, entrega antes do dia 12." />
+    <meta property="og:description" content="Tirem as fotos do celular. Finalmente. Fotos estilo Polaroid, álbum e Ferrero, entrega antes do dia 12." />
     <meta property="og:type" content="website" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -201,24 +201,6 @@
         0% { box-shadow: 0 0 0 0 rgba(224, 74, 63, 0.7); }
         70% { box-shadow: 0 0 0 10px rgba(224, 74, 63, 0); }
         100% { box-shadow: 0 0 0 0 rgba(224, 74, 63, 0); }
-      }
-
-      /* ---------- Hero parallax ---------- */
-      .hero-parallax {
-        position: absolute;
-        inset: 0;
-        overflow: hidden;
-        pointer-events: none;
-        z-index: 0;
-      }
-
-      .parallax-heart {
-        position: absolute;
-        color: var(--red);
-        line-height: 1;
-        will-change: transform;
-        user-select: none;
-        transition: transform 0.1s linear;
       }
 
       /* ---------- Hero ---------- */
@@ -790,7 +772,7 @@
         font-style: normal;
       }
 
-      /* ---------- How it works — stack scroll ---------- */
+      /* ---------- How it works — desktop split + beautiful cards ---------- */
       .how {
         background: var(--red);
         color: var(--cream-soft);
@@ -824,85 +806,120 @@
       }
 
       .how .container { position: relative; z-index: 1; }
-      .how .section-eyebrow { color: var(--cream-soft); }
+      .how .section-eyebrow { color: var(--cream-soft); opacity: 0.9; }
       .how .section-title { color: var(--cream-soft); }
       .how .section-title .script { color: var(--ink); }
-      .how .section-lead { color: rgba(247, 239, 224, 0.85); }
+      .how .section-lead { color: rgba(247, 239, 224, 0.82); max-width: 440px; }
 
-      /* Stack layout */
-      .how-stack {
-        margin-top: 56px;
-        position: relative;
+      /* Desktop: left sticky intro, right scrollable cards */
+      .how-inner {
+        display: grid;
+        grid-template-columns: 38% 1fr;
+        gap: 80px;
+        align-items: start;
+        margin-top: 0;
       }
 
-      .step-sticky-wrap {
+      .how-intro {
         position: sticky;
-        padding-bottom: 200px;
+        top: 100px;
       }
 
-      .step-sticky-wrap:last-child {
-        padding-bottom: 40px;
+      .how-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+        padding-top: 4px;
       }
 
-      /* cada card fica mais perto do topo e na frente */
-      .step-sticky-wrap:nth-child(1) { top: 80px; z-index: 1; }
-      .step-sticky-wrap:nth-child(2) { top: 94px; z-index: 2; }
-      .step-sticky-wrap:nth-child(3) { top: 108px; z-index: 3; }
-
-      .step {
+      /* Step card */
+      .step-card {
         background: var(--paper);
         color: var(--ink);
-        padding: 36px 28px;
-        border: 1.5px solid var(--ink);
+        border-radius: 3px;
+        padding: 40px 40px 40px 52px;
         position: relative;
-        transform-origin: top center;
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
-        will-change: transform;
+        overflow: hidden;
+        box-shadow:
+          0 20px 50px -20px rgba(43, 42, 40, 0.55),
+          0 4px 12px -4px rgba(43, 42, 40, 0.2),
+          inset 0 0 0 1.5px rgba(43, 42, 40, 0.06);
+        transition:
+          transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1),
+          box-shadow 0.38s ease;
       }
 
-      /* scale down cards underneath */
-      .step.is-under {
-        transform: scale(0.96) translateY(-8px);
-        box-shadow: 0 2px 8px -4px rgba(43,42,40,0.12);
+      .step-card:hover {
+        transform: translateY(-7px) rotate(-0.4deg);
+        box-shadow:
+          0 0 0 2px var(--red),
+          0 32px 70px -20px rgba(43, 42, 40, 0.6),
+          0 0 40px -10px rgba(200, 48, 42, 0.25),
+          inset 0 0 0 1.5px rgba(200, 48, 42, 0.12);
       }
 
-      .step.is-under-2 {
-        transform: scale(0.92) translateY(-16px);
-        box-shadow: 0 1px 4px -4px rgba(43,42,40,0.08);
-      }
-
-      .step-number {
+      /* Left accent bar */
+      .step-card::after {
+        content: "";
         position: absolute;
-        top: -22px;
-        left: 24px;
-        width: 44px;
-        height: 44px;
-        background: var(--ink);
-        color: var(--cream-soft);
-        border-radius: 50%;
-        display: flex;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+        background: linear-gradient(180deg, var(--red), var(--red-deep));
+        border-radius: 3px 0 0 3px;
+      }
+
+      /* Ghost number watermark */
+      .step-card-ghost {
+        position: absolute;
+        right: -8px;
+        bottom: -28px;
+        font-family: var(--display);
+        font-weight: 900;
+        font-size: 160px;
+        line-height: 1;
+        color: var(--red);
+        opacity: 0.055;
+        pointer-events: none;
+        user-select: none;
+        letter-spacing: -0.04em;
+      }
+
+      .step-card-num {
+        display: inline-flex;
         align-items: center;
         justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--red);
+        color: var(--cream-soft);
         font-family: var(--display);
         font-weight: 700;
-        font-size: 20px;
-        border: 2px solid var(--cream-soft);
-        box-shadow: 0 0 0 2px var(--red);
+        font-size: 17px;
+        margin-bottom: 20px;
+        box-shadow: 3px 3px 0 var(--ink);
+        flex-shrink: 0;
       }
 
-      .step h3 {
+      .step-card h3 {
         font-family: var(--display);
-        font-weight: 500;
-        font-size: 24px;
-        margin: 12px 0 12px;
+        font-weight: 600;
+        font-size: clamp(22px, 2.2vw, 28px);
+        line-height: 1.15;
+        margin: 0 0 12px;
         color: var(--ink);
+        letter-spacing: -0.015em;
       }
 
-      .step p {
-        font-size: 16px;
-        line-height: 1.55;
+      .step-card p {
+        font-size: 17px;
+        line-height: 1.62;
         color: var(--ink-soft);
         margin: 0;
+        position: relative;
+        z-index: 1;
       }
 
       /* ---------- Products section ---------- */
@@ -1122,14 +1139,19 @@
         background: var(--red-deep);
       }
 
-      /* ---------- Inside the album section ---------- */
+      /* ---------- Album / "o que vai dentro" section ---------- */
       .album {
         background: var(--cream);
+        overflow: hidden;
       }
 
       .album-head {
         text-align: center;
-        margin-bottom: 64px;
+        margin-bottom: 56px;
+        padding: 0 clamp(24px, 5vw, 64px);
+        max-width: 1180px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       .album-head .section-title {
@@ -1141,111 +1163,145 @@
         margin: 0 auto;
       }
 
-      .album-mosaic {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 22px;
-        max-width: 1040px;
-        margin: 0 auto;
+      /* ---------- Dual infinite marquee carousel ---------- */
+      .carousel-label {
+        text-align: center;
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 15px;
+        color: var(--ink-soft);
+        margin: 0 0 28px;
+        padding: 0 clamp(24px, 5vw, 64px);
       }
 
-      .album-card {
-        background: var(--paper);
-        padding: 14px 14px 14px;
-        box-shadow:
-          0 18px 40px -22px rgba(43, 42, 40, 0.5),
-          0 4px 8px -4px rgba(43, 42, 40, 0.2);
-        position: relative;
-        transition: transform 0.3s ease;
-        aspect-ratio: 1 / 1;
-      }
-
-      .album-card:hover {
-        transform: rotate(0) scale(1.04);
-        z-index: 5;
-      }
-
-      .album-card.photo .photo-inner {
-        width: 100%;
-        height: 100%;
-        position: relative;
+      .marquee-wrapper {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
+        flex-direction: column;
+        gap: 20px;
+        padding-bottom: clamp(64px, 9vw, 120px);
       }
 
-      .album-card.photo .photo-inner::before {
+      .marquee-row {
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Fade edges */
+      .marquee-row::before,
+      .marquee-row::after {
         content: "";
         position: absolute;
-        inset: 0;
-      }
-
-      .album-card.photo .number {
-        position: relative;
+        top: 0;
+        bottom: 0;
+        width: 140px;
         z-index: 2;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: var(--paper);
-        border: 1.5px solid var(--cream-deep);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: var(--display);
-        font-weight: 600;
-        font-size: 14px;
-        color: var(--ink);
+        pointer-events: none;
       }
 
-      .album-card.phrase {
-        background: var(--red);
-        color: var(--cream-soft);
+      .marquee-row::before {
+        left: 0;
+        background: linear-gradient(to right, var(--cream) 20%, transparent);
+      }
+
+      .marquee-row::after {
+        right: 0;
+        background: linear-gradient(to left, var(--cream) 20%, transparent);
+      }
+
+      .marquee-track {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        gap: 22px;
+        width: max-content;
+        will-change: transform;
+        padding: 12px 0;
+      }
+
+      .marquee-row:not(.reverse) .marquee-track {
+        animation: marquee-fwd 30s linear infinite;
+      }
+
+      .marquee-row.reverse .marquee-track {
+        animation: marquee-bwd 34s linear infinite;
+      }
+
+      .marquee-row:hover .marquee-track {
+        animation-play-state: paused;
+      }
+
+      @keyframes marquee-fwd {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+
+      @keyframes marquee-bwd {
+        0%   { transform: translateX(-50%); }
+        100% { transform: translateX(0); }
+      }
+
+      .marquee-slide {
+        flex: 0 0 auto;
+        width: 220px;
+        background: var(--paper);
+        padding: 13px 13px 52px;
+        position: relative;
+        box-shadow:
+          0 12px 28px -14px rgba(43, 42, 40, 0.5),
+          0 4px 8px -4px rgba(43, 42, 40, 0.15);
+        transform: rotate(-1.6deg);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        user-select: none;
+        cursor: default;
+      }
+
+      .marquee-slide:nth-child(2n) { transform: rotate(1.3deg); }
+      .marquee-slide:nth-child(3n) { transform: rotate(0.5deg); }
+      .marquee-slide:nth-child(4n) { transform: rotate(-0.8deg); }
+
+      .marquee-slide:hover {
+        transform: rotate(0) scale(1.04) translateY(-4px);
+        box-shadow:
+          0 20px 50px -14px rgba(43, 42, 40, 0.55),
+          0 6px 14px -4px rgba(43, 42, 40, 0.22);
+        z-index: 10;
+      }
+
+      .marquee-slide figcaption {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 14px;
         text-align: center;
         font-family: var(--script);
-        font-size: clamp(20px, 2vw, 28px);
-        line-height: 1.1;
-        padding: 18px;
+        font-size: 20px;
+        color: var(--ink);
+        line-height: 1;
+        pointer-events: none;
       }
 
-      .album-card.phrase.dark {
-        background: var(--ink);
+      .slide-img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        display: block;
+        object-fit: cover;
       }
 
-      .album-card.a1 { transform: rotate(-2deg); }
-      .album-card.a1 .photo-inner::before { background: linear-gradient(135deg, #d97a5e, #6b2520); }
-      .album-card.a2 { transform: rotate(1deg); }
-      .album-card.a2 .photo-inner::before { background: linear-gradient(140deg, #f7e0c8, #9b211d); }
-      .album-card.a3 { transform: rotate(-1deg); }
-      .album-card.a3 .photo-inner::before { background: linear-gradient(160deg, #f0c2ad, #c8302a 70%); }
-      .album-card.a4 { transform: rotate(2deg); }
-      .album-card.a4 .photo-inner::before { background: linear-gradient(120deg, #2b2a28, #c8302a); }
-      .album-card.a5 { transform: rotate(-2deg); }
-      .album-card.a5 .photo-inner::before { background: linear-gradient(135deg, #d97a5e, #2b2a28); }
-      .album-card.a6 { transform: rotate(1.5deg); }
-      .album-card.a6 .photo-inner::before { background: linear-gradient(135deg, #f7e0c8, #9b211d); }
-      .album-card.a7 { transform: rotate(1deg); }
-      .album-card.a7 .photo-inner::before { background: linear-gradient(150deg, #e6c8a0, #6b3a36); }
-      .album-card.a8 { transform: rotate(-1deg); }
-      .album-card.a8 .photo-inner::before { background: linear-gradient(150deg, #c8302a, #2b2a28 80%); }
-      .album-card.a9 { transform: rotate(-1deg); }
-      .album-card.a9 .photo-inner::before { background: linear-gradient(135deg, #e6c8a0, #6b3a36); }
-      .album-card.a10 { transform: rotate(2deg); }
-      .album-card.a10 .photo-inner::before { background: linear-gradient(160deg, #d97a5e, #2b2a28); }
-      .album-card.a11 { transform: rotate(-1.5deg); }
-      .album-card.a11 .photo-inner::before { background: linear-gradient(140deg, #f0c2ad, #2b2a28); }
-      .album-card.a12 { transform: rotate(1deg); }
-      .album-card.a12 .photo-inner::before { background: linear-gradient(150deg, #c8302a, #6b2520); }
+      /* Placeholder gradients */
+      .slide-img.s1 { background: linear-gradient(135deg, #f0c2ad 0%, #c8302a 80%); }
+      .slide-img.s2 { background: linear-gradient(155deg, #2b2a28 0%, #6b2520 100%); }
+      .slide-img.s3 { background: linear-gradient(120deg, #e6c8a0 0%, #9b211d 100%); }
+      .slide-img.s4 { background: radial-gradient(circle at 40% 35%, #d9a86a, #6b3a12 80%); }
+      .slide-img.s5 { background: linear-gradient(160deg, #f7e0c8 0%, #2b2a28 100%); }
+      .slide-img.s6 { background: linear-gradient(138deg, #d97a5e 0%, #2b2a28 100%); }
+      .slide-img.s7 { background: linear-gradient(148deg, #c8302a 0%, #f0c2ad 85%); }
+      .slide-img.s8 { background: linear-gradient(158deg, #4a2020 0%, #c8302a 80%); }
 
-      /* ---------- Testimonial ---------- */
+      /* ---------- Testimonial / Prova social ---------- */
       .testimonial {
         background: var(--red);
         color: var(--cream-soft);
         text-align: center;
         position: relative;
+        overflow: hidden;
       }
 
       .testimonial::before,
@@ -1253,7 +1309,8 @@
         content: "♥";
         position: absolute;
         font-size: 80px;
-        color: rgba(247, 239, 224, 0.15);
+        color: rgba(247, 239, 224, 0.12);
+        pointer-events: none;
       }
 
       .testimonial::before { top: 40px; left: 8%; transform: rotate(-15deg); }
@@ -1288,12 +1345,61 @@
         box-sizing: border-box;
       }
 
+      /* Avatar row */
+      .t-avatar-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+      }
+
+      .t-avatar {
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        border: 3px solid rgba(247, 239, 224, 0.35);
+        flex-shrink: 0;
+        box-shadow: 0 4px 16px rgba(43, 42, 40, 0.3);
+      }
+
+      .t-avatar-m { background: radial-gradient(circle at 35% 32%, #f4cbb8, #9b211d 78%); }
+      .t-avatar-b { background: radial-gradient(circle at 38% 30%, #ffe0c0, #5a3010 78%); }
+      .t-avatar-c { background: radial-gradient(circle at 42% 32%, #f7e0c8, #2b2a28 82%); }
+
+      .t-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .t-stars {
+        color: #ffd966;
+        font-size: 19px;
+        letter-spacing: 2px;
+        line-height: 1;
+      }
+
+      .t-verified {
+        font-family: var(--display);
+        font-size: 12px;
+        font-style: italic;
+        background: rgba(247, 239, 224, 0.18);
+        border: 1px solid rgba(247, 239, 224, 0.28);
+        padding: 3px 11px;
+        border-radius: 999px;
+        color: rgba(247, 239, 224, 0.88);
+        white-space: nowrap;
+      }
+
       .t-slide p {
         font-family: var(--display);
         font-style: italic;
         font-weight: 400;
-        font-size: clamp(24px, 3.2vw, 40px);
-        line-height: 1.3;
+        font-size: clamp(22px, 3vw, 38px);
+        line-height: 1.32;
         margin: 0 auto 28px;
         text-wrap: balance;
       }
@@ -1301,7 +1407,15 @@
       .t-slide cite {
         font-style: normal;
         font-family: var(--script);
-        font-size: 28px;
+        font-size: 26px;
+      }
+
+      .t-slide cite small {
+        font-family: var(--display);
+        font-size: 14px;
+        font-style: italic;
+        opacity: 0.7;
+        font-weight: 400;
       }
 
       .testimonial-dots {
@@ -1328,78 +1442,6 @@
         background: var(--cream-soft);
         transform: scale(1.3);
       }
-
-      /* ---------- Photo carousel ---------- */
-      .carousel-label {
-        text-align: center;
-        font-family: var(--display);
-        font-style: italic;
-        font-size: 15px;
-        color: var(--ink-soft);
-        margin: 52px 0 20px;
-      }
-
-      .photo-carousel {
-        overflow-x: auto;
-        overflow-y: hidden;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        cursor: grab;
-        -webkit-overflow-scrolling: touch;
-        padding: 8px 0 20px;
-      }
-
-      .photo-carousel::-webkit-scrollbar { display: none; }
-      .photo-carousel.dragging { cursor: grabbing; }
-
-      .photo-track {
-        display: flex;
-        gap: 22px;
-        width: max-content;
-        padding: 0 max(24px, calc((100vw - 1180px) / 2));
-      }
-
-      .photo-slide {
-        flex: 0 0 auto;
-        width: 260px;
-        margin: 0;
-        background: var(--paper);
-        padding: 14px 14px 18px;
-        box-shadow:
-          0 20px 40px -22px rgba(43, 42, 40, 0.5),
-          0 4px 8px -4px rgba(43, 42, 40, 0.2);
-        transform: rotate(-1.5deg);
-        transition: transform 0.3s ease;
-        user-select: none;
-      }
-
-      .photo-slide:nth-child(even) { transform: rotate(1.5deg); }
-      .photo-slide:hover { transform: rotate(0) scale(1.02); }
-
-      .photo-slide .ph-img {
-        width: 100%;
-        aspect-ratio: 4 / 5;
-        object-fit: cover;
-        display: block;
-        pointer-events: none;
-      }
-
-      .photo-slide figcaption {
-        font-family: var(--script);
-        font-size: 22px;
-        color: var(--ink);
-        text-align: center;
-        margin-top: 12px;
-        line-height: 1;
-      }
-
-      /* placeholders enquanto não há foto real (trocar .ph-img por <img>) */
-      .ph-img.g1 { background: linear-gradient(135deg, #f0c2ad, #c8302a 75%); }
-      .ph-img.g2 { background: linear-gradient(150deg, #2b2a28, #6b2520); }
-      .ph-img.g3 { background: linear-gradient(120deg, #e6c8a0, #9b211d); }
-      .ph-img.g4 { background: radial-gradient(circle at 40% 35%, #d9a86a, #6b3a12 80%); }
-      .ph-img.g5 { background: linear-gradient(160deg, #f7e0c8, #2b2a28); }
-      .ph-img.g6 { background: linear-gradient(135deg, #d97a5e, #2b2a28); }
 
       /* ---------- FAQ ---------- */
       .faq {
@@ -1553,47 +1595,6 @@
         letter-spacing: 0.1em;
       }
 
-      /* ---------- Policy ---------- */
-      .policy {
-        background: var(--cream-deep);
-        border-top: 2px solid var(--ink);
-      }
-
-      .policy .container { padding-top: clamp(48px, 7vw, 80px); padding-bottom: clamp(48px, 7vw, 80px); }
-
-      .policy-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-        margin-top: 36px;
-      }
-
-      .policy-grid > div {
-        background: var(--paper);
-        padding: 24px 24px;
-        border: 1.5px solid var(--ink);
-        box-shadow: 4px 4px 0 rgba(43, 42, 40, 0.1);
-      }
-
-      .policy-grid h3 {
-        font-family: var(--display);
-        font-weight: 600;
-        font-size: 18px;
-        margin: 0 0 10px;
-        color: var(--ink);
-      }
-
-      .policy-grid p {
-        font-size: 15px;
-        line-height: 1.55;
-        color: var(--ink-soft);
-        margin: 0;
-      }
-
-      @media (max-width: 720px) {
-        .policy-grid { grid-template-columns: 1fr; gap: 16px; }
-      }
-
       /* ---------- Footer ---------- */
       footer {
         background: var(--ink);
@@ -1654,11 +1655,24 @@
         .problem-text .section-lead { margin-left: auto; margin-right: auto; }
         .receipt { text-align: left; }
 
-        .how .section-lead { margin-left: auto; margin-right: auto; text-align: center; }
+        /* how: mobile layout - centered, stacked */
+        .how-inner {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
 
-        .step { text-align: center; }
-        .step-number { left: 50%; transform: translateX(-50%); }
-        .step-sticky-wrap { top: 60px; }
+        .how-intro {
+          position: static;
+          text-align: center;
+        }
+
+        .how-intro .section-eyebrow { text-align: center; }
+        .how-intro .section-title { text-align: center; }
+        .how-intro .section-lead { margin: 0 auto; text-align: center; }
+
+        .step-card {
+          text-align: left;
+        }
 
         .product-grid {
           grid-template-columns: 1fr;
@@ -1681,11 +1695,6 @@
         .faq-list .faq-item { text-align: left; }
         .faq-grid > div:first-child { text-align: center; }
         .faq-grid > div:first-child .section-lead { margin-left: auto; margin-right: auto; }
-
-        .album-mosaic {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 14px;
-        }
 
         .faq-grid {
           grid-template-columns: 1fr;
@@ -1740,6 +1749,11 @@
           font-size: 12px;
           padding: 7px 14px;
         }
+
+        .marquee-slide { width: 175px; }
+
+        .t-meta { align-items: center; }
+        .t-avatar-row { gap: 12px; }
       }
     </style>
   </head>
@@ -1762,14 +1776,13 @@
     <main id="top">
 
       <section class="hero">
-        <div class="hero-parallax" aria-hidden="true" id="heroParallax"></div>
         <div class="hero-text">
           <span class="hero-eyebrow" data-reveal>edição especial dia dos namorados</span>
           <h1 class="hero-title" data-reveal>
             o melhor da relação de vocês <span class="script">ainda tá preso</span> num celular.
           </h1>
           <p class="hero-sub" data-reveal>
-            O primeiro beijo, a viagem, o dia que deu tudo errado e vocês riram mesmo assim. Esse ano, isso vira presente. Polaroids, álbum e site personalizado, com Ferrero Rocher dentro e entrega antes da sexta dia 12.
+            O primeiro beijo, a viagem, o dia que deu tudo errado e vocês riram mesmo assim. Esse ano, isso vira presente. Fotos estilo Polaroid, álbum e site personalizado, com Ferrero Rocher dentro e entrega antes da sexta dia 12.
           </p>
           <div class="hero-cta-row" data-reveal>
             <a class="btn-primary" href="#planos">
@@ -1794,7 +1807,7 @@
             dentro da caixinha.
           </h2>
           <p class="section-lead" data-reveal>
-            8 polaroids brilhantes no papel fotográfico. Um álbum com frases que parecem escritas pra vocês. Três Ferrero pra abrir junto. Aperta o play e vê antes de comprar.
+            8 fotos estilo Polaroid brilhantes no papel fotográfico. Um álbum com frases que parecem escritas pra vocês. Três Ferrero pra abrir junto. Aperta o play e vê antes de comprar.
           </p>
 
           <div class="video-wrap" data-reveal>
@@ -1837,89 +1850,107 @@
 
       <section class="how" id="como">
         <div class="container">
-          <p class="section-eyebrow" data-reveal>como funciona</p>
-          <h2 class="section-title" data-reveal>
-            três passos e o presente<br>
-            <span class="script">chega pronto</span> na sua porta.
-          </h2>
-          <p class="section-lead" data-reveal>
-            Sem complicação, sem editor de fotos, sem você ter que aprender Photoshop. A gente cuida da parte chata. Vocês ficam com a parte gostosa.
-          </p>
+          <div class="how-inner">
 
-          <div class="how-stack" id="howStack">
-            <div class="step-sticky-wrap">
-              <div class="step" data-reveal>
-                <div class="step-number">1</div>
-                <h3>Escolha um combo</h3>
-                <p>Box de polaroids com chocolate, álbum completo ou o pacote com site personalizado. Você escolhe o tamanho do gesto.</p>
-              </div>
+            <div class="how-intro" data-reveal>
+              <p class="section-eyebrow">como funciona</p>
+              <h2 class="section-title">
+                três passos e o presente<br>
+                <span class="script">chega pronto</span> na sua porta.
+              </h2>
+              <p class="section-lead">
+                Sem complicação, sem editor de fotos, sem você ter que aprender Photoshop. A gente cuida da parte chata. Vocês ficam com a parte gostosa.
+              </p>
             </div>
-            <div class="step-sticky-wrap">
-              <div class="step" data-reveal>
-                <div class="step-number">2</div>
+
+            <div class="how-steps">
+              <div class="step-card" data-reveal>
+                <span class="step-card-ghost" aria-hidden="true">1</span>
+                <div class="step-card-num">1</div>
+                <h3>Escolha um combo</h3>
+                <p>Box de fotos estilo Polaroid com chocolate, álbum completo ou o pacote com site personalizado. Você escolhe o tamanho do gesto.</p>
+              </div>
+              <div class="step-card" data-reveal>
+                <span class="step-card-ghost" aria-hidden="true">2</span>
+                <div class="step-card-num">2</div>
                 <h3>Envie as fotos</h3>
                 <p>A gente abre uma conversa no WhatsApp e você arrasta as fotos do celular. Sem cadastro, sem nuvem, fim da sua parte difícil.</p>
               </div>
-            </div>
-            <div class="step-sticky-wrap">
-              <div class="step" data-reveal>
-                <div class="step-number">3</div>
+              <div class="step-card" data-reveal>
+                <span class="step-card-ghost" aria-hidden="true">3</span>
+                <div class="step-card-num">3</div>
                 <h3>Receba e abra juntos</h3>
-                <p>Chega embalado pra presente, com as polaroids, figurinhas e os Ferrero dentro. Sexta dia 12, vocês dois, e a noite inteira pra revisitar a história.</p>
+                <p>Chega embalado pra presente, com as fotos estilo Polaroid, figurinhas e os Ferrero dentro. Sexta dia 12, vocês dois, e a noite inteira pra revisitar a história.</p>
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
       <section class="album">
-        <div class="container">
-          <div class="album-head">
-            <p class="section-eyebrow" data-reveal>o que vai dentro</p>
-            <h2 class="section-title" data-reveal>
+        <div class="container" style="padding-bottom: 0;">
+          <div class="album-head" data-reveal>
+            <p class="section-eyebrow">o que vai dentro</p>
+            <h2 class="section-title">
               cada foto é <span class="script">um capítulo.</span> vocês escreveram todos.
             </h2>
-            <p class="section-lead" data-reveal>
-              8 polaroids pra espalhar pela casa. 14 figurinhas com frases românticas dentro do álbum. 3 Ferrero pra abrir junto. Tudo impresso em papel premium e numerado, do jeito que a história aconteceu.
+            <p class="section-lead">
+              8 fotos estilo Polaroid pra espalhar pela casa. 14 figurinhas com frases românticas dentro do álbum. 3 Ferrero pra abrir junto. Tudo impresso em papel premium, do jeito que a história aconteceu.
             </p>
           </div>
+        </div>
 
-          <div class="album-mosaic" data-reveal>
-            <div class="album-card photo a1"><div class="photo-inner"><div class="number">01</div></div></div>
-            <div class="album-card photo a2"><div class="photo-inner"><div class="number">02</div></div></div>
-            <div class="album-card photo a3"><div class="photo-inner"><div class="number">03</div></div></div>
-            <div class="album-card phrase">a vida é boa com você</div>
-            <div class="album-card photo a4"><div class="photo-inner"><div class="number">04</div></div></div>
-            <div class="album-card photo a5"><div class="photo-inner"><div class="number">05</div></div></div>
-            <div class="album-card photo a6"><div class="photo-inner"><div class="number">06</div></div></div>
-            <div class="album-card photo a7"><div class="photo-inner"><div class="number">07</div></div></div>
-            <div class="album-card photo a8"><div class="photo-inner"><div class="number">08</div></div></div>
-            <div class="album-card phrase dark">nos teus braços é onde quero estar</div>
-            <div class="album-card photo a9"><div class="photo-inner"><div class="number">09</div></div></div>
-            <div class="album-card photo a10"><div class="photo-inner"><div class="number">10</div></div></div>
-            <div class="album-card photo a11"><div class="photo-inner"><div class="number">11</div></div></div>
-            <div class="album-card photo a12"><div class="photo-inner"><div class="number">12</div></div></div>
-            <div class="album-card photo a1"><div class="photo-inner"><div class="number">13</div></div></div>
-            <div class="album-card photo a2"><div class="photo-inner"><div class="number">14</div></div></div>
-          </div>
+        <!-- Dual infinite marquee — vai de borda a borda -->
+        <p class="carousel-label" data-reveal>fotos reais do produto ♥ (em breve)</p>
+        <div class="marquee-wrapper" data-reveal>
 
-          <!--
-            CARROSSEL DE FOTOS REAIS DO PRODUTO
-            Quando tiver as fotos, troque o <div class="ph-img ..."> de cada slide
-            por <img src="caminho-da-foto.jpg" alt="..."> mantendo a classe .ph-img.
-            O carrossel anda sozinho e também dá pra arrastar/deslizar.
-          -->
-          <p class="carousel-label" data-reveal>fotos reais do produto, arrasta pro lado ♥</p>
-          <div class="photo-carousel" data-reveal>
-            <div class="photo-track" id="photoTrack">
-              <figure class="photo-slide"><div class="ph-img g1"></div><figcaption>as 8 polaroids 7×9</figcaption></figure>
-              <figure class="photo-slide"><div class="ph-img g2"></div><figcaption>a capa do álbum</figcaption></figure>
-              <figure class="photo-slide"><div class="ph-img g3"></div><figcaption>por dentro, figurinha por figurinha</figcaption></figure>
-              <figure class="photo-slide"><div class="ph-img g4"></div><figcaption>os 3 Ferrero Rocher</figcaption></figure>
-              <figure class="photo-slide"><div class="ph-img g5"></div><figcaption>o cartão com QR Code</figcaption></figure>
-              <figure class="photo-slide"><div class="ph-img g6"></div><figcaption>tudo embalado pra presente</figcaption></figure>
+          <!-- Fila 1: indo para a direita → -->
+          <div class="marquee-row">
+            <div class="marquee-track">
+              <figure class="marquee-slide"><div class="slide-img s1"></div><figcaption>fotos estilo Polaroid 7×9</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s2"></div><figcaption>a capa do álbum</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s3"></div><figcaption>por dentro do álbum</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s4"></div><figcaption>3 Ferrero Rocher</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s5"></div><figcaption>figurinha por figurinha</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s6"></div><figcaption>embalado pra presente</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s7"></div><figcaption>cartão com QR Code</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s8"></div><figcaption>tudo junto, tudo seu</figcaption></figure>
+              <!-- duplicados para loop infinito -->
+              <figure class="marquee-slide"><div class="slide-img s1"></div><figcaption>fotos estilo Polaroid 7×9</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s2"></div><figcaption>a capa do álbum</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s3"></div><figcaption>por dentro do álbum</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s4"></div><figcaption>3 Ferrero Rocher</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s5"></div><figcaption>figurinha por figurinha</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s6"></div><figcaption>embalado pra presente</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s7"></div><figcaption>cartão com QR Code</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s8"></div><figcaption>tudo junto, tudo seu</figcaption></figure>
             </div>
           </div>
+
+          <!-- Fila 2: indo para a esquerda ← -->
+          <div class="marquee-row reverse">
+            <div class="marquee-track">
+              <figure class="marquee-slide"><div class="slide-img s5"></div><figcaption>embalado pra presente</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s8"></div><figcaption>tudo junto, tudo seu</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s3"></div><figcaption>por dentro do álbum</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s6"></div><figcaption>fotos estilo Polaroid 7×9</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s1"></div><figcaption>a capa do álbum</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s7"></div><figcaption>figurinha por figurinha</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s4"></div><figcaption>3 Ferrero Rocher</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s2"></div><figcaption>cartão com QR Code</figcaption></figure>
+              <!-- duplicados para loop infinito -->
+              <figure class="marquee-slide"><div class="slide-img s5"></div><figcaption>embalado pra presente</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s8"></div><figcaption>tudo junto, tudo seu</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s3"></div><figcaption>por dentro do álbum</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s6"></div><figcaption>fotos estilo Polaroid 7×9</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s1"></div><figcaption>a capa do álbum</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s7"></div><figcaption>figurinha por figurinha</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s4"></div><figcaption>3 Ferrero Rocher</figcaption></figure>
+              <figure class="marquee-slide"><div class="slide-img s2"></div><figcaption>cartão com QR Code</figcaption></figure>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -1932,7 +1963,7 @@
               <span class="script">um propósito:</span> vocês nunca se esquecerem disso.
             </h2>
             <p class="section-lead" data-reveal>
-              Polaroids pra espalhar pela casa, álbum pra colar juntos, site personalizado pra durar pra sempre. Cada combo vem com chocolate e chega pronto pra aproveitarem juntinhos.
+              Fotos estilo Polaroid pra espalhar pela casa, álbum pra colar juntos, site personalizado pra durar pra sempre. Cada combo vem com chocolate e chega pronto pra aproveitarem juntinhos.
             </p>
           </div>
 
@@ -1940,7 +1971,7 @@
 
             <div class="product" data-reveal>
               <p class="product-tag">o doce começo</p>
-              <h3 class="product-name">Box de Polaroids + Ferrero</h3>
+              <h3 class="product-name">Box de Fotos estilo Polaroid + Ferrero</h3>
               <div class="product-price">
                 <span class="currency">R$</span>
                 <span class="value">57</span>
@@ -1948,7 +1979,7 @@
               </div>
               <p class="product-price-note">parcelado em até 12x · frete incluso</p>
               <ul class="product-list">
-                <li><strong>8 polaroids 7×9 cm</strong> em papel fotográfico</li>
+                <li><strong>8 fotos estilo Polaroid 7×9 cm</strong> em papel fotográfico</li>
                 <li><strong>3 Ferrero Rocher</strong> dentro da box, pra adoçar o gesto</li>
                 <li>Box em papel premium, pronta pra presente</li>
                 <li>Pra espalhar pela geladeira, espelho, cabeceira</li>
@@ -1960,7 +1991,7 @@
             <div class="product featured" data-reveal>
               <div class="product-badge">mais escolhido</div>
               <p class="product-tag">o queridinho</p>
-              <h3 class="product-name">Álbum + Polaroids + Ferrero</h3>
+              <h3 class="product-name">Álbum + Fotos estilo Polaroid + Ferrero</h3>
               <div class="product-price">
                 <span class="currency">R$</span>
                 <span class="value">97</span>
@@ -1970,7 +2001,7 @@
               <ul class="product-list">
                 <li><strong>Álbum A5</strong> em papel perolado premium</li>
                 <li><strong>14 figurinhas 6×6 cm</strong> com frases românticas já impressas</li>
-                <li><strong>8 polaroids 7×9 cm</strong> em papel fotográfico</li>
+                <li><strong>8 fotos estilo Polaroid 7×9 cm</strong> em papel fotográfico</li>
                 <li><strong>3 Ferrero Rocher</strong> dentro da embalagem</li>
                 <li>Entrega antes da sexta dia 12</li>
               </ul>
@@ -1979,7 +2010,7 @@
 
             <div class="product" data-reveal>
               <p class="product-tag">o pra sempre</p>
-              <h3 class="product-name">Álbum + Polaroids + Ferrero + Site</h3>
+              <h3 class="product-name">Álbum + Fotos estilo Polaroid + Ferrero + Site</h3>
               <div class="product-price">
                 <span class="currency">R$</span>
                 <span class="value">157</span>
@@ -1989,7 +2020,7 @@
               <ul class="product-list">
                 <li><strong>Álbum A5</strong> em papel perolado premium</li>
                 <li><strong>14 figurinhas 6×6 cm</strong> dentro do álbum</li>
-                <li><strong>8 polaroids 7×9 cm</strong> em papel fotográfico</li>
+                <li><strong>8 fotos estilo Polaroid 7×9 cm</strong> em papel fotográfico</li>
                 <li><strong>3 Ferrero Rocher</strong> dentro da embalagem</li>
                 <li><strong>+ Site personalizado</strong> com cartão e QR Code</li>
               </ul>
@@ -2005,18 +2036,43 @@
           <p class="section-eyebrow t-eyebrow" data-reveal>quem já recebeu</p>
           <div class="testimonial-carousel" data-reveal>
             <div class="testimonial-track" id="testimonialTrack">
+
               <blockquote class="t-slide">
+                <div class="t-avatar-row">
+                  <div class="t-avatar t-avatar-m" role="img" aria-label="Foto de Mariana"></div>
+                  <div class="t-meta">
+                    <div class="t-stars" aria-label="5 estrelas">★★★★★</div>
+                    <span class="t-verified">✓ cliente verificada</span>
+                  </div>
+                </div>
                 <p>"A gente sentou no chão da sala e foi colando uma foto por vez. Quando vi, já era de manhã e a gente tava rindo de coisa de três anos atrás."</p>
-                <cite>Mariana &amp; João, primeiro casal a receber</cite>
+                <cite>Mariana &amp; João <small>· primeiro casal a receber</small></cite>
               </blockquote>
+
               <blockquote class="t-slide">
+                <div class="t-avatar-row">
+                  <div class="t-avatar t-avatar-b" role="img" aria-label="Foto de Beatriz"></div>
+                  <div class="t-meta">
+                    <div class="t-stars" aria-label="5 estrelas">★★★★★</div>
+                    <span class="t-verified">✓ cliente verificada</span>
+                  </div>
+                </div>
                 <p>"Eu já ganhei joia, perfume, viagem. Esse foi o presente que eu chorei. Porque ele não comprou, ele montou."</p>
-                <cite>Beatriz, primeira cliente</cite>
+                <cite>Beatriz <small>· primeira cliente</small></cite>
               </blockquote>
+
               <blockquote class="t-slide">
+                <div class="t-avatar-row">
+                  <div class="t-avatar t-avatar-c" role="img" aria-label="Foto do casal"></div>
+                  <div class="t-meta">
+                    <div class="t-stars" aria-label="5 estrelas">★★★★★</div>
+                    <span class="t-verified">✓ cliente verificada</span>
+                  </div>
+                </div>
                 <p>"Faz seis meses e o álbum ainda tá na mesa da sala. Todo mundo que vem em casa folheia. É o presente que não foi pra gaveta."</p>
                 <cite>um casal que preferiu não aparecer</cite>
               </blockquote>
+
             </div>
           </div>
           <div class="testimonial-dots" id="testimonialDots"></div>
@@ -2073,11 +2129,11 @@
               </details>
               <details class="faq-item" data-reveal>
                 <summary>Qual a qualidade da impressão?</summary>
-                <p>Polaroids 7×9 cm em papel fotográfico premium. Álbum em papel perolado branco com brilho suave que valoriza cada foto. É o tipo de impressão que envelhece bonito.</p>
+                <p>Fotos estilo Polaroid 7×9 cm em papel fotográfico premium. Álbum em papel perolado branco com brilho suave que valoriza cada foto. É o tipo de impressão que envelhece bonito.</p>
               </details>
               <details class="faq-item" data-reveal>
                 <summary>O plano de R$ 57,90 vem com álbum também?</summary>
-                <p>Não. O Doce Começo é a box com 8 polaroids 7×9 cm + 3 Ferrero Rocher, pra você espalhar as fotos pela casa. Quem quer o álbum de figurinhas vai pro Queridinho ou Pra Sempre.</p>
+                <p>Não. O Doce Começo é a box com 8 fotos estilo Polaroid 7×9 cm + 3 Ferrero Rocher, pra você espalhar as fotos pela casa. Quem quer o álbum de figurinhas vai pro Queridinho ou Pra Sempre.</p>
               </details>
               <details class="faq-item" data-reveal>
                 <summary>Em quanto tempo chega?</summary>
@@ -2165,40 +2221,32 @@
       document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
 
       // ---------- InfinitePay Checkout ----------
-      // Cole abaixo o handle da sua conta InfinitePay (o "slug" que vc escolheu
-      // no cadastro). Ex: se o link da sua loja é checkout.infinitepay.io/papouli,
-      // o handle é "papouli".
       const INFINITEPAY_HANDLE = "estudio-papuli";
-
-      // URL pra onde o cliente volta depois de pagar (já existe a página de obrigado)
       const REDIRECT_URL = "https://zunno.digital/namoradosobrigado";
 
-      // Produtos: description, preço (em CENTAVOS), quantity
-      // Formato exato da doc da InfinitePay:
-      // https://ajuda.infinitepay.io/pt-BR/articles/10766888
       const PLANOS = {
         essencial: {
-          description: "Álbum de Figurinhas (Edição Namorados 2026)",
+          description: "Box de Fotos Estilo Polaroid + 3 Ferrero Rocher (Edicao Namorados 2026)",
           price: 5790,
           quantity: 1
         },
         polaroid: {
-          description: "Álbum de Figurinhas + 10 Polaroids (Edição Namorados 2026)",
+          description: "Album com 14 Figurinhas + 8 Fotos Polaroid + 3 Ferrero Rocher (Edicao Namorados 2026)",
           price: 9790,
           quantity: 1
         },
         prasempre: {
-          description: "Álbum + Polaroids + Site Personalizado (Edição Namorados 2026)",
-          price: 14790,
+          description: "Album + Fotos Polaroid + Ferrero + Site Personalizado (Edicao Namorados 2026)",
+          price: 15790,
           quantity: 1
         }
       };
 
       // valores pra evento de pixel (em reais, com frete)
       const PLANO_VALORES = {
-        essencial: { value: 57.90, name: "Box Polaroids + Ferrero" },
-        polaroid:  { value: 97.90, name: "Album + Polaroids + Ferrero" },
-        prasempre: { value: 157.90, name: "Album + Polaroids + Ferrero + Site" }
+        essencial: { value: 57.90, name: "Box Fotos Polaroid + Ferrero" },
+        polaroid:  { value: 97.90, name: "Album + Fotos Polaroid + Ferrero" },
+        prasempre: { value: 157.90, name: "Album + Fotos Polaroid + Ferrero + Site" }
       };
 
       async function iniciarCheckout(planoKey, btn) {
@@ -2251,99 +2299,6 @@
         });
       });
 
-      // ---------- Hero parallax hearts ----------
-      (function () {
-        const container = document.getElementById("heroParallax");
-        if (!container) return;
-
-        // Define hearts: [top%, left%, size, speed, opacity, rotation]
-        const hearts = [
-          [8,  5,  28, 0.15, 0.45, -12],
-          [12, 82, 20, 0.22, 0.35,  8],
-          [22, 18, 44, 0.08, 0.55, -6],
-          [18, 68, 16, 0.30, 0.40,  14],
-          [38, 3,  22, 0.18, 0.38, -18],
-          [42, 90, 36, 0.12, 0.50,  10],
-          [55, 25, 18, 0.25, 0.30, -8],
-          [60, 72, 30, 0.14, 0.45,  16],
-          [72, 10, 14, 0.28, 0.35, -20],
-          [75, 55, 40, 0.09, 0.52,  6],
-          [85, 85, 22, 0.20, 0.40, -10],
-          [90, 40, 16, 0.32, 0.30,  18],
-          [5,  45, 32, 0.10, 0.48, -4],
-          [50, 50, 12, 0.35, 0.28,  22],
-        ];
-
-        const els = hearts.map(([top, left, size, speed, opacity, rot]) => {
-          const el = document.createElement("span");
-          el.className = "parallax-heart";
-          el.textContent = "♥";
-          el.style.cssText = `
-            top:${top}%; left:${left}%;
-            font-size:${size}px;
-            opacity:${opacity};
-            transform: rotate(${rot}deg) translateY(0px);
-          `;
-          el._speed = speed;
-          el._rot = rot;
-          container.appendChild(el);
-          return el;
-        });
-
-        let ticking = false;
-        window.addEventListener("scroll", () => {
-          if (ticking) return;
-          requestAnimationFrame(() => {
-            const scrollY = window.scrollY;
-            els.forEach(el => {
-              const offsetY = scrollY * el._speed;
-              el.style.transform = `rotate(${el._rot}deg) translateY(${offsetY}px)`;
-            });
-            ticking = false;
-          });
-          ticking = true;
-        }, { passive: true });
-      })();
-
-      // ---------- How-to stack scroll ----------
-      (function () {
-        const stack = document.getElementById("howStack");
-        if (!stack) return;
-
-        const wraps = Array.from(stack.querySelectorAll(".step-sticky-wrap"));
-        const steps = wraps.map(w => w.querySelector(".step"));
-
-        function updateStack() {
-          const scrollY = window.scrollY;
-
-          steps.forEach((step, i) => {
-            const wrap = wraps[i];
-            const rect = wrap.getBoundingClientRect();
-            const stickyTop = parseInt(getComputedStyle(wrap).top) || 80;
-
-            // how far this card has been "passed" by the next one
-            const isPinned = rect.top <= stickyTop + 2;
-
-            step.classList.remove("is-under", "is-under-2");
-
-            if (isPinned) {
-              // check how many cards below are also pinned
-              let belowPinned = 0;
-              for (let j = i + 1; j < steps.length; j++) {
-                const nextRect = wraps[j].getBoundingClientRect();
-                const nextTop = parseInt(getComputedStyle(wraps[j]).top) || 80;
-                if (nextRect.top <= nextTop + 2) belowPinned++;
-              }
-              if (belowPinned >= 2) step.classList.add("is-under-2");
-              else if (belowPinned >= 1) step.classList.add("is-under");
-            }
-          });
-        }
-
-        window.addEventListener("scroll", updateStack, { passive: true });
-        updateStack();
-      })();
-
       // ---------- Video placeholder ----------
       const videoFrame = document.getElementById("videoFrame");
       if (videoFrame) {
@@ -2378,7 +2333,7 @@
           for (let d = 0; d < dots.length; d++) dots[d].classList.toggle("active", d === index);
         }
         function next() { go(index + 1); }
-        function reset() { clearInterval(timer); timer = setInterval(next, 5000); }
+        function reset() { clearInterval(timer); timer = setInterval(next, 5500); }
 
         go(0);
         reset();
@@ -2392,56 +2347,6 @@
           if (Math.abs(dx) > 40) { dx < 0 ? next() : go(index - 1); reset(); }
           startX = null;
         });
-      })();
-
-      // ---------- Photo carousel (auto-marquee + drag/swipe) ----------
-      (function () {
-        const carousel = document.querySelector(".photo-carousel");
-        if (!carousel) return;
-
-        let auto = true;
-        let raf;
-
-        function step() {
-          if (auto) {
-            carousel.scrollLeft += 0.5;
-            // loop suave: volta pro inicio ao chegar no fim
-            if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 1) {
-              carousel.scrollLeft = 0;
-            }
-          }
-          raf = requestAnimationFrame(step);
-        }
-        raf = requestAnimationFrame(step);
-
-        // pausa quando interage, retoma depois de parado
-        let idleTimer;
-        function pause() {
-          auto = false;
-          clearTimeout(idleTimer);
-          idleTimer = setTimeout(() => { auto = true; }, 2500);
-        }
-
-        // drag com mouse
-        let isDown = false, startX, startScroll;
-        carousel.addEventListener("mousedown", (e) => {
-          isDown = true;
-          carousel.classList.add("dragging");
-          startX = e.pageX;
-          startScroll = carousel.scrollLeft;
-          pause();
-        });
-        window.addEventListener("mouseup", () => { isDown = false; carousel.classList.remove("dragging"); });
-        carousel.addEventListener("mouseleave", () => { isDown = false; carousel.classList.remove("dragging"); });
-        carousel.addEventListener("mousemove", (e) => {
-          if (!isDown) return;
-          e.preventDefault();
-          carousel.scrollLeft = startScroll - (e.pageX - startX);
-        });
-
-        // touch e scroll nativo pausam o auto
-        carousel.addEventListener("touchstart", pause, { passive: true });
-        carousel.addEventListener("wheel", pause, { passive: true });
       })();
     </script>
   </body>
