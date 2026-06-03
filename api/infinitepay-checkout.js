@@ -5,21 +5,21 @@
 const HANDLE = "estudio-papuli";
 const REDIRECT_BASE = "https://zunno.digital/namoradosobrigado";
 
-// Preços já incluem R$ 15 de frete pra cidades vizinhas
+// Preços com frete embutido
 const PLANOS = {
   essencial: {
-    description: "Album de Figurinhas (Edicao Namorados 2026) - com frete",
-    price: 7290,
+    description: "Box de Polaroids + 3 Ferrero Rocher (Edicao Namorados 2026)",
+    price: 5790,
     quantity: 1
   },
   polaroid: {
-    description: "Album de Figurinhas + 10 Polaroids (Edicao Namorados 2026) - com frete",
-    price: 11290,
+    description: "Album de Figurinhas + 18 Polaroids + 3 Ferrero Rocher (Edicao Namorados 2026)",
+    price: 9790,
     quantity: 1
   },
   prasempre: {
-    description: "Album + Polaroids + Site Personalizado (Edicao Namorados 2026) - com frete",
-    price: 16290,
+    description: "Album + Polaroids + Ferrero + Site Personalizado (Edicao Namorados 2026)",
+    price: 15790,
     quantity: 1
   }
 };
