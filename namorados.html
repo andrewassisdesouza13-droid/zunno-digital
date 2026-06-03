@@ -1341,81 +1341,110 @@
       .t-slide {
         flex: 0 0 100%;
         margin: 0;
-        padding: 0 clamp(16px, 4vw, 40px);
+        padding: 0 clamp(12px, 3vw, 32px);
         box-sizing: border-box;
       }
 
-      /* Avatar row */
-      .t-avatar-row {
+      /* Testimonial card — estilo referência */
+
+      .t-card {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 16px;
-        margin-bottom: 28px;
-        flex-wrap: wrap;
-      }
-
-      .t-avatar {
-        width: 68px;
-        height: 68px;
-        border-radius: 50%;
-        border: 3px solid rgba(247, 239, 224, 0.35);
-        flex-shrink: 0;
-        box-shadow: 0 4px 16px rgba(43, 42, 40, 0.3);
-      }
-
-      .t-avatar-m { background: radial-gradient(circle at 35% 32%, #f4cbb8, #9b211d 78%); }
-      .t-avatar-b { background: radial-gradient(circle at 38% 30%, #ffe0c0, #5a3010 78%); }
-      .t-avatar-c { background: radial-gradient(circle at 42% 32%, #f7e0c8, #2b2a28 82%); }
-
-      .t-meta {
-        display: flex;
-        flex-direction: column;
         align-items: flex-start;
-        gap: 4px;
+        gap: 28px;
+        background: var(--ink);
+        border-radius: 6px;
+        padding: 32px 36px;
+        text-align: left;
+        max-width: 720px;
+        margin: 0 auto;
+        box-shadow:
+          0 24px 60px rgba(43, 42, 40, 0.5),
+          0 0 0 1px rgba(247, 239, 224, 0.07),
+          inset 0 1px 0 rgba(247, 239, 224, 0.05);
+        position: relative;
       }
 
-      .t-stars {
-        color: #ffd966;
-        font-size: 19px;
-        letter-spacing: 2px;
-        line-height: 1;
+      /* Subtle red glow no canto */
+      .t-card::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, var(--red) 0%, transparent 50%);
+        opacity: 0.15;
+        pointer-events: none;
       }
 
-      .t-verified {
+      .t-photo-wrap {
+        flex-shrink: 0;
+        position: relative;
+      }
+
+      .t-photo {
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+        border: 3px solid var(--red);
+        box-shadow:
+          0 0 0 3px var(--ink),
+          0 0 0 5px rgba(200, 48, 42, 0.45),
+          0 8px 24px rgba(43, 42, 40, 0.5);
+      }
+
+      .t-card-content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .t-card-name {
         font-family: var(--display);
-        font-size: 12px;
+        font-weight: 700;
+        font-size: 17px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--cream-soft);
+        margin: 0 0 3px;
+        line-height: 1.2;
+      }
+
+      .t-card-source {
+        font-family: var(--display);
+        font-size: 13px;
         font-style: italic;
-        background: rgba(247, 239, 224, 0.18);
-        border: 1px solid rgba(247, 239, 224, 0.28);
-        padding: 3px 11px;
-        border-radius: 999px;
-        color: rgba(247, 239, 224, 0.88);
-        white-space: nowrap;
+        color: rgba(247, 239, 224, 0.48);
+        margin: 0 0 12px;
       }
 
-      .t-slide p {
-        font-family: var(--display);
-        font-style: italic;
-        font-weight: 400;
-        font-size: clamp(22px, 3vw, 38px);
-        line-height: 1.32;
-        margin: 0 auto 28px;
-        text-wrap: balance;
-      }
-
-      .t-slide cite {
-        font-style: normal;
-        font-family: var(--script);
-        font-size: 26px;
-      }
-
-      .t-slide cite small {
-        font-family: var(--display);
+      .t-card-hearts {
+        color: var(--red-bright);
         font-size: 14px;
+        letter-spacing: 3px;
+        margin: 0 0 16px;
+        display: block;
+      }
+
+      .t-card p {
+        font-family: var(--body);
         font-style: italic;
-        opacity: 0.7;
         font-weight: 400;
+        font-size: 16px;
+        line-height: 1.68;
+        color: rgba(247, 239, 224, 0.86);
+        margin: 0;
+        text-wrap: pretty;
+      }
+
+      @media (max-width: 560px) {
+        .t-card {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 18px;
+          padding: 24px 22px;
+        }
+
+        .t-photo { width: 76px; height: 76px; }
       }
 
       .testimonial-dots {
@@ -2038,39 +2067,45 @@
             <div class="testimonial-track" id="testimonialTrack">
 
               <blockquote class="t-slide">
-                <div class="t-avatar-row">
-                  <div class="t-avatar t-avatar-m" role="img" aria-label="Foto de Mariana"></div>
-                  <div class="t-meta">
-                    <div class="t-stars" aria-label="5 estrelas">★★★★★</div>
-                    <span class="t-verified">✓ cliente verificada</span>
+                <div class="t-card">
+                  <div class="t-photo-wrap">
+                    <img class="t-photo" src="/feedback/mateus-cremon.png" alt="Mateus Cremon e namorada">
+                  </div>
+                  <div class="t-card-content">
+                    <p class="t-card-name">Mateus Cremon</p>
+                    <p class="t-card-source">Feedback pelo WhatsApp</p>
+                    <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+                    <p>"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
                   </div>
                 </div>
-                <p>"A gente sentou no chão da sala e foi colando uma foto por vez. Quando vi, já era de manhã e a gente tava rindo de coisa de três anos atrás."</p>
-                <cite>Mariana &amp; João <small>· primeiro casal a receber</small></cite>
               </blockquote>
 
               <blockquote class="t-slide">
-                <div class="t-avatar-row">
-                  <div class="t-avatar t-avatar-b" role="img" aria-label="Foto de Beatriz"></div>
-                  <div class="t-meta">
-                    <div class="t-stars" aria-label="5 estrelas">★★★★★</div>
-                    <span class="t-verified">✓ cliente verificada</span>
+                <div class="t-card">
+                  <div class="t-photo-wrap">
+                    <img class="t-photo" src="/feedback/lucas-melso.png" alt="Lucas Melso e namorada">
+                  </div>
+                  <div class="t-card-content">
+                    <p class="t-card-name">Lucas Melso</p>
+                    <p class="t-card-source">Feedback pelo WhatsApp</p>
+                    <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+                    <p>"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
                   </div>
                 </div>
-                <p>"Eu já ganhei joia, perfume, viagem. Esse foi o presente que eu chorei. Porque ele não comprou, ele montou."</p>
-                <cite>Beatriz <small>· primeira cliente</small></cite>
               </blockquote>
 
               <blockquote class="t-slide">
-                <div class="t-avatar-row">
-                  <div class="t-avatar t-avatar-c" role="img" aria-label="Foto do casal"></div>
-                  <div class="t-meta">
-                    <div class="t-stars" aria-label="5 estrelas">★★★★★</div>
-                    <span class="t-verified">✓ cliente verificada</span>
+                <div class="t-card">
+                  <div class="t-photo-wrap">
+                    <img class="t-photo" src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer e namorada">
+                  </div>
+                  <div class="t-card-content">
+                    <p class="t-card-name">Gabriel Pitzer</p>
+                    <p class="t-card-source">Feedback pelo WhatsApp</p>
+                    <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+                    <p>"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
                   </div>
                 </div>
-                <p>"Faz seis meses e o álbum ainda tá na mesa da sala. Todo mundo que vem em casa folheia. É o presente que não foi pra gaveta."</p>
-                <cite>um casal que preferiu não aparecer</cite>
               </blockquote>
 
             </div>
