@@ -65,6 +65,7 @@ module.exports = async (req, res) => {
     const ipBody = {
       handle: HANDLE,
       redirect_url: redirectUrl,
+      webhook_url: "https://zunno.digital/api/infinitepay-webhook",
       order_nsu: orderNsu,
       items: [produto]
     };
