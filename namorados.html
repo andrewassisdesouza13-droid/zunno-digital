@@ -1512,6 +1512,159 @@
         transform: scale(1.3);
       }
 
+      /* ---------- Modal de dados ---------- */
+      .dados-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(43, 42, 40, 0.62);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+
+      .dados-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .dados-card {
+        position: relative;
+        width: 100%;
+        max-width: 420px;
+        background: var(--paper);
+        border: 1.5px solid var(--ink);
+        border-radius: 6px;
+        padding: 40px 34px 32px;
+        box-shadow: 0 30px 70px -20px rgba(43, 42, 40, 0.6);
+        transform: translateY(16px) scale(0.98);
+        transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+        text-align: center;
+      }
+
+      .dados-overlay.open .dados-card {
+        transform: translateY(0) scale(1);
+      }
+
+      .dados-card::before {
+        content: "";
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-3deg);
+        width: 120px;
+        height: 26px;
+        background: var(--tape);
+      }
+
+      .dados-close {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        background: none;
+        border: none;
+        font-size: 28px;
+        line-height: 1;
+        color: var(--ink-soft);
+        cursor: pointer;
+        font-family: var(--display);
+        transition: color 0.2s;
+      }
+      .dados-close:hover { color: var(--red); }
+
+      .dados-eyebrow {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 13px;
+        color: var(--red);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .dados-title {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 25px;
+        line-height: 1.15;
+        margin: 10px 0 6px;
+        color: var(--ink);
+      }
+
+      .dados-plano {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 14px;
+        color: var(--ink-soft);
+        margin: 0 0 24px;
+      }
+
+      .dados-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        text-align: left;
+      }
+
+      .dados-label {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        color: var(--ink);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .dados-input {
+        font-family: var(--body);
+        font-size: 16px;
+        padding: 13px 15px;
+        border: 1.5px solid var(--cream-deep);
+        border-radius: 4px;
+        background: var(--cream-soft);
+        color: var(--ink);
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .dados-input:focus { border-color: var(--red); }
+      .dados-input::placeholder { color: #b3a890; }
+
+      .dados-submit {
+        margin-top: 6px;
+        background: var(--red);
+        color: var(--cream-soft);
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 16px;
+        padding: 16px;
+        border: none;
+        border-radius: 999px;
+        cursor: pointer;
+        box-shadow: 3px 3px 0 var(--ink);
+        transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      }
+      .dados-submit:hover:not(:disabled) {
+        background: var(--red-deep);
+        transform: translate(-1px, -1px);
+        box-shadow: 4px 4px 0 var(--ink);
+      }
+      .dados-submit:disabled { opacity: 0.7; cursor: default; }
+
+      .dados-hint {
+        text-align: center;
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 12px;
+        color: var(--ink-soft);
+        margin: 4px 0 0;
+      }
+
       /* ---------- FAQ ---------- */
       .faq {
         background: var(--cream-deep);
@@ -2311,6 +2464,28 @@
 
     </main>
 
+    <!-- ===== Modal: Nome + WhatsApp antes do checkout ===== -->
+    <div class="dados-overlay" id="dadosModal" aria-hidden="true">
+      <div class="dados-card" role="dialog" aria-modal="true" aria-labelledby="dadosTitle">
+        <button class="dados-close" id="dadosClose" type="button" aria-label="Fechar">×</button>
+        <span class="dados-eyebrow">falta pouco ♥</span>
+        <h3 class="dados-title" id="dadosTitle">Pra onde mandamos a<br>confirmação do pedido?</h3>
+        <p class="dados-plano" id="dadosPlanoLabel"></p>
+        <form class="dados-form" id="dadosForm" novalidate>
+          <label class="dados-label">
+            Seu nome
+            <input class="dados-input" id="dadosNome" type="text" placeholder="Como você se chama?" autocomplete="name" maxlength="80" required>
+          </label>
+          <label class="dados-label">
+            Seu WhatsApp
+            <input class="dados-input" id="dadosWhats" type="tel" inputmode="numeric" placeholder="(16) 99999-9999" autocomplete="tel" required>
+          </label>
+          <button class="dados-submit" id="dadosSubmit" type="submit">Continuar pro pagamento</button>
+          <p class="dados-hint">É por aqui que a gente vai pedir as fotos de vocês ♥</p>
+        </form>
+      </div>
+    </div>
+
     <footer>
       <div>
         Papuli ♥ Edição especial Dia dos Namorados 2026 · uma parceria com a Zunno.Digital
@@ -2398,10 +2573,10 @@
         prasempre: { value: 157.90, name: "Album + Fotos Polaroid + Ferrero + Site" }
       };
 
-      async function iniciarCheckout(planoKey, btn) {
-        const labelOriginal = btn.textContent;
-        btn.textContent = "Abrindo pagamento…";
-        btn.style.pointerEvents = "none";
+      async function iniciarCheckout(planoKey, nome, whatsapp, submitBtn) {
+        const labelOriginal = submitBtn.textContent;
+        submitBtn.textContent = "Abrindo pagamento…";
+        submitBtn.disabled = true;
 
         // dispara evento InitiateCheckout no Meta Pixel
         if (typeof fbq === "function") {
@@ -2421,7 +2596,7 @@
           const resp = await fetch("/api/infinitepay-checkout", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ plano: planoKey })
+            body: JSON.stringify({ plano: planoKey, nome: nome, whatsapp: whatsapp })
           });
 
           const data = await resp.json();
@@ -2435,18 +2610,73 @@
         } catch (err) {
           console.error("Erro ao iniciar checkout:", err);
           alert("Tivemos um problema ao abrir o pagamento. Tenta de novo em alguns segundos ou chama a gente no WhatsApp.");
-          btn.textContent = labelOriginal;
-          btn.style.pointerEvents = "";
+          submitBtn.textContent = labelOriginal;
+          submitBtn.disabled = false;
         }
       }
 
-      document.querySelectorAll("[data-plano]").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          e.preventDefault();
-          const plano = btn.getAttribute("data-plano");
-          iniciarCheckout(plano, btn);
+      // ---------- Modal de dados (Nome + WhatsApp antes do checkout) ----------
+      (function () {
+        const overlay  = document.getElementById("dadosModal");
+        const form     = document.getElementById("dadosForm");
+        const inputNome = document.getElementById("dadosNome");
+        const inputWa   = document.getElementById("dadosWhats");
+        const submitBtn = document.getElementById("dadosSubmit");
+        const closeBtn  = document.getElementById("dadosClose");
+        const planoLabel = document.getElementById("dadosPlanoLabel");
+        if (!overlay) return;
+
+        let planoAtual = null;
+
+        const NOMES_BONITOS = {
+          essencial: "Box de Fotos + Ferrero · R$ 57,90",
+          polaroid:  "Álbum + Fotos + Ferrero · R$ 97,90",
+          prasempre: "Álbum + Fotos + Ferrero + Site · R$ 157,90"
+        };
+
+        function abrir(plano) {
+          planoAtual = plano;
+          planoLabel.textContent = NOMES_BONITOS[plano] || "";
+          submitBtn.textContent = "Continuar pro pagamento";
+          submitBtn.disabled = false;
+          overlay.classList.add("open");
+          document.body.style.overflow = "hidden";
+          setTimeout(() => inputNome.focus(), 120);
+        }
+        function fechar() {
+          overlay.classList.remove("open");
+          document.body.style.overflow = "";
+        }
+
+        // máscara simples de telefone brasileiro
+        inputWa.addEventListener("input", () => {
+          let v = inputWa.value.replace(/\D/g, "").slice(0, 11);
+          if (v.length > 6)      v = "(" + v.slice(0,2) + ") " + v.slice(2,7) + "-" + v.slice(7);
+          else if (v.length > 2) v = "(" + v.slice(0,2) + ") " + v.slice(2);
+          else if (v.length > 0) v = "(" + v;
+          inputWa.value = v;
         });
-      });
+
+        document.querySelectorAll("[data-plano]").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            abrir(btn.getAttribute("data-plano"));
+          });
+        });
+
+        closeBtn.addEventListener("click", fechar);
+        overlay.addEventListener("click", (e) => { if (e.target === overlay) fechar(); });
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape") fechar(); });
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const nome = inputNome.value.trim();
+          const whats = inputWa.value.replace(/\D/g, "");
+          if (nome.length < 2) { inputNome.focus(); return; }
+          if (whats.length < 10) { inputWa.focus(); return; }
+          iniciarCheckout(planoAtual, nome, inputWa.value.trim(), submitBtn);
+        });
+      })();
 
       // ---------- Video placeholder ----------
       const videoFrame = document.getElementById("videoFrame");

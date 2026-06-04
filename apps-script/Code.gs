@@ -20,6 +20,7 @@ const COLUNAS = [
   "Data",
   "Plano",
   "Valor (R$)",
+  "Pagamento",
   "Nome",
   "WhatsApp",
   "Endereço",
@@ -32,7 +33,13 @@ const COLUNAS = [
 ];
 
 // Larguras das colunas em pixels
-const LARGURAS = [130, 120, 190, 90, 160, 130, 230, 210, 120, 145, 130, 160, 200];
+const LARGURAS = [130, 120, 190, 90, 140, 160, 130, 230, 210, 120, 145, 130, 160, 200];
+
+// Índices (1-based) das colunas usadas no código
+const COL_PEDIDO    = 1;
+const COL_PAGAMENTO = 5;
+const COL_NOME      = 6;
+const COL_WHATSAPP  = 7;
 
 // Cores do tema Papuli
 const COR_HEADER_BG   = "#2b2a28";
@@ -83,16 +90,16 @@ function setupSheet() {
   bandingRange.applyRowBanding(SpreadsheetApp.BandingTheme.LIGHT_GREY, false, false);
 
   // ── Dropdowns ────────────────────────────────────────────
-  // Coluna 9: Fotos recebidas?
-  aplicarDropdown(sheet, 9, ["aguardando", "recebido", "com problema"]);
-  // Coluna 10: Status Produção
-  aplicarDropdown(sheet, 10, ["aguardando", "em produção", "pronto ✓"]);
-  // Coluna 11: Status Envio
-  aplicarDropdown(sheet, 11, ["aguardando", "postado", "entregue ✓"]);
+  // Coluna 10: Fotos recebidas?
+  aplicarDropdown(sheet, 10, ["aguardando", "recebido", "com problema"]);
+  // Coluna 11: Status Produção
+  aplicarDropdown(sheet, 11, ["aguardando", "em produção", "pronto ✓"]);
+  // Coluna 12: Status Envio
+  aplicarDropdown(sheet, 12, ["aguardando", "postado", "entregue ✓"]);
 
-  // ── Formatação condicional (colunas 9–11) ───────────────
+  // ── Formatação condicional ──────────────────────────────
   var regras = [];
-  var range  = sheet.getRange(2, 9, 500, 3);
+  var rangeStatus = sheet.getRange(2, 10, 500, 3); // Fotos / Producao / Envio
 
   // Verde — concluído
   ["pronto ✓", "entregue ✓", "recebido"].forEach(function(texto) {
@@ -101,7 +108,7 @@ function setupSheet() {
         .whenTextEqualTo(texto)
         .setBackground("#c6efce")
         .setFontColor("#256c22")
-        .setRanges([range])
+        .setRanges([rangeStatus])
         .build()
     );
   });
@@ -113,7 +120,7 @@ function setupSheet() {
         .whenTextEqualTo(texto)
         .setBackground("#fff2cc")
         .setFontColor("#7d5c00")
-        .setRanges([range])
+        .setRanges([rangeStatus])
         .build()
     );
   });
@@ -124,7 +131,26 @@ function setupSheet() {
       .whenTextEqualTo("aguardando")
       .setBackground("#fce8e6")
       .setFontColor("#c8302a")
-      .setRanges([range])
+      .setRanges([rangeStatus])
+      .build()
+  );
+
+  // ── Coluna Pagamento (col 5): verde PAGO, amarelo aguardando ──
+  var rangePgto = sheet.getRange(2, COL_PAGAMENTO, 500, 1);
+  regras.push(
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenTextContains("PAGO")
+      .setBackground("#c6efce")
+      .setFontColor("#256c22")
+      .setRanges([rangePgto])
+      .build()
+  );
+  regras.push(
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenTextContains("aguardando")
+      .setBackground("#fff2cc")
+      .setFontColor("#7d5c00")
+      .setRanges([rangePgto])
       .build()
   );
 
@@ -153,13 +179,15 @@ function aplicarDropdown(sheet, coluna, opcoes) {
   sheet.getRange(2, coluna, 500).setDataValidation(regra);
 }
 
-// ── Webhook: recebe pedido e adiciona linha ──────────────────
+// ── Webhook / Checkout: registra ou atualiza pedido ──────────
+// Duas fases:
+//   origem "checkout" → cria a linha com Nome + WhatsApp, Pagamento "aguardando"
+//   origem "webhook"  → acha a linha pelo # Pedido e marca Pagamento "PAGO ✓"
 function doPost(e) {
   try {
     var ss    = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName(SHEET_NAME);
 
-    // Cria e formata o sheet se não existir
     if (!sheet) {
       setupSheet();
       sheet = ss.getSheetByName(SHEET_NAME);
@@ -168,42 +196,67 @@ function doPost(e) {
     var dados   = JSON.parse(e.postData.contents);
     var agora   = new Date();
     var dataStr = Utilities.formatDate(agora, "America/Sao_Paulo", "dd/MM/yyyy HH:mm");
+    var origem  = dados.origem || "checkout";
 
-    // ── Dedup: nao duplica se o # Pedido ja existe ──────────────
-    // (a pagina de obrigado E o webhook podem disparar pro mesmo pedido;
-    //  o primeiro que chegar cria a linha, o segundo é ignorado)
     var pedidoId = (dados.pedido || "").toString().trim();
+    var nome     = (dados.nome || "").toString().trim();
+    var whatsapp = (dados.whatsapp || "").toString().trim();
+
+    var plano = (dados.plano || "")
+      .replace(/\s*\(Edicao Namorados 2026\)/gi, "")
+      .trim();
+    var total = parseFloat((dados.total || "0").toString().replace(",", ".")) || 0;
+
+    // ── Procura linha existente pelo # Pedido ─────────────────
+    var linhaExistente = 0;
     if (pedidoId) {
       var totalLinhas = sheet.getLastRow();
       if (totalLinhas >= 2) {
         var colA = sheet.getRange(2, 1, totalLinhas - 1, 1).getValues();
         for (var i = 0; i < colA.length; i++) {
           if (String(colA[i][0]).trim() === pedidoId) {
-            return ContentService
-              .createTextOutput(JSON.stringify({ status: "duplicado", linha: i + 2 }))
-              .setMimeType(ContentService.MimeType.JSON);
+            linhaExistente = i + 2;
+            break;
           }
         }
       }
     }
 
-    // Limpa o plano para ficar legível (remove "Edicao Namorados 2026" etc.)
-    var plano = (dados.plano || "")
-      .replace(/\s*\(Edicao Namorados 2026\)/gi, "")
-      .trim();
+    // ── Linha já existe: atualiza ─────────────────────────────
+    if (linhaExistente) {
+      // preenche Nome/WhatsApp se vierem e estiverem vazios
+      if (nome) {
+        var celNome = sheet.getRange(linhaExistente, COL_NOME);
+        if (!String(celNome.getValue()).trim()) celNome.setValue(nome);
+      }
+      if (whatsapp) {
+        var celWa = sheet.getRange(linhaExistente, COL_WHATSAPP);
+        if (!String(celWa.getValue()).trim()) celWa.setValue(whatsapp);
+      }
+      // webhook ou retorno do cliente confirmam pagamento
+      if (origem === "webhook" || origem === "obrigado") {
+        var celPgto = sheet.getRange(linhaExistente, COL_PAGAMENTO);
+        if (String(celPgto.getValue()).indexOf("PAGO") === -1) {
+          celPgto.setValue("PAGO ✓ " + dataStr);
+        }
+      }
+      return ContentService
+        .createTextOutput(JSON.stringify({ status: "atualizado", linha: linhaExistente }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
 
-    // Total numérico
-    var total = parseFloat(
-      (dados.total || "0").toString().replace(",", ".")
-    ) || 0;
+    // ── Linha nova ────────────────────────────────────────────
+    var pago = (origem === "webhook" || origem === "obrigado");
+    var statusPgto = pago ? ("PAGO ✓ " + dataStr) : "aguardando pgto";
 
     sheet.appendRow([
-      dados.pedido || "",  // # Pedido
+      pedidoId,            // # Pedido
       dataStr,             // Data
       plano,               // Plano
       total,               // Valor (R$)
-      "",                  // Nome
-      "",                  // WhatsApp
+      statusPgto,          // Pagamento
+      nome,                // Nome
+      whatsapp,            // WhatsApp
       "",                  // Endereço
       "",                  // Link Drive
       "aguardando",        // Fotos recebidas?
@@ -213,7 +266,6 @@ function doPost(e) {
       ""                   // Obs
     ]);
 
-    // Estilo da linha recém-adicionada
     var ultimaLinha = sheet.getLastRow();
     sheet.getRange(ultimaLinha, 1, 1, COLUNAS.length)
       .setFontFamily("Arial")

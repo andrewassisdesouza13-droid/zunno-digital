@@ -898,7 +898,7 @@
           fetch("/api/log-order", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ pedido, plano, total: total || "0" })
+            body: JSON.stringify({ pedido, plano, total: total || "0", origem: "obrigado" })
           }).catch(function() {
             // silencioso — não impacta a experiência do cliente
           });
