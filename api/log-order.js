@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: "method not allowed" });
   }
 
-  const { pedido, plano, total } = req.body || {};
+  const { pedido, plano, total, origem } = req.body || {};
 
   if (!pedido || !plano) {
     return res.status(400).json({ error: "dados insuficientes" });
@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
     const resp = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ pedido, plano, total }),
+      body: JSON.stringify({ pedido, plano, total, origem: origem || "obrigado" }),
       redirect: "follow"
     });
 

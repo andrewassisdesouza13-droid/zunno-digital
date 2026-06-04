@@ -2,3 +2,9 @@
 node_modules/
 render-pdf.mjs
 *.log
+
+# skills e config locais do Claude (nao precisam ir pro deploy)
+.agents/
+.claude/
+skills-lock.json
+_brief.pdf
