@@ -878,9 +878,7 @@
 
         // ---------- Meta Pixel: Purchase ----------
         if (typeof fbq === "function") {
-          // converte "112,90" -> 112.90 pro Pixel
           const valor = total ? parseFloat(total.replace(",", ".")) : undefined;
-
           fbq("track", "Purchase", {
             value: valor,
             currency: "BRL",
@@ -889,6 +887,18 @@
             content_type: "product",
             num_items: 1,
             order_id: pedido || undefined
+          });
+        }
+
+        // ---------- Log no Google Sheets ----------
+        // Fire-and-forget: não bloqueia a página, não mostra erro pro cliente
+        if (pedido && plano) {
+          fetch("/api/log-order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ pedido, plano, total: total || "0" })
+          }).catch(function() {
+            // silencioso — não impacta a experiência do cliente
           });
         }
       })();
