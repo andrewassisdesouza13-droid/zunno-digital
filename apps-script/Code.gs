@@ -169,6 +169,24 @@ function doPost(e) {
     var agora   = new Date();
     var dataStr = Utilities.formatDate(agora, "America/Sao_Paulo", "dd/MM/yyyy HH:mm");
 
+    // ── Dedup: nao duplica se o # Pedido ja existe ──────────────
+    // (a pagina de obrigado E o webhook podem disparar pro mesmo pedido;
+    //  o primeiro que chegar cria a linha, o segundo é ignorado)
+    var pedidoId = (dados.pedido || "").toString().trim();
+    if (pedidoId) {
+      var totalLinhas = sheet.getLastRow();
+      if (totalLinhas >= 2) {
+        var colA = sheet.getRange(2, 1, totalLinhas - 1, 1).getValues();
+        for (var i = 0; i < colA.length; i++) {
+          if (String(colA[i][0]).trim() === pedidoId) {
+            return ContentService
+              .createTextOutput(JSON.stringify({ status: "duplicado", linha: i + 2 }))
+              .setMimeType(ContentService.MimeType.JSON);
+          }
+        }
+      }
+    }
+
     // Limpa o plano para ficar legível (remove "Edicao Namorados 2026" etc.)
     var plano = (dados.plano || "")
       .replace(/\s*\(Edicao Namorados 2026\)/gi, "")
