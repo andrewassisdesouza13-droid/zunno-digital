@@ -1184,35 +1184,38 @@
       /* ---------- Netflix Slider de fotos ---------- */
 
       /*
-       * Layout: [fade-left | 20% peek] [slide] [gap] [slide] [20% peek | fade-right]
-       * Slide width = (viewport - gap) / 2.4  →  2 slides + 0.4 de peek
-       * Fade: pseudo-element com gradient cream→transparent + backdrop-filter blur
+       * Layout Netflix: slider ocupa 100vw (quebra o container),
+       * 3 slides visíveis no desktop, 1.2 no mobile.
+       * Fades nas bordas: gradient + blur cobrem o peek lateral.
        */
 
       .nf-slider-outer {
         position: relative;
+        /* Quebra o padding do container pai pra ir de borda a borda */
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
         overflow: hidden;
         padding-bottom: clamp(80px, 12vw, 160px);
       }
 
-      /* Fade + blur nas bordas (cobre o peek das laterais) */
+      /* Fade + blur nas bordas */
       .nf-slider-outer::before,
       .nf-slider-outer::after {
         content: "";
         position: absolute;
         top: 0; bottom: 0;
-        width: 14%;
+        width: 120px;
         z-index: 3;
         pointer-events: none;
-        backdrop-filter: blur(6px) saturate(0.6);
-        -webkit-backdrop-filter: blur(6px) saturate(0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
       }
 
       .nf-slider-outer::before {
         left: 0;
         background: linear-gradient(to right,
           var(--cream) 0%,
-          rgba(246, 243, 236, 0.85) 40%,
+          rgba(246, 243, 236, 0.7) 50%,
           transparent 100%);
       }
 
@@ -1220,7 +1223,7 @@
         right: 0;
         background: linear-gradient(to left,
           var(--cream) 0%,
-          rgba(246, 243, 236, 0.85) 40%,
+          rgba(246, 243, 236, 0.7) 50%,
           transparent 100%);
       }
 
@@ -1234,21 +1237,26 @@
 
       .nf-slider-track {
         display: flex;
-        gap: 20px;
+        gap: 16px;
         transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         will-change: transform;
+        padding: 20px 0 24px;
       }
 
-      /* 2 slides visíveis = (100% - 1 gap) / 2.4  →  cada slide ~40.8% da tela */
+      /*
+       * Desktop: 3 slides completos visíveis + peek ~10% em cada lado
+       * slide = (100vw - 2*peek - 2*gap) / 3  ≈  30vw
+       */
       .nf-slide {
-        flex: 0 0 calc((100% - 20px) / 2.4);
+        flex: 0 0 30vw;
         background: var(--paper);
         padding: 10px 10px 36px;
         box-shadow:
-          0 12px 32px -10px rgba(43, 42, 40, 0.38),
-          0 3px 8px -3px rgba(43, 42, 40, 0.14);
+          0 16px 40px -12px rgba(43, 42, 40, 0.45),
+          0 4px 10px -4px rgba(43, 42, 40, 0.15);
         pointer-events: none;
         user-select: none;
+        flex-shrink: 0;
       }
 
       .nf-slide img {
@@ -1260,17 +1268,13 @@
         -webkit-user-drag: none;
       }
 
-      /* Mobile: 1 slide central + 20% peek em cada lado */
+      /* Mobile: 1 slide + peek 20% em cada lado → slide = 70vw */
       @media (max-width: 640px) {
         .nf-slider-outer::before,
-        .nf-slider-outer::after { width: 16%; }
+        .nf-slider-outer::after { width: 60px; }
 
-        .nf-slide {
-          flex: 0 0 calc((100% - 12px) / 1.4); /* ~68% da tela → ~20% peek cada lado */
-          padding: 8px 8px 28px;
-        }
-
-        .nf-slider-track { gap: 12px; }
+        .nf-slide { flex: 0 0 72vw; padding: 8px 8px 28px; }
+        .nf-slider-track { gap: 10px; }
       }
 
       /* ---------- Testimonial / Prova social ---------- */
@@ -1290,23 +1294,125 @@
         color: rgba(247, 239, 224, 0.82) !important;
       }
 
-      /* Grid estático de 3 cards lado a lado */
+      /* ---------- Testimonials redesenhados ---------- */
       .t-cards-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-        padding: 32px clamp(24px, 5vw, 64px) 0;
-        max-width: 1180px;
-        margin: 0 auto;
+        gap: 2px; /* borda compartilhada */
+        padding: 48px 0 0;
+        max-width: 100%;
+        align-items: stretch;
       }
 
+      /* Cada card vira uma "entrada de diário" — sem borda externa, fundo escuro */
       .t-cards-grid .t-card {
+        background: rgba(0, 0, 0, 0.22);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: none;
+        border-radius: 0;
+        padding: 44px 36px 36px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
         max-width: none;
+        margin: 0;
+        box-shadow: none;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Aspas decorativas gigantes */
+      .t-cards-grid .t-card::before {
+        content: "\201C";
+        position: absolute;
+        top: -16px;
+        left: 20px;
+        font-family: var(--display);
+        font-size: 180px;
+        line-height: 1;
+        color: rgba(247, 239, 224, 0.06);
+        pointer-events: none;
+        font-style: italic;
+      }
+
+      /* Corações em cima */
+      .t-cards-grid .t-card-hearts {
+        font-size: 12px;
+        letter-spacing: 5px;
+        color: rgba(247, 239, 224, 0.6);
+        margin: 0 0 20px;
+        display: block;
+      }
+
+      /* Texto em destaque */
+      .t-cards-grid .t-card p {
+        font-family: var(--body);
+        font-style: italic;
+        font-size: 16px;
+        line-height: 1.8;
+        color: rgba(247, 239, 224, 0.92);
+        margin: 0;
+        flex: 1;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Linha separadora + autor embaixo */
+      .t-card-author {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(247, 239, 224, 0.14);
+      }
+
+      .t-cards-grid .t-photo {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(247, 239, 224, 0.3);
+        flex-shrink: 0;
+        box-shadow: none;
+      }
+
+      .t-card-meta { display: flex; flex-direction: column; gap: 2px; }
+
+      .t-cards-grid .t-card-name {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--cream-soft);
         margin: 0;
       }
 
-      @media (max-width: 900px) {
-        .t-cards-grid { grid-template-columns: 1fr; gap: 20px; max-width: 600px; }
+      .t-cards-grid .t-card-source {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 12px;
+        color: rgba(247, 239, 224, 0.42);
+        margin: 0;
+      }
+
+      /* Divisória vertical entre cards */
+      .t-cards-grid .t-card + .t-card {
+        border-left: 1px solid rgba(247, 239, 224, 0.1);
+      }
+
+      @media (max-width: 860px) {
+        .t-cards-grid {
+          grid-template-columns: 1fr;
+          gap: 1px;
+        }
+        .t-cards-grid .t-card + .t-card {
+          border-left: none;
+          border-top: 1px solid rgba(247, 239, 224, 0.1);
+        }
+        .t-cards-grid .t-card { padding: 32px 28px 28px; }
       }
 
       .testimonial {
@@ -2225,42 +2331,42 @@
           </h2>
         </div>
 
-        <!-- 3 cards estáticos lado a lado -->
+        <!-- 3 cards estáticos lado a lado — layout editorial -->
         <div class="t-cards-grid" data-reveal>
 
           <div class="t-card">
-            <div class="t-photo-wrap">
-              <img class="t-photo" src="/feedback/mateus-cremon.png" alt="Mateus Cremon e namorada">
-            </div>
-            <div class="t-card-content">
-              <p class="t-card-name">Mateus Cremon</p>
-              <p class="t-card-source">Feedback pelo WhatsApp</p>
-              <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-              <p>"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
-            </div>
-          </div>
-
-          <div class="t-card">
-            <div class="t-photo-wrap">
-              <img class="t-photo" src="/feedback/lucas-melso.png" alt="Lucas Melso e namorada">
-            </div>
-            <div class="t-card-content">
-              <p class="t-card-name">Lucas Melso</p>
-              <p class="t-card-source">Feedback pelo WhatsApp</p>
-              <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-              <p>"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
+            <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+            <p>"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
+            <div class="t-card-author">
+              <img class="t-photo" src="/feedback/mateus-cremon.png" alt="Mateus Cremon">
+              <div class="t-card-meta">
+                <p class="t-card-name">Mateus Cremon</p>
+                <p class="t-card-source">Feedback pelo WhatsApp</p>
+              </div>
             </div>
           </div>
 
           <div class="t-card">
-            <div class="t-photo-wrap">
-              <img class="t-photo" src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer e namorada">
+            <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+            <p>"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
+            <div class="t-card-author">
+              <img class="t-photo" src="/feedback/lucas-melso.png" alt="Lucas Melso">
+              <div class="t-card-meta">
+                <p class="t-card-name">Lucas Melso</p>
+                <p class="t-card-source">Feedback pelo WhatsApp</p>
+              </div>
             </div>
-            <div class="t-card-content">
-              <p class="t-card-name">Gabriel Pitzer</p>
-              <p class="t-card-source">Feedback pelo WhatsApp</p>
-              <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-              <p>"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
+          </div>
+
+          <div class="t-card">
+            <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+            <p>"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
+            <div class="t-card-author">
+              <img class="t-photo" src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer">
+              <div class="t-card-meta">
+                <p class="t-card-name">Gabriel Pitzer</p>
+                <p class="t-card-source">Feedback pelo WhatsApp</p>
+              </div>
             </div>
           </div>
 
@@ -2590,14 +2696,19 @@
           return track.children[0].offsetWidth + GAP;
         }
 
-        // peek = espaço que sobra dos dois lados quando 2 slides estão centralizados
+        // peek = quanto da borda esquerda fica visível antes do primeiro slide
+        // No desktop temos ~10% de vw como peek; calcula dinamicamente
         function peekW() {
+          const totalTrackVisible = vp.offsetWidth;
           const sw = track.children[0].offsetWidth;
-          return (vp.offsetWidth - 2 * sw - GAP) / 2;
+          // número de slides que cabem + fração
+          // peek é o espaço sobrando dividido por 2
+          const slidesPerView = totalTrackVisible / sw;
+          const fullSlides = Math.floor(slidesPerView);
+          return (totalTrackVisible - fullSlides * sw - (fullSlides - 1) * GAP) / 2;
         }
 
         function getTranslate(idx) {
-          // offset tal que o slide[idx] começa logo após o peek esquerdo
           return -(idx * slideW() - peekW());
         }
 
