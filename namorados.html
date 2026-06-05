@@ -1167,7 +1167,7 @@
         margin: 0 auto;
       }
 
-      /* ---------- Dual infinite marquee carousel ---------- */
+      /* ---------- Carousel label ---------- */
       .carousel-label {
         text-align: center;
         font-family: var(--display);
@@ -1178,129 +1178,97 @@
         padding: 0 clamp(24px, 5vw, 64px);
       }
 
-      .marquee-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        padding-bottom: clamp(64px, 9vw, 120px);
+      /* padding-bottom da seção de fotos */
+      .album-section-pad { padding-bottom: clamp(80px, 12vw, 160px); }
+
+      /* ---------- Netflix Slider de fotos ---------- */
+      .nf-slider-outer {
+        overflow: hidden;                    /* clipa o peek nas bordas */
+        padding-bottom: clamp(80px, 12vw, 160px);
       }
 
-      /* ---------- Gallery de fotos (main + thumbs) ---------- */
-      .gallery-wrap {
-        max-width: 860px;
-        margin: 0 auto;
-        padding: 0 24px;
+      .nf-slider-viewport {
+        /* Extende além da tela pra mostrar peek dos lados */
+        margin: 0 -40px;
+        overflow: visible;
+        position: relative;
+        cursor: grab;
         user-select: none;
       }
 
-      .gallery-main-frame {
-        position: relative;
-        border-radius: 14px;
-        overflow: hidden;
-        background: var(--ink);
-        aspect-ratio: 4 / 3;
+      .nf-slider-viewport:active { cursor: grabbing; }
+
+      .nf-slider-track {
+        display: flex;
+        gap: 20px;
+        transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        will-change: transform;
+      }
+
+      .nf-slide {
+        flex: 0 0 calc(33.333% - 14px);
+        background: var(--paper);
+        padding: 10px 10px 36px;
         box-shadow:
-          0 28px 64px -20px rgba(43, 42, 40, 0.55),
-          0 8px 20px -8px rgba(43, 42, 40, 0.18);
-      }
-
-      .gallery-main-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        transition: opacity 0.3s ease;
+          0 12px 32px -10px rgba(43, 42, 40, 0.38),
+          0 3px 8px -3px rgba(43, 42, 40, 0.14);
         pointer-events: none;
+        user-select: none;
       }
 
-      .gallery-main-img.fading { opacity: 0; }
-
-      /* Barra de thumbs */
-      .gallery-thumb-row {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 14px;
-      }
-
-      .gallery-thumbs {
-        flex: 1;
-        display: flex;
-        gap: 8px;
-        overflow-x: auto;
-        scroll-behavior: smooth;
-        scrollbar-width: none;
-        padding: 4px 2px;
-      }
-
-      .gallery-thumbs::-webkit-scrollbar { display: none; }
-
-      .gallery-thumb {
-        flex: 0 0 auto;
-        width: 70px;
-        height: 52px;
-        border-radius: 7px;
-        overflow: hidden;
-        border: 2.5px solid transparent;
-        padding: 0;
-        cursor: pointer;
-        background: var(--ink);
-        box-shadow: 0 2px 8px rgba(43, 42, 40, 0.2);
-        transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-      }
-
-      .gallery-thumb img {
+      .nf-slide img {
         width: 100%;
-        height: 100%;
+        aspect-ratio: 1 / 1;
         object-fit: cover;
         display: block;
         pointer-events: none;
+        -webkit-user-drag: none;
       }
 
-      .gallery-thumb.active {
-        border-color: var(--red);
-        transform: scale(1.1);
-        box-shadow: 0 4px 14px rgba(200, 48, 42, 0.35);
+      /* Botões sobre o slider */
+      .nf-slider-wrap {
+        position: relative;
+        padding: 0 48px;
       }
 
-      .gallery-thumb:hover:not(.active) {
-        border-color: rgba(43, 42, 40, 0.4);
-        transform: scale(1.05);
-      }
-
-      /* Botões nav (usados pela gallery e reutilizáveis) */
-      .gallery-btn {
-        flex: 0 0 auto;
-        width: 42px;
-        height: 42px;
+      .nf-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
         border: 2px solid var(--ink);
         background: var(--paper);
         color: var(--ink);
-        font-size: 22px;
+        font-size: 24px;
+        font-family: var(--display);
         line-height: 1;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         box-shadow: 2px 2px 0 var(--ink);
-        transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
         padding: 0;
-        font-family: var(--display);
+        z-index: 10;
       }
 
-      .gallery-btn:hover {
+      .nf-btn:hover {
         background: var(--ink);
         color: var(--cream-soft);
-        transform: scale(1.08);
         box-shadow: 3px 3px 0 var(--red);
       }
 
-      @media (max-width: 560px) {
-        .gallery-wrap { padding: 0 16px; }
-        .gallery-main-frame { border-radius: 10px; aspect-ratio: 1 / 1; }
-        .gallery-thumb { width: 52px; height: 40px; border-radius: 5px; }
-        .gallery-btn { width: 36px; height: 36px; font-size: 18px; }
+      .nf-btn--prev { left: 0; }
+      .nf-btn--next { right: 0; }
+
+      @media (max-width: 640px) {
+        .nf-slider-viewport { margin: 0 -20px; }
+        .nf-slide { flex: 0 0 calc(75% - 10px); padding: 8px 8px 28px; }
+        .nf-slider-track { gap: 12px; }
+        .nf-slider-wrap { padding: 0 36px; }
+        .nf-btn { width: 36px; height: 36px; font-size: 18px; }
       }
 
       /* ---------- Testimonial / Prova social ---------- */
@@ -1320,54 +1288,23 @@
         color: rgba(247, 239, 224, 0.82) !important;
       }
 
-      /* Infinite marquee for testimonials */
-      .testimonial-marquee-row {
-        overflow: hidden;
-        position: relative;
-        padding: 24px 0 40px;
+      /* Grid estático de 3 cards lado a lado */
+      .t-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        padding: 32px clamp(24px, 5vw, 64px) 0;
+        max-width: 1180px;
+        margin: 0 auto;
       }
 
-      .testimonial-marquee-row::before,
-      .testimonial-marquee-row::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 200px;
-        z-index: 2;
-        pointer-events: none;
-      }
-      .testimonial-marquee-row::before {
-        left: 0;
-        background: linear-gradient(to right, var(--red) 15%, transparent);
-      }
-      .testimonial-marquee-row::after {
-        right: 0;
-        background: linear-gradient(to left, var(--red) 15%, transparent);
-      }
-
-      .testimonial-marquee-track {
-        display: flex;
-        gap: 28px;
-        width: max-content;
-        animation: marquee-fwd 44s linear infinite;
-      }
-
-      .testimonial-marquee-row:hover .testimonial-marquee-track {
-        animation-play-state: paused;
-      }
-
-      /* Card width fixo dentro do marquee */
-      .testimonial-marquee-track .t-card {
-        width: 520px;
-        flex-shrink: 0;
+      .t-cards-grid .t-card {
+        max-width: none;
         margin: 0;
-        cursor: default;
       }
 
-      .testimonial-marquee-track .t-card p {
-        font-size: 17px;
-        line-height: 1.72;
+      @media (max-width: 900px) {
+        .t-cards-grid { grid-template-columns: 1fr; gap: 20px; max-width: 600px; }
       }
 
       .testimonial {
@@ -2172,33 +2109,38 @@
           </div>
         </div>
 
-        <!-- Gallery: foto principal + thumbs -->
+        <!-- Netflix slider -->
         <p class="carousel-label" data-reveal>fotos reais do produto ♥</p>
-        <div class="gallery-wrap" data-reveal>
+        <div class="nf-slider-outer" data-reveal>
+          <div class="nf-slider-wrap">
+            <button class="nf-btn nf-btn--prev" id="nfPrev" aria-label="Foto anterior">‹</button>
 
-          <!-- Foto principal grande -->
-          <div class="gallery-main-frame">
-            <img class="gallery-main-img" id="galleryMainImg" src="/fotos/1.jpg" alt="Kit Estúdio Papuli">
-          </div>
-
-          <!-- Linha de miniaturas com setas -->
-          <div class="gallery-thumb-row">
-            <button class="gallery-btn" id="galleryPrev" aria-label="Foto anterior">‹</button>
-            <div class="gallery-thumbs" id="galleryThumbs">
-              <button class="gallery-thumb active" data-idx="0"><img src="/fotos/1.jpg"  alt="Foto 1"></button>
-              <button class="gallery-thumb"         data-idx="1"><img src="/fotos/2.jpg"  alt="Foto 2"></button>
-              <button class="gallery-thumb"         data-idx="2"><img src="/fotos/3.jpg"  alt="Foto 3"></button>
-              <button class="gallery-thumb"         data-idx="3"><img src="/fotos/4.jpg"  alt="Foto 4"></button>
-              <button class="gallery-thumb"         data-idx="4"><img src="/fotos/5.jpg"  alt="Foto 5"></button>
-              <button class="gallery-thumb"         data-idx="5"><img src="/fotos/6.jpg"  alt="Foto 6"></button>
-              <button class="gallery-thumb"         data-idx="6"><img src="/fotos/7.jpg"  alt="Foto 7"></button>
-              <button class="gallery-thumb"         data-idx="7"><img src="/fotos/8.jpg"  alt="Foto 8"></button>
-              <button class="gallery-thumb"         data-idx="8"><img src="/fotos/9.jpg"  alt="Foto 9"></button>
-              <button class="gallery-thumb"         data-idx="9"><img src="/fotos/10.jpg" alt="Foto 10"></button>
+            <div class="nf-slider-viewport" id="nfViewport">
+              <div class="nf-slider-track" id="nfTrack">
+                <!-- Clones do final (para loop infinito) -->
+                <div class="nf-slide nf-clone"><img src="/fotos/8.jpg"  alt="" aria-hidden="true"></div>
+                <div class="nf-slide nf-clone"><img src="/fotos/9.jpg"  alt="" aria-hidden="true"></div>
+                <div class="nf-slide nf-clone"><img src="/fotos/10.jpg" alt="" aria-hidden="true"></div>
+                <!-- Slides reais -->
+                <div class="nf-slide"><img src="/fotos/1.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/2.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/3.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/4.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/5.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/6.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/7.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/8.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/9.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/10.jpg" alt="Kit Estúdio Papuli"></div>
+                <!-- Clones do início (para loop infinito) -->
+                <div class="nf-slide nf-clone"><img src="/fotos/1.jpg" alt="" aria-hidden="true"></div>
+                <div class="nf-slide nf-clone"><img src="/fotos/2.jpg" alt="" aria-hidden="true"></div>
+                <div class="nf-slide nf-clone"><img src="/fotos/3.jpg" alt="" aria-hidden="true"></div>
+              </div>
             </div>
-            <button class="gallery-btn" id="galleryNext" aria-label="Próxima foto">›</button>
-          </div>
 
+            <button class="nf-btn nf-btn--next" id="nfNext" aria-label="Próxima foto">›</button>
+          </div>
         </div>
       </section>
 
@@ -2287,89 +2229,47 @@
           </h2>
         </div>
 
-        <!-- Marquee infinito — sai do container pra ir de borda a borda -->
-        <div class="testimonial-marquee-row" data-reveal>
-          <div class="testimonial-marquee-track">
+        <!-- 3 cards estáticos lado a lado -->
+        <div class="t-cards-grid" data-reveal>
 
-            <!-- Card 1 -->
-            <div class="t-card">
-              <div class="t-photo-wrap">
-                <img class="t-photo" src="/feedback/mateus-cremon.png" alt="Mateus Cremon e namorada">
-              </div>
-              <div class="t-card-content">
-                <p class="t-card-name">Mateus Cremon</p>
-                <p class="t-card-source">Feedback pelo WhatsApp</p>
-                <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-                <p>"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
-              </div>
+          <div class="t-card">
+            <div class="t-photo-wrap">
+              <img class="t-photo" src="/feedback/mateus-cremon.png" alt="Mateus Cremon e namorada">
             </div>
-
-            <!-- Card 2 -->
-            <div class="t-card">
-              <div class="t-photo-wrap">
-                <img class="t-photo" src="/feedback/lucas-melso.png" alt="Lucas Melso e namorada">
-              </div>
-              <div class="t-card-content">
-                <p class="t-card-name">Lucas Melso</p>
-                <p class="t-card-source">Feedback pelo WhatsApp</p>
-                <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-                <p>"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
-              </div>
+            <div class="t-card-content">
+              <p class="t-card-name">Mateus Cremon</p>
+              <p class="t-card-source">Feedback pelo WhatsApp</p>
+              <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+              <p>"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
             </div>
-
-            <!-- Card 3 -->
-            <div class="t-card">
-              <div class="t-photo-wrap">
-                <img class="t-photo" src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer e namorada">
-              </div>
-              <div class="t-card-content">
-                <p class="t-card-name">Gabriel Pitzer</p>
-                <p class="t-card-source">Feedback pelo WhatsApp</p>
-                <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-                <p>"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
-              </div>
-            </div>
-
-            <!-- Duplicados para loop infinito -->
-            <div class="t-card">
-              <div class="t-photo-wrap">
-                <img class="t-photo" src="/feedback/mateus-cremon.png" alt="Mateus Cremon e namorada">
-              </div>
-              <div class="t-card-content">
-                <p class="t-card-name">Mateus Cremon</p>
-                <p class="t-card-source">Feedback pelo WhatsApp</p>
-                <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-                <p>"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
-              </div>
-            </div>
-
-            <div class="t-card">
-              <div class="t-photo-wrap">
-                <img class="t-photo" src="/feedback/lucas-melso.png" alt="Lucas Melso e namorada">
-              </div>
-              <div class="t-card-content">
-                <p class="t-card-name">Lucas Melso</p>
-                <p class="t-card-source">Feedback pelo WhatsApp</p>
-                <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-                <p>"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
-              </div>
-            </div>
-
-            <div class="t-card">
-              <div class="t-photo-wrap">
-                <img class="t-photo" src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer e namorada">
-              </div>
-              <div class="t-card-content">
-                <p class="t-card-name">Gabriel Pitzer</p>
-                <p class="t-card-source">Feedback pelo WhatsApp</p>
-                <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-                <p>"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
-              </div>
-            </div>
-
           </div>
+
+          <div class="t-card">
+            <div class="t-photo-wrap">
+              <img class="t-photo" src="/feedback/lucas-melso.png" alt="Lucas Melso e namorada">
+            </div>
+            <div class="t-card-content">
+              <p class="t-card-name">Lucas Melso</p>
+              <p class="t-card-source">Feedback pelo WhatsApp</p>
+              <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+              <p>"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
+            </div>
+          </div>
+
+          <div class="t-card">
+            <div class="t-photo-wrap">
+              <img class="t-photo" src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer e namorada">
+            </div>
+            <div class="t-card-content">
+              <p class="t-card-name">Gabriel Pitzer</p>
+              <p class="t-card-source">Feedback pelo WhatsApp</p>
+              <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
+              <p>"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
+            </div>
+          </div>
+
         </div>
-        <div style="height: clamp(48px, 6vw, 80px);"></div>
+        <div style="height: clamp(64px, 9vw, 120px);"></div>
       </section>
 
       <section class="final">
@@ -2677,72 +2577,82 @@
         });
       }
 
-      // ---------- Gallery fotos (main + thumbs) ----------
+      // ---------- Netflix Slider fotos ----------
       (function () {
-        const mainImg  = document.getElementById("galleryMainImg");
-        const thumbsEl = document.getElementById("galleryThumbs");
-        const prevBtn  = document.getElementById("galleryPrev");
-        const nextBtn  = document.getElementById("galleryNext");
-        if (!mainImg) return;
+        const track   = document.getElementById("nfTrack");
+        const vp      = document.getElementById("nfViewport");
+        const prevBtn = document.getElementById("nfPrev");
+        const nextBtn = document.getElementById("nfNext");
+        if (!track) return;
 
-        const FOTOS = [
-          "/fotos/1.jpg","/fotos/2.jpg","/fotos/3.jpg","/fotos/4.jpg","/fotos/5.jpg",
-          "/fotos/6.jpg","/fotos/7.jpg","/fotos/8.jpg","/fotos/9.jpg","/fotos/10.jpg"
-        ];
-        const thumbBtns = Array.from(thumbsEl.querySelectorAll(".gallery-thumb"));
-        let current = 0;
+        const CLONES  = 3;   // quantos clones em cada ponta
+        const TOTAL   = 10;  // fotos reais
+        const GAP     = 20;  // px, igual ao CSS gap
 
-        function goTo(idx) {
-          current = ((idx % FOTOS.length) + FOTOS.length) % FOTOS.length; // wrap infinito
+        let current = CLONES; // começa no primeiro slide real
+        let isAnimating = false;
 
-          // Cross-fade
-          mainImg.classList.add("fading");
-          setTimeout(() => {
-            mainImg.src = FOTOS[current];
-            mainImg.classList.remove("fading");
-          }, 180);
-
-          // Destaca thumb ativa e centraliza no scroll
-          thumbBtns.forEach((t, i) => t.classList.toggle("active", i === current));
-          thumbBtns[current].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        function slideW() {
+          return track.children[0].offsetWidth + GAP;
         }
 
-        // Clicks nas thumbs
-        thumbBtns.forEach((t, i) => t.addEventListener("click", () => goTo(i)));
+        function setPos(idx, animated) {
+          if (!animated) track.style.transition = "none";
+          else           track.style.transition  = "transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94)";
+          track.style.transform = "translateX(" + (-idx * slideW()) + "px)";
+        }
 
-        // Botões de nav
-        prevBtn.addEventListener("click", () => goTo(current - 1));
-        nextBtn.addEventListener("click", () => goTo(current + 1));
+        function advance(dir) {
+          if (isAnimating) return;
+          isAnimating = true;
+          current += dir;
+          setPos(current, true);
+        }
 
-        // Swipe touch na foto principal
-        let touchStartX = 0;
-        mainImg.parentElement.addEventListener("touchstart", (e) => {
-          touchStartX = e.touches[0].clientX;
-        }, { passive: true });
-        mainImg.parentElement.addEventListener("touchend", (e) => {
-          const diff = touchStartX - e.changedTouches[0].clientX;
-          if (Math.abs(diff) > 40) diff > 0 ? goTo(current + 1) : goTo(current - 1);
+        // Após a animação, reposiciona silenciosamente se estiver nos clones
+        track.addEventListener("transitionend", () => {
+          if (current <= CLONES - 1) {
+            current = CLONES + TOTAL - (CLONES - current);
+            setPos(current, false);
+          } else if (current >= CLONES + TOTAL) {
+            current = CLONES + (current - (CLONES + TOTAL));
+            setPos(current, false);
+          }
+          // Força reflow antes de re-habilitar transição
+          void track.offsetWidth;
+          isAnimating = false;
         });
 
-        // Drag mouse na foto principal (desktop)
-        let dragStartX = 0, isDragging = false;
-        mainImg.parentElement.addEventListener("mousedown", (e) => {
-          dragStartX = e.clientX; isDragging = true;
-        });
-        mainImg.parentElement.addEventListener("mouseup", (e) => {
-          if (!isDragging) return; isDragging = false;
-          const diff = dragStartX - e.clientX;
-          if (Math.abs(diff) > 40) diff > 0 ? goTo(current + 1) : goTo(current - 1);
-        });
-        mainImg.parentElement.addEventListener("mouseleave", () => { isDragging = false; });
+        // Inicializa na posição correta sem animação
+        function init() {
+          setPos(current, false);
+          void track.offsetWidth;
+          track.style.transition = "transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94)";
+        }
 
-        // Teclado
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "ArrowLeft")  goTo(current - 1);
-          if (e.key === "ArrowRight") goTo(current + 1);
-        });
+        prevBtn.addEventListener("click", () => advance(-1));
+        nextBtn.addEventListener("click", () => advance(1));
 
-        goTo(0);
+        // Drag / swipe
+        let startX = 0, startTime = 0, dragging = false;
+
+        function dragStart(x) { startX = x; startTime = Date.now(); dragging = true; }
+        function dragEnd(x) {
+          if (!dragging) return;
+          dragging = false;
+          const diff = startX - x;
+          const fast = (Date.now() - startTime) < 300;
+          if (Math.abs(diff) > (fast ? 20 : 60)) advance(diff > 0 ? 1 : -1);
+        }
+
+        vp.addEventListener("mousedown",  (e) => { dragStart(e.clientX); });
+        window.addEventListener("mouseup", (e) => { dragEnd(e.clientX); });
+        vp.addEventListener("touchstart", (e) => { dragStart(e.touches[0].clientX); }, { passive: true });
+        vp.addEventListener("touchend",   (e) => { dragEnd(e.changedTouches[0].clientX); });
+
+        window.addEventListener("resize", () => { setPos(current, false); });
+
+        init();
       })();
 
     </script>
