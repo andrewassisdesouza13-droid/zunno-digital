@@ -2199,12 +2199,12 @@
 
       <section class="video-section">
         <div class="container">
-          <p class="section-eyebrow" data-reveal>como chega na sua casa</p>
+          <p class="section-eyebrow" data-reveal>o que vai dentro</p>
           <h2 class="section-title" data-reveal>
-            esse presente contém muito <span class="script">amor</span><br>e ótimas <span class="script">memórias.</span>
+            cada foto é <span class="script">um capítulo</span><br>que vocês escreveram.
           </h2>
           <p class="section-lead" data-reveal>
-            8 fotos estilo Polaroid. Um álbum com frases que parecem escritas pra vocês. 3 Ferrero Rocher dentro da box. Tudo montado, pronto pra presentear.
+            8 fotos estilo Polaroid pra espalhar pela casa. 14 figurinhas com frases românticas dentro do álbum. 3 Ferrero pra abrir junto. Tudo impresso em papel premium, do jeito que a história aconteceu.
           </p>
 
           <!-- Slider Netflix de fotos (mesmo padrão da outra seção) -->
@@ -2295,48 +2295,6 @@
               </div>
             </div>
 
-          </div>
-        </div>
-      </section>
-
-      <section class="album">
-        <div class="container" style="padding-bottom: 0;">
-          <div class="album-head" data-reveal>
-            <p class="section-eyebrow">o que vai dentro</p>
-            <h2 class="section-title">
-              cada foto é <span class="script">um capítulo</span> que vocês escreveram.
-            </h2>
-            <p class="section-lead">
-              8 fotos estilo Polaroid pra espalhar pela casa. 14 figurinhas com frases românticas dentro do álbum. 3 Ferrero pra abrir junto. Tudo impresso em papel premium, do jeito que a história aconteceu.
-            </p>
-          </div>
-        </div>
-
-        <!-- Netflix slider: arraste o dedo / mouse -->
-        <p class="carousel-label" data-reveal>fotos reais do produto ♥</p>
-        <div class="nf-slider-outer" data-reveal>
-          <div class="nf-slider-viewport" id="nfViewport">
-            <div class="nf-slider-track" id="nfTrack">
-              <!-- Clones do final (loop infinito ao voltar) -->
-              <div class="nf-slide nf-clone"><img src="/fotos/8.jpg"  alt="" aria-hidden="true"></div>
-              <div class="nf-slide nf-clone"><img src="/fotos/9.jpg"  alt="" aria-hidden="true"></div>
-              <div class="nf-slide nf-clone"><img src="/fotos/10.jpg" alt="" aria-hidden="true"></div>
-              <!-- Slides reais -->
-              <div class="nf-slide"><img src="/fotos/1.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/2.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/3.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/4.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/5.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/6.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/7.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/8.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/9.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/10.jpg" alt="Kit Estúdio Papuli"></div>
-              <!-- Clones do início (loop infinito ao avançar) -->
-              <div class="nf-slide nf-clone"><img src="/fotos/1.jpg" alt="" aria-hidden="true"></div>
-              <div class="nf-slide nf-clone"><img src="/fotos/2.jpg" alt="" aria-hidden="true"></div>
-              <div class="nf-slide nf-clone"><img src="/fotos/3.jpg" alt="" aria-hidden="true"></div>
-            </div>
           </div>
         </div>
       </section>
@@ -2848,10 +2806,7 @@
         window.addEventListener("resize", () => setPos(current, false));
       }
 
-      // Slider de fotos: 3 clones em cada ponta, 10 fotos reais, gap 16px
-      makeSlider("nfViewport", "nfTrack", 3, 10, 16);
-
-      // 2º slider de fotos (seção "como chega na sua casa")
+      // Slider de fotos (seção "como chega na sua casa")
       makeSlider("nfViewport2", "nfTrack2", 3, 10, 16);
 
       // (testimonials são estáticos — sem slider)
