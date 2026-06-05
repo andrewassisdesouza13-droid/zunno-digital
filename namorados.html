@@ -2199,22 +2199,39 @@
 
       <section class="video-section">
         <div class="container">
-          <p class="section-eyebrow" data-reveal>veja em movimento</p>
+          <p class="section-eyebrow" data-reveal>como chega na sua casa</p>
           <h2 class="section-title" data-reveal>
             esse presente contém muito <span class="script">amor</span><br>e ótimas <span class="script">memórias.</span>
           </h2>
           <p class="section-lead" data-reveal>
-            8 fotos estilo Polaroid. Um álbum com frases que parecem escritas pra vocês. Um site personalizado para eternizar seu amor no digital. Veja antes de comprar.
+            8 fotos estilo Polaroid. Um álbum com frases que parecem escritas pra vocês. 3 Ferrero Rocher dentro da box. Tudo montado, pronto pra presentear.
           </p>
 
-          <div class="video-wrap" data-reveal>
-            <div class="tape left"></div>
-            <div class="tape right"></div>
-            <div class="video-frame" id="videoFrame">
-              <button class="play-btn" aria-label="Reproduzir vídeo do álbum"></button>
+          <!-- Slider Netflix de fotos (mesmo padrão da outra seção) -->
+          <div class="nf-slider-outer" data-reveal>
+            <div class="nf-slider-viewport" id="nfViewport2">
+              <div class="nf-slider-track" id="nfTrack2">
+                <!-- Clones finais (loop infinito) -->
+                <div class="nf-slide nf-clone"><img src="/fotos/8.jpg"  alt="" aria-hidden="true"></div>
+                <div class="nf-slide nf-clone"><img src="/fotos/9.jpg"  alt="" aria-hidden="true"></div>
+                <div class="nf-slide nf-clone"><img src="/fotos/10.jpg" alt="" aria-hidden="true"></div>
+                <!-- Slides reais -->
+                <div class="nf-slide"><img src="/fotos/2.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/5.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/1.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/7.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/3.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/9.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/4.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/10.jpg" alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/6.jpg"  alt="Kit Estúdio Papuli"></div>
+                <div class="nf-slide"><img src="/fotos/8.jpg"  alt="Kit Estúdio Papuli"></div>
+                <!-- Clones do início (loop infinito) -->
+                <div class="nf-slide nf-clone"><img src="/fotos/2.jpg" alt="" aria-hidden="true"></div>
+                <div class="nf-slide nf-clone"><img src="/fotos/5.jpg" alt="" aria-hidden="true"></div>
+                <div class="nf-slide nf-clone"><img src="/fotos/1.jpg" alt="" aria-hidden="true"></div>
+              </div>
             </div>
-            <div class="video-caption">Veja antes de comprar.</div>
-            <div class="video-badge">edição 2026</div>
           </div>
         </div>
       </section>
@@ -2833,6 +2850,9 @@
 
       // Slider de fotos: 3 clones em cada ponta, 10 fotos reais, gap 16px
       makeSlider("nfViewport", "nfTrack", 3, 10, 16);
+
+      // 2º slider de fotos (seção "como chega na sua casa")
+      makeSlider("nfViewport2", "nfTrack2", 3, 10, 16);
 
       // (testimonials são estáticos — sem slider)
 
