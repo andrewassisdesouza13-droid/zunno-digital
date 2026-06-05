@@ -1262,113 +1262,97 @@
         .nf-slider-track { gap: 10px; }
       }
 
-      /* ---- Slide de testimonial (reutiliza .nf-slide mas muda o conteúdo) ---- */
-      .t-slide {
-        flex: 0 0 calc((100% - 152px) / 3);
-        background: rgba(0, 0, 0, 0.22);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        padding: 36px 28px 28px;
-        position: relative;
-        overflow: hidden;
+      /* ---------- Testimonial cards — 3 colunas estáticas ---------- */
+      .t-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 44px clamp(24px, 5vw, 64px) 0;
+        max-width: 1180px;
+        margin: 0 auto;
+      }
+
+      .t-card-new {
+        background: rgba(0, 0, 0, 0.18);
+        border: 1px solid rgba(247, 239, 224, 0.12);
+        border-radius: 4px;
+        padding: 32px 28px 24px;
         display: flex;
         flex-direction: column;
-        gap: 0;
-        pointer-events: none;
-        user-select: none;
-        flex-shrink: 0;
-        min-height: 260px;
-      }
-
-      /* Aspas decorativas */
-      .t-slide::before {
-        content: "\201C";
-        position: absolute;
-        top: -12px; left: 16px;
-        font-family: var(--display);
-        font-size: 160px;
-        line-height: 1;
-        color: rgba(247, 239, 224, 0.07);
-        pointer-events: none;
-        font-style: italic;
-      }
-
-      .t-slide .t-card-hearts {
-        font-size: 11px;
-        letter-spacing: 5px;
-        color: rgba(247, 239, 224, 0.55);
-        margin: 0 0 16px;
-        display: block;
-      }
-
-      .t-slide .t-card-text {
-        font-family: var(--body);
-        font-style: italic;
-        font-size: 15px;
-        line-height: 1.75;
-        color: rgba(247, 239, 224, 0.9);
-        margin: 0;
-        flex: 1;
         position: relative;
-        z-index: 1;
-        /* 4 linhas máximas */
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
         overflow: hidden;
       }
 
-      .t-slide .t-card-author {
+      /* Grande aspas decorativa quase invisível */
+      .t-card-new::before {
+        content: "\201C";
+        position: absolute;
+        top: -10px; left: 14px;
+        font-family: var(--display);
+        font-size: 140px;
+        line-height: 1;
+        color: rgba(247, 239, 224, 0.08);
+        pointer-events: none;
+        font-style: italic;
+      }
+
+      .t-card-new .hearts {
+        font-size: 11px;
+        letter-spacing: 4px;
+        color: rgba(247, 239, 224, 0.5);
+        margin: 0 0 18px;
+        display: block;
+        position: relative;
+      }
+
+      .t-card-new .quote {
+        font-family: var(--body);
+        font-style: italic;
+        font-size: 15.5px;
+        line-height: 1.78;
+        color: rgba(247, 239, 224, 0.88);
+        margin: 0 0 auto;
+        padding-bottom: 24px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .t-card-new .author {
         display: flex;
         align-items: center;
         gap: 12px;
-        margin-top: 20px;
-        padding-top: 16px;
-        border-top: 1px solid rgba(247, 239, 224, 0.14);
+        padding-top: 18px;
+        border-top: 1px solid rgba(247, 239, 224, 0.13);
       }
 
-      .t-slide .t-photo {
+      .t-card-new .author img {
         width: 44px; height: 44px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid rgba(247, 239, 224, 0.28);
+        border: 2px solid rgba(247, 239, 224, 0.25);
         flex-shrink: 0;
       }
 
-      .t-slide .t-card-meta { display: flex; flex-direction: column; gap: 1px; }
-
-      .t-slide .t-card-name {
+      .t-card-new .author-name {
         font-family: var(--display);
         font-weight: 600;
         font-size: 12px;
-        letter-spacing: 0.14em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
         color: var(--cream-soft);
-        margin: 0;
+        margin: 0 0 2px;
       }
 
-      .t-slide .t-card-source {
+      .t-card-new .author-source {
         font-family: var(--display);
         font-style: italic;
         font-size: 11px;
-        color: rgba(247, 239, 224, 0.4);
+        color: rgba(247, 239, 224, 0.38);
         margin: 0;
       }
 
-      /* Mobile testimonials */
-      @media (max-width: 640px) {
-        .t-slide {
-          flex: 0 0 calc(100% - 88px);
-          padding: 28px 22px 22px;
-        }
-      }
-
-      /* Fade do slider de testimonials (sobre fundo vermelho) */
-      .t-slider-outer::before {
-        background: linear-gradient(to right, var(--red), transparent) !important;
-      }
-      .t-slider-outer::after {
-        background: linear-gradient(to left, var(--red), transparent) !important;
+      @media (max-width: 860px) {
+        .t-grid { grid-template-columns: 1fr; max-width: 500px; }
       }
 
       /* ---------- Testimonial / Prova social ---------- */
@@ -2425,40 +2409,45 @@
           </h2>
         </div>
 
-        <!-- Slider de testimonials — mesmo padrão das fotos -->
-        <div class="nf-slider-outer t-slider-outer" data-reveal>
-          <div class="nf-slider-viewport" id="tViewport">
-            <div class="nf-slider-track" id="tTrack">
-              <!-- Clones finais (loop infinito) -->
-              <div class="t-slide nf-clone">
-                <span class="t-card-hearts">♥ ♥ ♥ ♥ ♥</span>
-                <p class="t-card-text">"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
-                <div class="t-card-author"><img class="t-photo" src="/feedback/gabriel-pitzer.png" alt=""><div class="t-card-meta"><p class="t-card-name">Gabriel Pitzer</p><p class="t-card-source">Feedback pelo WhatsApp</p></div></div>
-              </div>
-              <!-- Slides reais -->
-              <div class="t-slide">
-                <span class="t-card-hearts">♥ ♥ ♥ ♥ ♥</span>
-                <p class="t-card-text">"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
-                <div class="t-card-author"><img class="t-photo" src="/feedback/mateus-cremon.png" alt="Mateus Cremon"><div class="t-card-meta"><p class="t-card-name">Mateus Cremon</p><p class="t-card-source">Feedback pelo WhatsApp</p></div></div>
-              </div>
-              <div class="t-slide">
-                <span class="t-card-hearts">♥ ♥ ♥ ♥ ♥</span>
-                <p class="t-card-text">"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
-                <div class="t-card-author"><img class="t-photo" src="/feedback/lucas-melso.png" alt="Lucas Melso"><div class="t-card-meta"><p class="t-card-name">Lucas Melso</p><p class="t-card-source">Feedback pelo WhatsApp</p></div></div>
-              </div>
-              <div class="t-slide">
-                <span class="t-card-hearts">♥ ♥ ♥ ♥ ♥</span>
-                <p class="t-card-text">"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
-                <div class="t-card-author"><img class="t-photo" src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer"><div class="t-card-meta"><p class="t-card-name">Gabriel Pitzer</p><p class="t-card-source">Feedback pelo WhatsApp</p></div></div>
-              </div>
-              <!-- Clone inicial (loop infinito) -->
-              <div class="t-slide nf-clone">
-                <span class="t-card-hearts">♥ ♥ ♥ ♥ ♥</span>
-                <p class="t-card-text">"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
-                <div class="t-card-author"><img class="t-photo" src="/feedback/mateus-cremon.png" alt=""><div class="t-card-meta"><p class="t-card-name">Mateus Cremon</p><p class="t-card-source">Feedback pelo WhatsApp</p></div></div>
+        <!-- 3 cards estáticos lado a lado -->
+        <div class="t-grid" data-reveal>
+
+          <div class="t-card-new">
+            <span class="hearts">♥ ♥ ♥ ♥ ♥</span>
+            <p class="quote">"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
+            <div class="author">
+              <img src="/feedback/mateus-cremon.png" alt="Mateus Cremon">
+              <div>
+                <p class="author-name">Mateus Cremon</p>
+                <p class="author-source">Feedback pelo WhatsApp</p>
               </div>
             </div>
           </div>
+
+          <div class="t-card-new">
+            <span class="hearts">♥ ♥ ♥ ♥ ♥</span>
+            <p class="quote">"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
+            <div class="author">
+              <img src="/feedback/lucas-melso.png" alt="Lucas Melso">
+              <div>
+                <p class="author-name">Lucas Melso</p>
+                <p class="author-source">Feedback pelo WhatsApp</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="t-card-new">
+            <span class="hearts">♥ ♥ ♥ ♥ ♥</span>
+            <p class="quote">"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
+            <div class="author">
+              <img src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer">
+              <div>
+                <p class="author-name">Gabriel Pitzer</p>
+                <p class="author-source">Feedback pelo WhatsApp</p>
+              </div>
+            </div>
+          </div>
+
         </div>
         <div style="height: clamp(64px, 9vw, 120px);"></div>
       </section>
@@ -2845,8 +2834,7 @@
       // Slider de fotos: 3 clones em cada ponta, 10 fotos reais, gap 16px
       makeSlider("nfViewport", "nfTrack", 3, 10, 16);
 
-      // Slider de testimonials: 1 clone em cada ponta, 3 reais, gap 16px
-      makeSlider("tViewport", "tTrack", 1, 3, 16);
+      // (testimonials são estáticos — sem slider)
 
     </script>
   </body>
