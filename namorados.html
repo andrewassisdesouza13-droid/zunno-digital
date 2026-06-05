@@ -1181,50 +1181,37 @@
       /* padding-bottom da seção de fotos */
       .album-section-pad { padding-bottom: clamp(80px, 12vw, 160px); }
 
-      /* ---------- Netflix Slider de fotos ---------- */
+      /* ==========================================================
+         Slider reutilizável (fotos E testimonials)
+         3 slides visíveis + peek 60px de cada lado, sem blur.
+         ========================================================== */
 
-      /*
-       * Layout Netflix: slider ocupa 100vw (quebra o container),
-       * 3 slides visíveis no desktop, 1.2 no mobile.
-       * Fades nas bordas: gradient + blur cobrem o peek lateral.
-       */
-
+      /* Wrapper externo — limita à largura do conteúdo */
       .nf-slider-outer {
         position: relative;
-        /* Quebra o padding do container pai pra ir de borda a borda */
-        width: 100vw;
-        margin-left: calc(-50vw + 50%);
+        max-width: 1180px;
+        margin: 0 auto;
         overflow: hidden;
         padding-bottom: clamp(80px, 12vw, 160px);
       }
 
-      /* Fade + blur nas bordas */
+      /* Fade simples nas bordas — sem blur */
       .nf-slider-outer::before,
       .nf-slider-outer::after {
         content: "";
         position: absolute;
         top: 0; bottom: 0;
-        width: 120px;
+        width: 80px;
         z-index: 3;
         pointer-events: none;
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
       }
-
       .nf-slider-outer::before {
         left: 0;
-        background: linear-gradient(to right,
-          var(--cream) 0%,
-          rgba(246, 243, 236, 0.7) 50%,
-          transparent 100%);
+        background: linear-gradient(to right, var(--cream), transparent);
       }
-
       .nf-slider-outer::after {
         right: 0;
-        background: linear-gradient(to left,
-          var(--cream) 0%,
-          rgba(246, 243, 236, 0.7) 50%,
-          transparent 100%);
+        background: linear-gradient(to left, var(--cream), transparent);
       }
 
       .nf-slider-viewport {
@@ -1232,7 +1219,6 @@
         user-select: none;
         overflow: visible;
       }
-
       .nf-slider-viewport:active { cursor: grabbing; }
 
       .nf-slider-track {
@@ -1244,16 +1230,16 @@
       }
 
       /*
-       * Desktop: 3 slides completos visíveis + peek ~10% em cada lado
-       * slide = (100vw - 2*peek - 2*gap) / 3  ≈  30vw
+       * peek fixo = 60px em cada lado
+       * slide = (100% - 2*60 - 2*16) / 3 = (100% - 152px) / 3
        */
       .nf-slide {
-        flex: 0 0 30vw;
+        flex: 0 0 calc((100% - 152px) / 3);
         background: var(--paper);
         padding: 10px 10px 36px;
         box-shadow:
-          0 16px 40px -12px rgba(43, 42, 40, 0.45),
-          0 4px 10px -4px rgba(43, 42, 40, 0.15);
+          0 14px 36px -10px rgba(43, 42, 40, 0.42),
+          0 3px 8px -4px rgba(43, 42, 40, 0.13);
         pointer-events: none;
         user-select: none;
         flex-shrink: 0;
@@ -1268,13 +1254,121 @@
         -webkit-user-drag: none;
       }
 
-      /* Mobile: 1 slide + peek 20% em cada lado → slide = 70vw */
+      /* Mobile: 1 slide + ~44px peek em cada lado */
       @media (max-width: 640px) {
         .nf-slider-outer::before,
-        .nf-slider-outer::after { width: 60px; }
-
-        .nf-slide { flex: 0 0 72vw; padding: 8px 8px 28px; }
+        .nf-slider-outer::after { width: 50px; }
+        .nf-slide { flex: 0 0 calc(100% - 88px); padding: 8px 8px 28px; }
         .nf-slider-track { gap: 10px; }
+      }
+
+      /* ---- Slide de testimonial (reutiliza .nf-slide mas muda o conteúdo) ---- */
+      .t-slide {
+        flex: 0 0 calc((100% - 152px) / 3);
+        background: rgba(0, 0, 0, 0.22);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        padding: 36px 28px 28px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        pointer-events: none;
+        user-select: none;
+        flex-shrink: 0;
+        min-height: 260px;
+      }
+
+      /* Aspas decorativas */
+      .t-slide::before {
+        content: "\201C";
+        position: absolute;
+        top: -12px; left: 16px;
+        font-family: var(--display);
+        font-size: 160px;
+        line-height: 1;
+        color: rgba(247, 239, 224, 0.07);
+        pointer-events: none;
+        font-style: italic;
+      }
+
+      .t-slide .t-card-hearts {
+        font-size: 11px;
+        letter-spacing: 5px;
+        color: rgba(247, 239, 224, 0.55);
+        margin: 0 0 16px;
+        display: block;
+      }
+
+      .t-slide .t-card-text {
+        font-family: var(--body);
+        font-style: italic;
+        font-size: 15px;
+        line-height: 1.75;
+        color: rgba(247, 239, 224, 0.9);
+        margin: 0;
+        flex: 1;
+        position: relative;
+        z-index: 1;
+        /* 4 linhas máximas */
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .t-slide .t-card-author {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(247, 239, 224, 0.14);
+      }
+
+      .t-slide .t-photo {
+        width: 44px; height: 44px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(247, 239, 224, 0.28);
+        flex-shrink: 0;
+      }
+
+      .t-slide .t-card-meta { display: flex; flex-direction: column; gap: 1px; }
+
+      .t-slide .t-card-name {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--cream-soft);
+        margin: 0;
+      }
+
+      .t-slide .t-card-source {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 11px;
+        color: rgba(247, 239, 224, 0.4);
+        margin: 0;
+      }
+
+      /* Mobile testimonials */
+      @media (max-width: 640px) {
+        .t-slide {
+          flex: 0 0 calc(100% - 88px);
+          padding: 28px 22px 22px;
+        }
+      }
+
+      /* Fade do slider de testimonials (sobre fundo vermelho) */
+      .t-slider-outer::before {
+        background: linear-gradient(to right, var(--red), transparent) !important;
+      }
+      .t-slider-outer::after {
+        background: linear-gradient(to left, var(--red), transparent) !important;
       }
 
       /* ---------- Testimonial / Prova social ---------- */
@@ -2331,45 +2425,40 @@
           </h2>
         </div>
 
-        <!-- 3 cards estáticos lado a lado — layout editorial -->
-        <div class="t-cards-grid" data-reveal>
-
-          <div class="t-card">
-            <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-            <p>"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
-            <div class="t-card-author">
-              <img class="t-photo" src="/feedback/mateus-cremon.png" alt="Mateus Cremon">
-              <div class="t-card-meta">
-                <p class="t-card-name">Mateus Cremon</p>
-                <p class="t-card-source">Feedback pelo WhatsApp</p>
+        <!-- Slider de testimonials — mesmo padrão das fotos -->
+        <div class="nf-slider-outer t-slider-outer" data-reveal>
+          <div class="nf-slider-viewport" id="tViewport">
+            <div class="nf-slider-track" id="tTrack">
+              <!-- Clones finais (loop infinito) -->
+              <div class="t-slide nf-clone">
+                <span class="t-card-hearts">♥ ♥ ♥ ♥ ♥</span>
+                <p class="t-card-text">"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
+                <div class="t-card-author"><img class="t-photo" src="/feedback/gabriel-pitzer.png" alt=""><div class="t-card-meta"><p class="t-card-name">Gabriel Pitzer</p><p class="t-card-source">Feedback pelo WhatsApp</p></div></div>
+              </div>
+              <!-- Slides reais -->
+              <div class="t-slide">
+                <span class="t-card-hearts">♥ ♥ ♥ ♥ ♥</span>
+                <p class="t-card-text">"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
+                <div class="t-card-author"><img class="t-photo" src="/feedback/mateus-cremon.png" alt="Mateus Cremon"><div class="t-card-meta"><p class="t-card-name">Mateus Cremon</p><p class="t-card-source">Feedback pelo WhatsApp</p></div></div>
+              </div>
+              <div class="t-slide">
+                <span class="t-card-hearts">♥ ♥ ♥ ♥ ♥</span>
+                <p class="t-card-text">"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
+                <div class="t-card-author"><img class="t-photo" src="/feedback/lucas-melso.png" alt="Lucas Melso"><div class="t-card-meta"><p class="t-card-name">Lucas Melso</p><p class="t-card-source">Feedback pelo WhatsApp</p></div></div>
+              </div>
+              <div class="t-slide">
+                <span class="t-card-hearts">♥ ♥ ♥ ♥ ♥</span>
+                <p class="t-card-text">"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
+                <div class="t-card-author"><img class="t-photo" src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer"><div class="t-card-meta"><p class="t-card-name">Gabriel Pitzer</p><p class="t-card-source">Feedback pelo WhatsApp</p></div></div>
+              </div>
+              <!-- Clone inicial (loop infinito) -->
+              <div class="t-slide nf-clone">
+                <span class="t-card-hearts">♥ ♥ ♥ ♥ ♥</span>
+                <p class="t-card-text">"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
+                <div class="t-card-author"><img class="t-photo" src="/feedback/mateus-cremon.png" alt=""><div class="t-card-meta"><p class="t-card-name">Mateus Cremon</p><p class="t-card-source">Feedback pelo WhatsApp</p></div></div>
               </div>
             </div>
           </div>
-
-          <div class="t-card">
-            <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-            <p>"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
-            <div class="t-card-author">
-              <img class="t-photo" src="/feedback/lucas-melso.png" alt="Lucas Melso">
-              <div class="t-card-meta">
-                <p class="t-card-name">Lucas Melso</p>
-                <p class="t-card-source">Feedback pelo WhatsApp</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="t-card">
-            <span class="t-card-hearts" aria-label="5 corações">♥ ♥ ♥ ♥ ♥</span>
-            <p>"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
-            <div class="t-card-author">
-              <img class="t-photo" src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer">
-              <div class="t-card-meta">
-                <p class="t-card-name">Gabriel Pitzer</p>
-                <p class="t-card-source">Feedback pelo WhatsApp</p>
-              </div>
-            </div>
-          </div>
-
         </div>
         <div style="height: clamp(64px, 9vw, 120px);"></div>
       </section>
@@ -2679,37 +2768,22 @@
         });
       }
 
-      // ---------- Netflix Slider fotos ----------
-      (function () {
-        const track = document.getElementById("nfTrack");
-        const vp    = document.getElementById("nfViewport");
-        if (!track) return;
+      // ---------- Slider reutilizável (fotos + testimonials) ----------
+      function makeSlider(vpId, trackId, clones, total, gap) {
+        const track = document.getElementById(trackId);
+        const vp    = document.getElementById(vpId);
+        if (!track || !vp) return;
 
-        const CLONES = 3;   // clones em cada ponta
-        const TOTAL  = 10;  // slides reais
-        const GAP    = 20;  // px — deve bater com o CSS gap
-
-        let current     = CLONES; // índice no início do 1º slide real
+        const PEEK = window.innerWidth <= 640 ? 44 : 60; // px
+        let current     = clones;
         let isAnimating = false;
 
-        function slideW() {
-          return track.children[0].offsetWidth + GAP;
-        }
+        function slideW() { return track.children[0].offsetWidth + gap; }
 
-        // peek = quanto da borda esquerda fica visível antes do primeiro slide
-        // No desktop temos ~10% de vw como peek; calcula dinamicamente
-        function peekW() {
-          const totalTrackVisible = vp.offsetWidth;
-          const sw = track.children[0].offsetWidth;
-          // número de slides que cabem + fração
-          // peek é o espaço sobrando dividido por 2
-          const slidesPerView = totalTrackVisible / sw;
-          const fullSlides = Math.floor(slidesPerView);
-          return (totalTrackVisible - fullSlides * sw - (fullSlides - 1) * GAP) / 2;
-        }
+        function peek() { return window.innerWidth <= 640 ? 44 : 60; }
 
         function getTranslate(idx) {
-          return -(idx * slideW() - peekW());
+          return -(idx * slideW() - peek());
         }
 
         function setPos(idx, animated) {
@@ -2726,27 +2800,24 @@
           setPos(current, true);
         }
 
-        // Após animação: se chegou nos clones, salta silenciosamente
         track.addEventListener("transitionend", () => {
-          if (current < CLONES) {
-            current += TOTAL;
+          if (current < clones) {
+            current += total;
             setPos(current, false);
-            void track.offsetWidth; // força reflow
-          } else if (current >= CLONES + TOTAL) {
-            current -= TOTAL;
+            void track.offsetWidth;
+          } else if (current >= clones + total) {
+            current -= total;
             setPos(current, false);
             void track.offsetWidth;
           }
           isAnimating = false;
         });
 
-        // Init
         setPos(current, false);
         void track.offsetWidth;
 
-        // Drag / swipe — mouse
+        // Drag mouse
         let startX = 0, startT = 0, dragging = false;
-
         vp.addEventListener("mousedown", (e) => {
           startX = e.clientX; startT = Date.now(); dragging = true;
           e.preventDefault();
@@ -2758,7 +2829,7 @@
           if (Math.abs(diff) > (fast ? 20 : 50)) advance(diff > 0 ? 1 : -1);
         });
 
-        // Drag / swipe — touch
+        // Swipe touch
         vp.addEventListener("touchstart", (e) => {
           startX = e.touches[0].clientX; startT = Date.now();
         }, { passive: true });
@@ -2769,7 +2840,13 @@
         });
 
         window.addEventListener("resize", () => setPos(current, false));
-      })();
+      }
+
+      // Slider de fotos: 3 clones em cada ponta, 10 fotos reais, gap 16px
+      makeSlider("nfViewport", "nfTrack", 3, 10, 16);
+
+      // Slider de testimonials: 1 clone em cada ponta, 3 reais, gap 16px
+      makeSlider("tViewport", "tTrack", 1, 3, 16);
 
     </script>
   </body>
