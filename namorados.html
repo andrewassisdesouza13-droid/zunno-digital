@@ -1185,123 +1185,130 @@
         padding-bottom: clamp(64px, 9vw, 120px);
       }
 
-      /* ---------- Foto Slider ---------- */
-      .foto-slider-wrap {
-        position: relative;
-        padding: 0 60px;
-      }
-
-      .slider-viewport {
-        overflow-x: scroll;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        display: flex;
-        gap: 18px;
-        padding: 18px 4px 24px;
-        cursor: grab;
-      }
-
-      .slider-viewport:active { cursor: grabbing; }
-      .slider-viewport::-webkit-scrollbar { display: none; }
-
-      .slider-slide {
-        flex: 0 0 calc(33.333% - 12px);
-        scroll-snap-align: start;
-        background: var(--paper);
-        padding: 10px 10px 32px;
-        box-shadow:
-          0 10px 28px -12px rgba(43, 42, 40, 0.4),
-          0 3px 8px -3px rgba(43, 42, 40, 0.12);
+      /* ---------- Gallery de fotos (main + thumbs) ---------- */
+      .gallery-wrap {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 0 24px;
         user-select: none;
-        pointer-events: none;
-        transition: box-shadow 0.3s;
       }
 
-      .slider-slide img {
+      .gallery-main-frame {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+        background: var(--ink);
+        aspect-ratio: 4 / 3;
+        box-shadow:
+          0 28px 64px -20px rgba(43, 42, 40, 0.55),
+          0 8px 20px -8px rgba(43, 42, 40, 0.18);
+      }
+
+      .gallery-main-img {
         width: 100%;
-        aspect-ratio: 1 / 1;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+
+      .gallery-main-img.fading { opacity: 0; }
+
+      /* Barra de thumbs */
+      .gallery-thumb-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .gallery-thumbs {
+        flex: 1;
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        padding: 4px 2px;
+      }
+
+      .gallery-thumbs::-webkit-scrollbar { display: none; }
+
+      .gallery-thumb {
+        flex: 0 0 auto;
+        width: 70px;
+        height: 52px;
+        border-radius: 7px;
+        overflow: hidden;
+        border: 2.5px solid transparent;
+        padding: 0;
+        cursor: pointer;
+        background: var(--ink);
+        box-shadow: 0 2px 8px rgba(43, 42, 40, 0.2);
+        transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      }
+
+      .gallery-thumb img {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
         display: block;
         pointer-events: none;
-        draggable: false;
       }
 
-      /* Botões prev/next */
-      .slider-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 46px;
-        height: 46px;
+      .gallery-thumb.active {
+        border-color: var(--red);
+        transform: scale(1.1);
+        box-shadow: 0 4px 14px rgba(200, 48, 42, 0.35);
+      }
+
+      .gallery-thumb:hover:not(.active) {
+        border-color: rgba(43, 42, 40, 0.4);
+        transform: scale(1.05);
+      }
+
+      /* Botões nav (usados pela gallery e reutilizáveis) */
+      .gallery-btn {
+        flex: 0 0 auto;
+        width: 42px;
+        height: 42px;
         border-radius: 50%;
         border: 2px solid var(--ink);
         background: var(--paper);
         color: var(--ink);
-        font-size: 26px;
+        font-size: 22px;
         line-height: 1;
         cursor: pointer;
-        z-index: 2;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 3px 3px 0 var(--ink);
-        transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+        box-shadow: 2px 2px 0 var(--ink);
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
         padding: 0;
         font-family: var(--display);
       }
 
-      .slider-btn:hover:not(:disabled) {
+      .gallery-btn:hover {
         background: var(--ink);
         color: var(--cream-soft);
-        transform: translateY(calc(-50% - 1px)) translateX(-1px);
-        box-shadow: 4px 4px 0 var(--red);
+        transform: scale(1.08);
+        box-shadow: 3px 3px 0 var(--red);
       }
 
-      .slider-btn:disabled { opacity: 0.25; cursor: default; pointer-events: none; }
-      .slider-btn--prev { left: 4px; }
-      .slider-btn--next { right: 4px; }
-
-      /* Dots */
-      .slider-dots {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        margin-top: 12px;
-      }
-
-      .slider-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--cream-deep);
-        border: none;
-        cursor: pointer;
-        padding: 0;
-        transition: background 0.25s, transform 0.25s;
-      }
-
-      .slider-dot.active {
-        background: var(--red);
-        transform: scale(1.35);
-      }
-
-      /* Mobile: 1 por vez */
       @media (max-width: 560px) {
-        .foto-slider-wrap { padding: 0 44px; }
-
-        .slider-slide {
-          flex: 0 0 100%;
-          scroll-snap-align: center;
-        }
-
-        .slider-btn { width: 38px; height: 38px; font-size: 20px; box-shadow: 2px 2px 0 var(--ink); }
-        .slider-btn--prev { left: 0; }
-        .slider-btn--next { right: 0; }
+        .gallery-wrap { padding: 0 16px; }
+        .gallery-main-frame { border-radius: 10px; aspect-ratio: 1 / 1; }
+        .gallery-thumb { width: 52px; height: 40px; border-radius: 5px; }
+        .gallery-btn { width: 36px; height: 36px; font-size: 18px; }
       }
 
       /* ---------- Testimonial / Prova social ---------- */
+
+      @keyframes marquee-fwd {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
       .t-section-title {
         color: var(--cream-soft) !important;
         text-align: center;
@@ -2165,26 +2172,33 @@
           </div>
         </div>
 
-        <!-- Slider interativo de fotos -->
+        <!-- Gallery: foto principal + thumbs -->
         <p class="carousel-label" data-reveal>fotos reais do produto ♥</p>
-        <div class="foto-slider-wrap" data-reveal>
-          <button class="slider-btn slider-btn--prev" id="sliderPrev" aria-label="Foto anterior">‹</button>
+        <div class="gallery-wrap" data-reveal>
 
-          <div class="slider-viewport" id="fotoSlider">
-            <div class="slider-slide"><img src="/fotos/1.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
-            <div class="slider-slide"><img src="/fotos/2.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
-            <div class="slider-slide"><img src="/fotos/3.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
-            <div class="slider-slide"><img src="/fotos/4.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
-            <div class="slider-slide"><img src="/fotos/5.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
-            <div class="slider-slide"><img src="/fotos/6.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
-            <div class="slider-slide"><img src="/fotos/7.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
-            <div class="slider-slide"><img src="/fotos/8.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
-            <div class="slider-slide"><img src="/fotos/9.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
-            <div class="slider-slide"><img src="/fotos/10.jpg" alt="Kit Estúdio Papuli" loading="lazy"></div>
+          <!-- Foto principal grande -->
+          <div class="gallery-main-frame">
+            <img class="gallery-main-img" id="galleryMainImg" src="/fotos/1.jpg" alt="Kit Estúdio Papuli">
           </div>
 
-          <button class="slider-btn slider-btn--next" id="sliderNext" aria-label="Próxima foto">›</button>
-          <div class="slider-dots" id="sliderDots"></div>
+          <!-- Linha de miniaturas com setas -->
+          <div class="gallery-thumb-row">
+            <button class="gallery-btn" id="galleryPrev" aria-label="Foto anterior">‹</button>
+            <div class="gallery-thumbs" id="galleryThumbs">
+              <button class="gallery-thumb active" data-idx="0"><img src="/fotos/1.jpg"  alt="Foto 1"></button>
+              <button class="gallery-thumb"         data-idx="1"><img src="/fotos/2.jpg"  alt="Foto 2"></button>
+              <button class="gallery-thumb"         data-idx="2"><img src="/fotos/3.jpg"  alt="Foto 3"></button>
+              <button class="gallery-thumb"         data-idx="3"><img src="/fotos/4.jpg"  alt="Foto 4"></button>
+              <button class="gallery-thumb"         data-idx="4"><img src="/fotos/5.jpg"  alt="Foto 5"></button>
+              <button class="gallery-thumb"         data-idx="5"><img src="/fotos/6.jpg"  alt="Foto 6"></button>
+              <button class="gallery-thumb"         data-idx="6"><img src="/fotos/7.jpg"  alt="Foto 7"></button>
+              <button class="gallery-thumb"         data-idx="7"><img src="/fotos/8.jpg"  alt="Foto 8"></button>
+              <button class="gallery-thumb"         data-idx="8"><img src="/fotos/9.jpg"  alt="Foto 9"></button>
+              <button class="gallery-thumb"         data-idx="9"><img src="/fotos/10.jpg" alt="Foto 10"></button>
+            </div>
+            <button class="gallery-btn" id="galleryNext" aria-label="Próxima foto">›</button>
+          </div>
+
         </div>
       </section>
 
@@ -2663,79 +2677,72 @@
         });
       }
 
-      // ---------- Foto Slider ----------
+      // ---------- Gallery fotos (main + thumbs) ----------
       (function () {
-        const vp       = document.getElementById("fotoSlider");
-        const prevBtn  = document.getElementById("sliderPrev");
-        const nextBtn  = document.getElementById("sliderNext");
-        const dotsWrap = document.getElementById("sliderDots");
-        if (!vp) return;
+        const mainImg  = document.getElementById("galleryMainImg");
+        const thumbsEl = document.getElementById("galleryThumbs");
+        const prevBtn  = document.getElementById("galleryPrev");
+        const nextBtn  = document.getElementById("galleryNext");
+        if (!mainImg) return;
 
-        const slides = vp.querySelectorAll(".slider-slide");
-        const total  = slides.length;
+        const FOTOS = [
+          "/fotos/1.jpg","/fotos/2.jpg","/fotos/3.jpg","/fotos/4.jpg","/fotos/5.jpg",
+          "/fotos/6.jpg","/fotos/7.jpg","/fotos/8.jpg","/fotos/9.jpg","/fotos/10.jpg"
+        ];
+        const thumbBtns = Array.from(thumbsEl.querySelectorAll(".gallery-thumb"));
+        let current = 0;
 
-        // Gera dots
-        const dots = Array.from({ length: total }, (_, i) => {
-          const d = document.createElement("button");
-          d.className = "slider-dot";
-          d.setAttribute("aria-label", "Foto " + (i + 1));
-          d.addEventListener("click", () => scrollToSlide(i));
-          dotsWrap.appendChild(d);
-          return d;
-        });
+        function goTo(idx) {
+          current = ((idx % FOTOS.length) + FOTOS.length) % FOTOS.length; // wrap infinito
 
-        function slideWidth() {
-          return slides[0].offsetWidth + 18; // 18 = gap
+          // Cross-fade
+          mainImg.classList.add("fading");
+          setTimeout(() => {
+            mainImg.src = FOTOS[current];
+            mainImg.classList.remove("fading");
+          }, 180);
+
+          // Destaca thumb ativa e centraliza no scroll
+          thumbBtns.forEach((t, i) => t.classList.toggle("active", i === current));
+          thumbBtns[current].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
         }
 
-        function currentIdx() {
-          return Math.round(vp.scrollLeft / slideWidth());
-        }
+        // Clicks nas thumbs
+        thumbBtns.forEach((t, i) => t.addEventListener("click", () => goTo(i)));
 
-        function scrollToSlide(idx) {
-          const clamped = Math.max(0, Math.min(idx, total - 1));
-          vp.scrollTo({ left: clamped * slideWidth(), behavior: "smooth" });
-        }
+        // Botões de nav
+        prevBtn.addEventListener("click", () => goTo(current - 1));
+        nextBtn.addEventListener("click", () => goTo(current + 1));
 
-        function updateUI() {
-          const idx = currentIdx();
-          dots.forEach((d, i) => d.classList.toggle("active", i === idx));
-          prevBtn.disabled = idx === 0;
-          nextBtn.disabled = idx >= total - 1;
-        }
-
-        prevBtn.addEventListener("click", () => scrollToSlide(currentIdx() - 1));
-        nextBtn.addEventListener("click", () => scrollToSlide(currentIdx() + 1));
-
-        vp.addEventListener("scroll", updateUI, { passive: true });
-        window.addEventListener("resize", updateUI);
-
-        // Drag com mouse (desktop)
-        let startX = 0, startScroll = 0, dragging = false;
-
-        vp.addEventListener("mousedown", (e) => {
-          dragging = true;
-          startX = e.clientX;
-          startScroll = vp.scrollLeft;
-          vp.style.cursor = "grabbing";
-          vp.style.scrollBehavior = "auto";
+        // Swipe touch na foto principal
+        let touchStartX = 0;
+        mainImg.parentElement.addEventListener("touchstart", (e) => {
+          touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        mainImg.parentElement.addEventListener("touchend", (e) => {
+          const diff = touchStartX - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 40) diff > 0 ? goTo(current + 1) : goTo(current - 1);
         });
 
-        window.addEventListener("mousemove", (e) => {
-          if (!dragging) return;
-          vp.scrollLeft = startScroll - (e.clientX - startX);
+        // Drag mouse na foto principal (desktop)
+        let dragStartX = 0, isDragging = false;
+        mainImg.parentElement.addEventListener("mousedown", (e) => {
+          dragStartX = e.clientX; isDragging = true;
+        });
+        mainImg.parentElement.addEventListener("mouseup", (e) => {
+          if (!isDragging) return; isDragging = false;
+          const diff = dragStartX - e.clientX;
+          if (Math.abs(diff) > 40) diff > 0 ? goTo(current + 1) : goTo(current - 1);
+        });
+        mainImg.parentElement.addEventListener("mouseleave", () => { isDragging = false; });
+
+        // Teclado
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowLeft")  goTo(current - 1);
+          if (e.key === "ArrowRight") goTo(current + 1);
         });
 
-        window.addEventListener("mouseup", (e) => {
-          if (!dragging) return;
-          dragging = false;
-          vp.style.cursor = "grab";
-          vp.style.scrollBehavior = "smooth";
-          // snap pro mais próximo
-          scrollToSlide(currentIdx());
-        });
-
-        updateUI();
+        goTo(0);
       })();
 
     </script>
