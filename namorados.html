@@ -1216,30 +1216,16 @@
         display: flex;
         gap: 14px;
         width: max-content;
-        will-change: transform;
         padding: 10px 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
       }
 
-      .marquee-row:not(.reverse) .marquee-track {
-        animation: marquee-fwd 28s linear infinite;
-      }
-
-      .marquee-row.reverse .marquee-track {
-        animation: marquee-bwd 32s linear infinite;
-      }
-
-      .marquee-row:hover .marquee-track {
-        animation-play-state: paused;
-      }
-
-      @keyframes marquee-fwd {
-        0%   { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-      }
-
-      @keyframes marquee-bwd {
-        0%   { transform: translateX(-50%); }
-        100% { transform: translateX(0); }
+      .marquee-track::-webkit-scrollbar {
+        display: none;
       }
 
       .marquee-slide {
@@ -2002,6 +1988,16 @@
           bottom: -14px;
           font-size: 12px;
           padding: 7px 14px;
+        }
+
+        /* Carrossel de fotos: menos espaço entre imagens */
+        .marquee-slide {
+          width: 160px;
+          padding: 8px 8px 8px;
+        }
+
+        .marquee-track {
+          gap: 8px;
         }
 
         /* Hero mais compacto no mobile */
