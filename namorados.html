@@ -1182,18 +1182,52 @@
       .album-section-pad { padding-bottom: clamp(80px, 12vw, 160px); }
 
       /* ---------- Netflix Slider de fotos ---------- */
+
+      /*
+       * Layout: [fade-left | 20% peek] [slide] [gap] [slide] [20% peek | fade-right]
+       * Slide width = (viewport - gap) / 2.4  →  2 slides + 0.4 de peek
+       * Fade: pseudo-element com gradient cream→transparent + backdrop-filter blur
+       */
+
       .nf-slider-outer {
-        overflow: hidden;                    /* clipa o peek nas bordas */
+        position: relative;
+        overflow: hidden;
         padding-bottom: clamp(80px, 12vw, 160px);
       }
 
+      /* Fade + blur nas bordas (cobre o peek das laterais) */
+      .nf-slider-outer::before,
+      .nf-slider-outer::after {
+        content: "";
+        position: absolute;
+        top: 0; bottom: 0;
+        width: 14%;
+        z-index: 3;
+        pointer-events: none;
+        backdrop-filter: blur(6px) saturate(0.6);
+        -webkit-backdrop-filter: blur(6px) saturate(0.6);
+      }
+
+      .nf-slider-outer::before {
+        left: 0;
+        background: linear-gradient(to right,
+          var(--cream) 0%,
+          rgba(246, 243, 236, 0.85) 40%,
+          transparent 100%);
+      }
+
+      .nf-slider-outer::after {
+        right: 0;
+        background: linear-gradient(to left,
+          var(--cream) 0%,
+          rgba(246, 243, 236, 0.85) 40%,
+          transparent 100%);
+      }
+
       .nf-slider-viewport {
-        /* Extende além da tela pra mostrar peek dos lados */
-        margin: 0 -40px;
-        overflow: visible;
-        position: relative;
         cursor: grab;
         user-select: none;
+        overflow: visible;
       }
 
       .nf-slider-viewport:active { cursor: grabbing; }
@@ -1201,12 +1235,13 @@
       .nf-slider-track {
         display: flex;
         gap: 20px;
-        transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         will-change: transform;
       }
 
+      /* 2 slides visíveis = (100% - 1 gap) / 2.4  →  cada slide ~40.8% da tela */
       .nf-slide {
-        flex: 0 0 calc(33.333% - 14px);
+        flex: 0 0 calc((100% - 20px) / 2.4);
         background: var(--paper);
         padding: 10px 10px 36px;
         box-shadow:
@@ -1225,50 +1260,17 @@
         -webkit-user-drag: none;
       }
 
-      /* Botões sobre o slider */
-      .nf-slider-wrap {
-        position: relative;
-        padding: 0 48px;
-      }
-
-      .nf-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        border: 2px solid var(--ink);
-        background: var(--paper);
-        color: var(--ink);
-        font-size: 24px;
-        font-family: var(--display);
-        line-height: 1;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 2px 2px 0 var(--ink);
-        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-        padding: 0;
-        z-index: 10;
-      }
-
-      .nf-btn:hover {
-        background: var(--ink);
-        color: var(--cream-soft);
-        box-shadow: 3px 3px 0 var(--red);
-      }
-
-      .nf-btn--prev { left: 0; }
-      .nf-btn--next { right: 0; }
-
+      /* Mobile: 1 slide central + 20% peek em cada lado */
       @media (max-width: 640px) {
-        .nf-slider-viewport { margin: 0 -20px; }
-        .nf-slide { flex: 0 0 calc(75% - 10px); padding: 8px 8px 28px; }
+        .nf-slider-outer::before,
+        .nf-slider-outer::after { width: 16%; }
+
+        .nf-slide {
+          flex: 0 0 calc((100% - 12px) / 1.4); /* ~68% da tela → ~20% peek cada lado */
+          padding: 8px 8px 28px;
+        }
+
         .nf-slider-track { gap: 12px; }
-        .nf-slider-wrap { padding: 0 36px; }
-        .nf-btn { width: 36px; height: 36px; font-size: 18px; }
       }
 
       /* ---------- Testimonial / Prova social ---------- */
@@ -2109,37 +2111,31 @@
           </div>
         </div>
 
-        <!-- Netflix slider -->
+        <!-- Netflix slider: arraste o dedo / mouse -->
         <p class="carousel-label" data-reveal>fotos reais do produto ♥</p>
         <div class="nf-slider-outer" data-reveal>
-          <div class="nf-slider-wrap">
-            <button class="nf-btn nf-btn--prev" id="nfPrev" aria-label="Foto anterior">‹</button>
-
-            <div class="nf-slider-viewport" id="nfViewport">
-              <div class="nf-slider-track" id="nfTrack">
-                <!-- Clones do final (para loop infinito) -->
-                <div class="nf-slide nf-clone"><img src="/fotos/8.jpg"  alt="" aria-hidden="true"></div>
-                <div class="nf-slide nf-clone"><img src="/fotos/9.jpg"  alt="" aria-hidden="true"></div>
-                <div class="nf-slide nf-clone"><img src="/fotos/10.jpg" alt="" aria-hidden="true"></div>
-                <!-- Slides reais -->
-                <div class="nf-slide"><img src="/fotos/1.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/2.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/3.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/4.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/5.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/6.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/7.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/8.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/9.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/10.jpg" alt="Kit Estúdio Papuli"></div>
-                <!-- Clones do início (para loop infinito) -->
-                <div class="nf-slide nf-clone"><img src="/fotos/1.jpg" alt="" aria-hidden="true"></div>
-                <div class="nf-slide nf-clone"><img src="/fotos/2.jpg" alt="" aria-hidden="true"></div>
-                <div class="nf-slide nf-clone"><img src="/fotos/3.jpg" alt="" aria-hidden="true"></div>
-              </div>
+          <div class="nf-slider-viewport" id="nfViewport">
+            <div class="nf-slider-track" id="nfTrack">
+              <!-- Clones do final (loop infinito ao voltar) -->
+              <div class="nf-slide nf-clone"><img src="/fotos/8.jpg"  alt="" aria-hidden="true"></div>
+              <div class="nf-slide nf-clone"><img src="/fotos/9.jpg"  alt="" aria-hidden="true"></div>
+              <div class="nf-slide nf-clone"><img src="/fotos/10.jpg" alt="" aria-hidden="true"></div>
+              <!-- Slides reais -->
+              <div class="nf-slide"><img src="/fotos/1.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/2.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/3.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/4.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/5.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/6.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/7.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/8.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/9.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/10.jpg" alt="Kit Estúdio Papuli"></div>
+              <!-- Clones do início (loop infinito ao avançar) -->
+              <div class="nf-slide nf-clone"><img src="/fotos/1.jpg" alt="" aria-hidden="true"></div>
+              <div class="nf-slide nf-clone"><img src="/fotos/2.jpg" alt="" aria-hidden="true"></div>
+              <div class="nf-slide nf-clone"><img src="/fotos/3.jpg" alt="" aria-hidden="true"></div>
             </div>
-
-            <button class="nf-btn nf-btn--next" id="nfNext" aria-label="Próxima foto">›</button>
           </div>
         </div>
       </section>
@@ -2579,27 +2575,37 @@
 
       // ---------- Netflix Slider fotos ----------
       (function () {
-        const track   = document.getElementById("nfTrack");
-        const vp      = document.getElementById("nfViewport");
-        const prevBtn = document.getElementById("nfPrev");
-        const nextBtn = document.getElementById("nfNext");
+        const track = document.getElementById("nfTrack");
+        const vp    = document.getElementById("nfViewport");
         if (!track) return;
 
-        const CLONES  = 3;   // quantos clones em cada ponta
-        const TOTAL   = 10;  // fotos reais
-        const GAP     = 20;  // px, igual ao CSS gap
+        const CLONES = 3;   // clones em cada ponta
+        const TOTAL  = 10;  // slides reais
+        const GAP    = 20;  // px — deve bater com o CSS gap
 
-        let current = CLONES; // começa no primeiro slide real
+        let current     = CLONES; // índice no início do 1º slide real
         let isAnimating = false;
 
         function slideW() {
           return track.children[0].offsetWidth + GAP;
         }
 
+        // peek = espaço que sobra dos dois lados quando 2 slides estão centralizados
+        function peekW() {
+          const sw = track.children[0].offsetWidth;
+          return (vp.offsetWidth - 2 * sw - GAP) / 2;
+        }
+
+        function getTranslate(idx) {
+          // offset tal que o slide[idx] começa logo após o peek esquerdo
+          return -(idx * slideW() - peekW());
+        }
+
         function setPos(idx, animated) {
-          if (!animated) track.style.transition = "none";
-          else           track.style.transition  = "transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94)";
-          track.style.transform = "translateX(" + (-idx * slideW()) + "px)";
+          track.style.transition = animated
+            ? "transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)"
+            : "none";
+          track.style.transform = "translateX(" + getTranslate(idx) + "px)";
         }
 
         function advance(dir) {
@@ -2609,50 +2615,49 @@
           setPos(current, true);
         }
 
-        // Após a animação, reposiciona silenciosamente se estiver nos clones
+        // Após animação: se chegou nos clones, salta silenciosamente
         track.addEventListener("transitionend", () => {
-          if (current <= CLONES - 1) {
-            current = CLONES + TOTAL - (CLONES - current);
+          if (current < CLONES) {
+            current += TOTAL;
             setPos(current, false);
+            void track.offsetWidth; // força reflow
           } else if (current >= CLONES + TOTAL) {
-            current = CLONES + (current - (CLONES + TOTAL));
+            current -= TOTAL;
             setPos(current, false);
+            void track.offsetWidth;
           }
-          // Força reflow antes de re-habilitar transição
-          void track.offsetWidth;
           isAnimating = false;
         });
 
-        // Inicializa na posição correta sem animação
-        function init() {
-          setPos(current, false);
-          void track.offsetWidth;
-          track.style.transition = "transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94)";
-        }
+        // Init
+        setPos(current, false);
+        void track.offsetWidth;
 
-        prevBtn.addEventListener("click", () => advance(-1));
-        nextBtn.addEventListener("click", () => advance(1));
+        // Drag / swipe — mouse
+        let startX = 0, startT = 0, dragging = false;
 
-        // Drag / swipe
-        let startX = 0, startTime = 0, dragging = false;
+        vp.addEventListener("mousedown", (e) => {
+          startX = e.clientX; startT = Date.now(); dragging = true;
+          e.preventDefault();
+        });
+        window.addEventListener("mouseup", (e) => {
+          if (!dragging) return; dragging = false;
+          const diff = startX - e.clientX;
+          const fast = Date.now() - startT < 300;
+          if (Math.abs(diff) > (fast ? 20 : 50)) advance(diff > 0 ? 1 : -1);
+        });
 
-        function dragStart(x) { startX = x; startTime = Date.now(); dragging = true; }
-        function dragEnd(x) {
-          if (!dragging) return;
-          dragging = false;
-          const diff = startX - x;
-          const fast = (Date.now() - startTime) < 300;
-          if (Math.abs(diff) > (fast ? 20 : 60)) advance(diff > 0 ? 1 : -1);
-        }
+        // Drag / swipe — touch
+        vp.addEventListener("touchstart", (e) => {
+          startX = e.touches[0].clientX; startT = Date.now();
+        }, { passive: true });
+        vp.addEventListener("touchend", (e) => {
+          const diff = startX - e.changedTouches[0].clientX;
+          const fast = Date.now() - startT < 300;
+          if (Math.abs(diff) > (fast ? 20 : 50)) advance(diff > 0 ? 1 : -1);
+        });
 
-        vp.addEventListener("mousedown",  (e) => { dragStart(e.clientX); });
-        window.addEventListener("mouseup", (e) => { dragEnd(e.clientX); });
-        vp.addEventListener("touchstart", (e) => { dragStart(e.touches[0].clientX); }, { passive: true });
-        vp.addEventListener("touchend",   (e) => { dragEnd(e.changedTouches[0].clientX); });
-
-        window.addEventListener("resize", () => { setPos(current, false); });
-
-        init();
+        window.addEventListener("resize", () => setPos(current, false));
       })();
 
     </script>
