@@ -238,6 +238,11 @@ function doPost(e) {
         var celPgto = sheet.getRange(linhaExistente, COL_PAGAMENTO);
         if (String(celPgto.getValue()).indexOf("PAGO") === -1) {
           celPgto.setValue("PAGO ✓ " + dataStr);
+          // Primeira confirmacao → dispara Purchase pro Meta (CAPI)
+          var telCapi  = String(sheet.getRange(linhaExistente, COL_WHATSAPP).getValue()).trim() || whatsapp;
+          var nomeCapi = String(sheet.getRange(linhaExistente, COL_NOME).getValue()).trim() || nome;
+          var valCapi  = parseFloat(sheet.getRange(linhaExistente, 4).getValue()) || total;
+          enviarPurchaseCAPI_(pedidoId, valCapi, plano, telCapi, nomeCapi);
         }
       }
       return ContentService
@@ -272,6 +277,11 @@ function doPost(e) {
       .setFontSize(10)
       .setVerticalAlignment("middle");
 
+    // Se a linha ja nasceu paga (webhook/obrigado chegou antes do checkout), dispara CAPI
+    if (pago) {
+      enviarPurchaseCAPI_(pedidoId, total, plano, whatsapp, nome);
+    }
+
     return ContentService
       .createTextOutput(JSON.stringify({ status: "ok", linha: ultimaLinha }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -280,6 +290,87 @@ function doPost(e) {
     return ContentService
       .createTextOutput(JSON.stringify({ status: "erro", mensagem: err.toString() }))
       .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// ── Meta Conversions API (CAPI) ──────────────────────────────
+// Dispara o evento "Purchase" direto pro Meta quando o pagamento confirma.
+// Funciona mesmo no Pix sem retorno ao site (server-to-server).
+// O token fica em: Projeto > Configuracoes (engrenagem) > Propriedades do script
+//   chave: META_CAPI_TOKEN   valor: <token gerado no Gerenciador de Eventos>
+
+var META_PIXEL_ID = "3350637735316682";
+var META_API_VER  = "v21.0";
+
+function getCapiToken_() {
+  return PropertiesService.getScriptProperties().getProperty("META_CAPI_TOKEN") || "";
+}
+
+// SHA-256 em hex (exigido pelo Meta pra dados pessoais)
+function sha256Hex_(str) {
+  if (!str) return "";
+  var bytes = Utilities.computeDigest(
+    Utilities.DigestAlgorithm.SHA_256,
+    str.toString().trim().toLowerCase(),
+    Utilities.Charset.UTF_8
+  );
+  return bytes.map(function (b) {
+    var v = (b < 0 ? b + 256 : b).toString(16);
+    return v.length === 1 ? "0" + v : v;
+  }).join("");
+}
+
+// Telefone no formato que o Meta espera: digitos com codigo do pais (ex 5516981189075)
+function normalizarTelefoneCapi_(tel) {
+  var d = (tel || "").toString().replace(/\D/g, "");
+  if (!d) return "";
+  d = d.replace(/^0+/, "");
+  if (d.length <= 11 && d.indexOf("55") !== 0) d = "55" + d;
+  return d;
+}
+
+function enviarPurchaseCAPI_(pedidoId, valor, plano, telefone, nome) {
+  try {
+    var token = getCapiToken_();
+    if (!token || !pedidoId) return;
+
+    var userData = {};
+    var telNorm = normalizarTelefoneCapi_(telefone);
+    if (telNorm) userData.ph = [sha256Hex_(telNorm)];
+    if (nome)    userData.fn = [sha256Hex_(nome.toString().split(" ")[0])];
+
+    // Meta exige pelo menos 1 identificador no user_data
+    if (!userData.ph && !userData.fn) return;
+
+    var payload = {
+      data: [{
+        event_name: "Purchase",
+        event_time: Math.floor(Date.now() / 1000),
+        action_source: "website",
+        event_id: pedidoId,            // dedup com o Pixel da pagina de obrigado
+        event_source_url: "https://zunno.digital/namoradosobrigado",
+        user_data: userData,
+        custom_data: {
+          currency: "BRL",
+          value: Number(valor) || 0,
+          content_name: plano || "Album Papuli",
+          content_type: "product",
+          order_id: pedidoId
+        }
+      }]
+    };
+
+    var url = "https://graph.facebook.com/" + META_API_VER + "/" +
+              META_PIXEL_ID + "/events?access_token=" + encodeURIComponent(token);
+
+    UrlFetchApp.fetch(url, {
+      method: "post",
+      contentType: "application/json",
+      payload: JSON.stringify(payload),
+      muteHttpExceptions: true
+    });
+  } catch (err) {
+    // nunca quebra o registro do pedido se o CAPI falhar
   }
 }
 

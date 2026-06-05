@@ -879,6 +879,8 @@
         if (total) document.getElementById("orderTotal").textContent = "R$ " + total;
 
         // ---------- Meta Pixel: Purchase ----------
+        // eventID = nº do pedido → deduplica com o evento do CAPI (Apps Script).
+        // Se os dois dispararem (cliente voltou + servidor), o Meta conta 1 só.
         if (typeof fbq === "function") {
           const valor = total ? parseFloat(total.replace(",", ".")) : undefined;
           fbq("track", "Purchase", {
@@ -889,7 +891,7 @@
             content_type: "product",
             num_items: 1,
             order_id: pedido || undefined
-          });
+          }, pedido ? { eventID: pedido } : undefined);
         }
 
         // ---------- Log no Google Sheets ----------
