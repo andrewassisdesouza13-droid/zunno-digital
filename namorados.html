@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Papuli | Edição Dia dos Namorados 2026</title>
+    <title>Estúdio Papuli | Edição Dia dos Namorados 2026</title>
     <meta
       name="description"
       content="Fotos estilo Polaroid, álbum de figurinhas e cartão com QR Code feitos com as fotos de vocês. Embalado com chocolate Ferrero. Edição limitada, entrega garantida antes da sexta 12/06."
     />
     <meta name="theme-color" content="#c8302a" />
-    <meta property="og:title" content="Papuli — Edição Dia dos Namorados 2026" />
+    <meta property="og:title" content="Estúdio Papuli — Edição Dia dos Namorados 2026" />
     <meta property="og:description" content="Tirem as fotos do celular. Finalmente. Fotos estilo Polaroid, álbum e Ferrero, entrega antes do dia 12." />
     <meta property="og:type" content="website" />
 
@@ -1185,92 +1185,121 @@
         padding-bottom: clamp(64px, 9vw, 120px);
       }
 
-      .marquee-row {
-        overflow: hidden;
+      /* ---------- Foto Slider ---------- */
+      .foto-slider-wrap {
         position: relative;
+        padding: 0 60px;
       }
 
-      /* Fade edges */
-      .marquee-row::before,
-      .marquee-row::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 80px;
-        z-index: 2;
-        pointer-events: none;
-      }
-
-      .marquee-row::before {
-        left: 0;
-        background: linear-gradient(to right, var(--cream) 30%, transparent);
-      }
-
-      .marquee-row::after {
-        right: 0;
-        background: linear-gradient(to left, var(--cream) 30%, transparent);
-      }
-
-      .marquee-track {
-        display: flex;
-        gap: 14px;
-        width: max-content;
-        padding: 10px 0;
-        overflow-x: auto;
-        overflow-y: hidden;
+      .slider-viewport {
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
+        display: flex;
+        gap: 18px;
+        padding: 18px 4px 24px;
+        cursor: grab;
       }
 
-      .marquee-track::-webkit-scrollbar {
-        display: none;
-      }
+      .slider-viewport:active { cursor: grabbing; }
+      .slider-viewport::-webkit-scrollbar { display: none; }
 
-      .marquee-slide {
-        flex: 0 0 auto;
-        width: 250px;
+      .slider-slide {
+        flex: 0 0 calc(33.333% - 12px);
+        scroll-snap-align: start;
         background: var(--paper);
-        padding: 12px 12px 12px;
-        position: relative;
+        padding: 10px 10px 32px;
         box-shadow:
-          0 10px 24px -12px rgba(43, 42, 40, 0.45),
-          0 3px 7px -3px rgba(43, 42, 40, 0.13);
-        transform: rotate(-1.6deg);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+          0 10px 28px -12px rgba(43, 42, 40, 0.4),
+          0 3px 8px -3px rgba(43, 42, 40, 0.12);
         user-select: none;
-        cursor: default;
+        pointer-events: none;
+        transition: box-shadow 0.3s;
       }
 
-      .marquee-slide:nth-child(2n) { transform: rotate(1.3deg); }
-      .marquee-slide:nth-child(3n) { transform: rotate(0.5deg); }
-      .marquee-slide:nth-child(4n) { transform: rotate(-0.8deg); }
-
-      .marquee-slide:hover {
-        transform: rotate(0) scale(1.02);
-        box-shadow:
-          0 8px 20px -8px rgba(43, 42, 40, 0.3),
-          0 2px 5px -3px rgba(43, 42, 40, 0.1);
-        z-index: 2;
-      }
-
-      .slide-img {
+      .slider-slide img {
         width: 100%;
         aspect-ratio: 1 / 1;
-        display: block;
         object-fit: cover;
+        display: block;
+        pointer-events: none;
+        draggable: false;
       }
 
-      /* Placeholder gradients */
-      .slide-img.s1 { background: linear-gradient(135deg, #f0c2ad 0%, #c8302a 80%); }
-      .slide-img.s2 { background: linear-gradient(155deg, #2b2a28 0%, #6b2520 100%); }
-      .slide-img.s3 { background: linear-gradient(120deg, #e6c8a0 0%, #9b211d 100%); }
-      .slide-img.s4 { background: radial-gradient(circle at 40% 35%, #d9a86a, #6b3a12 80%); }
-      .slide-img.s5 { background: linear-gradient(160deg, #f7e0c8 0%, #2b2a28 100%); }
-      .slide-img.s6 { background: linear-gradient(138deg, #d97a5e 0%, #2b2a28 100%); }
-      .slide-img.s7 { background: linear-gradient(148deg, #c8302a 0%, #f0c2ad 85%); }
-      .slide-img.s8 { background: linear-gradient(158deg, #4a2020 0%, #c8302a 80%); }
+      /* Botões prev/next */
+      .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        border: 2px solid var(--ink);
+        background: var(--paper);
+        color: var(--ink);
+        font-size: 26px;
+        line-height: 1;
+        cursor: pointer;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 3px 3px 0 var(--ink);
+        transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+        padding: 0;
+        font-family: var(--display);
+      }
+
+      .slider-btn:hover:not(:disabled) {
+        background: var(--ink);
+        color: var(--cream-soft);
+        transform: translateY(calc(-50% - 1px)) translateX(-1px);
+        box-shadow: 4px 4px 0 var(--red);
+      }
+
+      .slider-btn:disabled { opacity: 0.25; cursor: default; pointer-events: none; }
+      .slider-btn--prev { left: 4px; }
+      .slider-btn--next { right: 4px; }
+
+      /* Dots */
+      .slider-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .slider-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--cream-deep);
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        transition: background 0.25s, transform 0.25s;
+      }
+
+      .slider-dot.active {
+        background: var(--red);
+        transform: scale(1.35);
+      }
+
+      /* Mobile: 1 por vez */
+      @media (max-width: 560px) {
+        .foto-slider-wrap { padding: 0 44px; }
+
+        .slider-slide {
+          flex: 0 0 100%;
+          scroll-snap-align: center;
+        }
+
+        .slider-btn { width: 38px; height: 38px; font-size: 20px; box-shadow: 2px 2px 0 var(--ink); }
+        .slider-btn--prev { left: 0; }
+        .slider-btn--next { right: 0; }
+      }
 
       /* ---------- Testimonial / Prova social ---------- */
       .t-section-title {
@@ -1912,18 +1941,10 @@
         .hero::before { display: none; }
       }
 
-      /* ---- Breakpoint 640px: marquee mobile fixes ---- */
+      /* ---- Breakpoint 640px ---- */
       @media (max-width: 640px) {
-        /* Fades mais estreitas no mobile */
-        .marquee-row::before,
-        .marquee-row::after { width: 28px; }
-
         .testimonial-marquee-row::before,
         .testimonial-marquee-row::after { width: 44px; }
-
-        /* Carrossel de fotos: compacto e limpo no mobile */
-        .marquee-slide { width: 195px; padding: 10px 10px 10px; }
-        .marquee-track { gap: 10px; }
 
         /* Cards de testimonial: largura fixa, coluna */
         .testimonial-marquee-track .t-card {
@@ -1990,17 +2011,6 @@
           padding: 7px 14px;
         }
 
-        /* Carrossel de fotos: MENOS espaço, MAIS tamanho */
-        .marquee-slide {
-          width: 45vw;
-          padding: 6px 6px 6px;
-        }
-
-        .marquee-track {
-          gap: 3px;
-          padding: 10px 20px;
-        }
-
         /* Hero mais compacto no mobile */
         .hero { padding-left: 20px; padding-right: 20px; }
         .hero-sub { font-size: 17px; }
@@ -2022,7 +2032,7 @@
 
     <header class="site-header" data-reveal>
       <a class="brand" href="#top">
-        Papuli <span class="heart">♥</span>
+        Estúdio Papuli <span class="heart">♥</span>
       </a>
       <a class="nav-cta" href="#planos">
         <span class="dot"></span>
@@ -2155,64 +2165,26 @@
           </div>
         </div>
 
-        <!-- Dual infinite marquee — vai de borda a borda -->
+        <!-- Slider interativo de fotos -->
         <p class="carousel-label" data-reveal>fotos reais do produto ♥</p>
-        <div class="marquee-wrapper" data-reveal>
+        <div class="foto-slider-wrap" data-reveal>
+          <button class="slider-btn slider-btn--prev" id="sliderPrev" aria-label="Foto anterior">‹</button>
 
-          <!-- Fila 1: indo para a direita → (fotos 1–10) -->
-          <div class="marquee-row">
-            <div class="marquee-track">
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/1.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/2.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/3.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/4.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/5.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/6.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/7.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/8.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/9.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/10.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <!-- duplicados para loop infinito -->
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/1.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/2.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/3.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/4.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/5.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/6.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/7.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/8.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/9.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/10.jpg" alt="Kit Papuli" loading="lazy"></figure>
-            </div>
+          <div class="slider-viewport" id="fotoSlider">
+            <div class="slider-slide"><img src="/fotos/1.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
+            <div class="slider-slide"><img src="/fotos/2.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
+            <div class="slider-slide"><img src="/fotos/3.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
+            <div class="slider-slide"><img src="/fotos/4.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
+            <div class="slider-slide"><img src="/fotos/5.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
+            <div class="slider-slide"><img src="/fotos/6.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
+            <div class="slider-slide"><img src="/fotos/7.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
+            <div class="slider-slide"><img src="/fotos/8.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
+            <div class="slider-slide"><img src="/fotos/9.jpg"  alt="Kit Estúdio Papuli" loading="lazy"></div>
+            <div class="slider-slide"><img src="/fotos/10.jpg" alt="Kit Estúdio Papuli" loading="lazy"></div>
           </div>
 
-          <!-- Fila 2: indo para a esquerda ← (ordem embaralhada) -->
-          <div class="marquee-row reverse">
-            <div class="marquee-track">
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/6.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/3.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/9.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/1.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/7.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/4.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/10.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/2.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/8.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/5.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <!-- duplicados para loop infinito -->
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/6.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/3.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/9.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/1.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/7.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/4.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/10.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/2.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/8.jpg" alt="Kit Papuli" loading="lazy"></figure>
-              <figure class="marquee-slide"><img class="slide-img" src="/fotos/5.jpg" alt="Kit Papuli" loading="lazy"></figure>
-            </div>
-          </div>
-
+          <button class="slider-btn slider-btn--next" id="sliderNext" aria-label="Próxima foto">›</button>
+          <div class="slider-dots" id="sliderDots"></div>
         </div>
       </section>
 
@@ -2493,7 +2465,7 @@
 
     <footer>
       <div>
-        Papuli ♥ Edição especial Dia dos Namorados 2026 · uma parceria com a Zunno.Digital
+        Estúdio Papuli ♥ Edição especial Dia dos Namorados 2026 · uma parceria com a Zunno.Digital
       </div>
       <div>
         Dúvidas?
@@ -2691,7 +2663,81 @@
         });
       }
 
-      // Testimonial marquee: CSS animation handles the infinite scroll (no JS needed)
+      // ---------- Foto Slider ----------
+      (function () {
+        const vp       = document.getElementById("fotoSlider");
+        const prevBtn  = document.getElementById("sliderPrev");
+        const nextBtn  = document.getElementById("sliderNext");
+        const dotsWrap = document.getElementById("sliderDots");
+        if (!vp) return;
+
+        const slides = vp.querySelectorAll(".slider-slide");
+        const total  = slides.length;
+
+        // Gera dots
+        const dots = Array.from({ length: total }, (_, i) => {
+          const d = document.createElement("button");
+          d.className = "slider-dot";
+          d.setAttribute("aria-label", "Foto " + (i + 1));
+          d.addEventListener("click", () => scrollToSlide(i));
+          dotsWrap.appendChild(d);
+          return d;
+        });
+
+        function slideWidth() {
+          return slides[0].offsetWidth + 18; // 18 = gap
+        }
+
+        function currentIdx() {
+          return Math.round(vp.scrollLeft / slideWidth());
+        }
+
+        function scrollToSlide(idx) {
+          const clamped = Math.max(0, Math.min(idx, total - 1));
+          vp.scrollTo({ left: clamped * slideWidth(), behavior: "smooth" });
+        }
+
+        function updateUI() {
+          const idx = currentIdx();
+          dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+          prevBtn.disabled = idx === 0;
+          nextBtn.disabled = idx >= total - 1;
+        }
+
+        prevBtn.addEventListener("click", () => scrollToSlide(currentIdx() - 1));
+        nextBtn.addEventListener("click", () => scrollToSlide(currentIdx() + 1));
+
+        vp.addEventListener("scroll", updateUI, { passive: true });
+        window.addEventListener("resize", updateUI);
+
+        // Drag com mouse (desktop)
+        let startX = 0, startScroll = 0, dragging = false;
+
+        vp.addEventListener("mousedown", (e) => {
+          dragging = true;
+          startX = e.clientX;
+          startScroll = vp.scrollLeft;
+          vp.style.cursor = "grabbing";
+          vp.style.scrollBehavior = "auto";
+        });
+
+        window.addEventListener("mousemove", (e) => {
+          if (!dragging) return;
+          vp.scrollLeft = startScroll - (e.clientX - startX);
+        });
+
+        window.addEventListener("mouseup", (e) => {
+          if (!dragging) return;
+          dragging = false;
+          vp.style.cursor = "grab";
+          vp.style.scrollBehavior = "smooth";
+          // snap pro mais próximo
+          scrollToSlide(currentIdx());
+        });
+
+        updateUI();
+      })();
+
     </script>
   </body>
 </html>
