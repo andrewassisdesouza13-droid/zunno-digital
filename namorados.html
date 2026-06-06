@@ -83,6 +83,8 @@
         font-size: 18px;
         line-height: 1.6;
         color: var(--ink);
+        /* iOS/Android renderizam ♥ como emoji color. Forca text glyph. */
+        font-variant-emoji: text;
         background: var(--cream);
         background-image:
           radial-gradient(circle at 12% 18%, rgba(200, 48, 42, 0.14) 0, rgba(200, 48, 42, 0.14) 1px, transparent 1.2px),
@@ -244,7 +246,7 @@
       }
 
       .hero-eyebrow::before {
-        content: "♥";
+        content: "\2665\FE0E";
         font-size: 14px;
       }
 
@@ -561,6 +563,101 @@
         margin: 0 auto 48px;
       }
 
+      /* Vitrine: foto (esquerda) + video stories (direita) */
+      .vitrine {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: clamp(24px, 4vw, 56px);
+        align-items: center;
+        justify-content: center;
+        max-width: 980px;
+        margin: 0 auto;
+      }
+
+      .vitrine-foto {
+        position: relative;
+        background: var(--paper);
+        padding: 14px 14px 50px;
+        box-shadow:
+          0 20px 50px -18px rgba(43, 42, 40, 0.42),
+          0 8px 18px -6px rgba(43, 42, 40, 0.16);
+        transform: rotate(-2deg);
+        transition: transform 0.5s ease;
+      }
+      .vitrine-foto:hover { transform: rotate(0) scale(1.02); }
+
+      .vitrine-foto::before {
+        content: "";
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-3deg);
+        width: 130px;
+        height: 26px;
+        background: var(--tape);
+      }
+
+      .vitrine-foto img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        display: block;
+        max-width: 460px;
+      }
+
+      .vitrine-video {
+        position: relative;
+        border-radius: 24px;
+        overflow: hidden;
+        background: var(--ink);
+        height: clamp(420px, 62vh, 640px);
+        aspect-ratio: 9 / 16;
+        box-shadow:
+          0 24px 60px -20px rgba(43, 42, 40, 0.55),
+          0 8px 20px -8px rgba(43, 42, 40, 0.18);
+        transform: rotate(1.5deg);
+        transition: transform 0.5s ease;
+      }
+      .vitrine-video:hover { transform: rotate(0) scale(1.02); }
+
+      .vitrine-video video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* Badge "ao vivo" no vídeo (cara de stories) */
+      .vitrine-video::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 3px solid var(--paper);
+        border-radius: 24px;
+        pointer-events: none;
+      }
+
+      /* Mobile: video em cima, foto embaixo */
+      @media (max-width: 800px) {
+        .vitrine {
+          grid-template-columns: 1fr;
+          gap: 32px;
+          max-width: 420px;
+        }
+        .vitrine-video {
+          order: -1;
+          width: 100%;
+          height: auto;
+          max-height: 70vh;
+          transform: rotate(0);
+        }
+        .vitrine-foto {
+          transform: rotate(0);
+          max-width: 340px;
+          margin: 0 auto;
+        }
+      }
+
       .video-wrap {
         position: relative;
         max-width: 920px;
@@ -721,7 +818,7 @@
       }
 
       .receipt::after {
-        content: "♥";
+        content: "\2665\FE0E";
         position: absolute;
         bottom: -18px;
         right: 28px;
@@ -786,7 +883,7 @@
       }
 
       .how::before {
-        content: "♥";
+        content: "\2665\FE0E";
         position: absolute;
         top: -20px;
         right: -10px;
@@ -798,7 +895,7 @@
       }
 
       .how::after {
-        content: "♥";
+        content: "\2665\FE0E";
         position: absolute;
         bottom: -60px;
         left: -20px;
@@ -1101,7 +1198,7 @@
       .product-list li:last-child { border-bottom: none; }
 
       .product-list li::before {
-        content: "♥";
+        content: "\2665\FE0E";
         position: absolute;
         left: 0;
         top: 10px;
@@ -1503,7 +1600,7 @@
 
       .testimonial::before,
       .testimonial::after {
-        content: "♥";
+        content: "\2665\FE0E";
         position: absolute;
         font-size: 80px;
         color: rgba(247, 239, 224, 0.12);
@@ -1880,7 +1977,7 @@
       }
 
       .final::before {
-        content: "♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥";
+        content: "\2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E";
         position: absolute;
         top: 24px;
         left: 0;
@@ -1894,7 +1991,7 @@
       }
 
       .final::after {
-        content: "♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥";
+        content: "\2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E \2665\FE0E";
         position: absolute;
         bottom: 24px;
         left: 0;
@@ -2157,12 +2254,12 @@
   <body>
 
     <div class="ribbon">
-      edição limitada <span>♥</span> dia dos namorados 2026 <span>♥</span> entrega antes de 12/06
+      edição limitada <span>♥&#xFE0E;</span> dia dos namorados 2026 <span>♥&#xFE0E;</span> entrega antes de 12/06
     </div>
 
     <header class="site-header" data-reveal>
       <a class="brand" href="#top">
-        Estúdio Papuli <span class="heart">♥</span>
+        Estúdio Papuli <span class="heart">♥&#xFE0E;</span>
       </a>
       <a class="nav-cta" href="#planos">
         <span class="dot"></span>
@@ -2207,30 +2304,19 @@
             8 fotos estilo Polaroid pra espalhar pela casa. 14 figurinhas com frases românticas dentro do álbum. 3 Ferrero pra abrir junto. Tudo impresso em papel premium, do jeito que a história aconteceu.
           </p>
 
-          <!-- Slider Netflix de fotos (mesmo padrão da outra seção) -->
-          <div class="nf-slider-outer" data-reveal>
-            <div class="nf-slider-viewport" id="nfViewport2">
-              <div class="nf-slider-track" id="nfTrack2">
-                <!-- Clones finais (loop infinito) -->
-                <div class="nf-slide nf-clone"><img src="/fotos/8.jpg"  alt="" aria-hidden="true"></div>
-                <div class="nf-slide nf-clone"><img src="/fotos/9.jpg"  alt="" aria-hidden="true"></div>
-                <div class="nf-slide nf-clone"><img src="/fotos/10.jpg" alt="" aria-hidden="true"></div>
-                <!-- Slides reais -->
-                <div class="nf-slide"><img src="/fotos/2.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/5.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/1.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/7.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/3.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/9.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/4.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/10.jpg" alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/6.jpg"  alt="Kit Estúdio Papuli"></div>
-                <div class="nf-slide"><img src="/fotos/8.jpg"  alt="Kit Estúdio Papuli"></div>
-                <!-- Clones do início (loop infinito) -->
-                <div class="nf-slide nf-clone"><img src="/fotos/2.jpg" alt="" aria-hidden="true"></div>
-                <div class="nf-slide nf-clone"><img src="/fotos/5.jpg" alt="" aria-hidden="true"></div>
-                <div class="nf-slide nf-clone"><img src="/fotos/1.jpg" alt="" aria-hidden="true"></div>
-              </div>
+          <!-- Vitrine: foto à esquerda, vídeo stories à direita -->
+          <div class="vitrine" data-reveal>
+            <div class="vitrine-foto">
+              <img src="/fotos/1.jpg" alt="Kit Estúdio Papuli">
+            </div>
+            <div class="vitrine-video">
+              <video
+                src="/videos/teaser.mp4"
+                poster="/fotos/3.jpg"
+                autoplay muted loop playsinline
+                preload="metadata"
+                controls
+              ></video>
             </div>
           </div>
         </div>
@@ -2388,7 +2474,7 @@
         <div class="t-grid" data-reveal>
 
           <div class="t-card-new">
-            <span class="hearts">♥ ♥ ♥ ♥ ♥</span>
+            <span class="hearts">♥&#xFE0E; ♥&#xFE0E; ♥&#xFE0E; ♥&#xFE0E; ♥&#xFE0E;</span>
             <p class="quote">"Dei de surpresa sem contar o que era. Quando ela abriu, passamos duas horas colando as figurinhas, lembrando de cada foto tirada. A gente esqueceu o celular por completo nessa noite."</p>
             <div class="author">
               <img src="/feedback/mateus-cremon.png" alt="Mateus Cremon">
@@ -2400,7 +2486,7 @@
           </div>
 
           <div class="t-card-new">
-            <span class="hearts">♥ ♥ ♥ ♥ ♥</span>
+            <span class="hearts">♥&#xFE0E; ♥&#xFE0E; ♥&#xFE0E; ♥&#xFE0E; ♥&#xFE0E;</span>
             <p class="quote">"Minha namorada chorou quando viu o álbum. Não o choro exagerado, sabe? Foi aquele choro quieto de quem percebe que alguém prestou atenção na história dos dois. Valeu mais que qualquer outro presente."</p>
             <div class="author">
               <img src="/feedback/lucas-melso.png" alt="Lucas Melso">
@@ -2412,7 +2498,7 @@
           </div>
 
           <div class="t-card-new">
-            <span class="hearts">♥ ♥ ♥ ♥ ♥</span>
+            <span class="hearts">♥&#xFE0E; ♥&#xFE0E; ♥&#xFE0E; ♥&#xFE0E; ♥&#xFE0E;</span>
             <p class="quote">"Tava com medo de parecer algo sem graça. Virou o único presente dela que não foi pra gaveta. Tá na mesa da sala faz quatro meses. Todo mundo que visita abre e folheia."</p>
             <div class="author">
               <img src="/feedback/gabriel-pitzer.png" alt="Gabriel Pitzer">
@@ -2514,7 +2600,7 @@
     <div class="dados-overlay" id="dadosModal" aria-hidden="true">
       <div class="dados-card" role="dialog" aria-modal="true" aria-labelledby="dadosTitle">
         <button class="dados-close" id="dadosClose" type="button" aria-label="Fechar">×</button>
-        <span class="dados-eyebrow">falta pouco ♥</span>
+        <span class="dados-eyebrow">falta pouco ♥&#xFE0E;</span>
         <h3 class="dados-title" id="dadosTitle">Pra onde mandamos a<br>confirmação do pedido?</h3>
         <p class="dados-plano" id="dadosPlanoLabel"></p>
         <form class="dados-form" id="dadosForm" novalidate>
@@ -2527,14 +2613,14 @@
             <input class="dados-input" id="dadosWhats" type="tel" inputmode="numeric" placeholder="(16) 99999-9999" autocomplete="tel" required>
           </label>
           <button class="dados-submit" id="dadosSubmit" type="submit">Continuar pro pagamento</button>
-          <p class="dados-hint">É por aqui que a gente vai pedir as fotos de vocês ♥</p>
+          <p class="dados-hint">É por aqui que a gente vai pedir as fotos de vocês ♥&#xFE0E;</p>
         </form>
       </div>
     </div>
 
     <footer>
       <div>
-        Estúdio Papuli ♥ Edição especial Dia dos Namorados 2026 · uma parceria com a Zunno.Digital
+        Estúdio Papuli ♥&#xFE0E; Edição especial Dia dos Namorados 2026 · uma parceria com a Zunno.Digital
       </div>
       <div>
         Dúvidas?
@@ -2806,10 +2892,9 @@
         window.addEventListener("resize", () => setPos(current, false));
       }
 
-      // Slider de fotos (seção "como chega na sua casa")
-      makeSlider("nfViewport2", "nfTrack2", 3, 10, 16);
-
       // (testimonials são estáticos — sem slider)
+      // (Vitrine de foto + vídeo na "como chega na sua casa" é HTML puro,
+      //  o <video> reproduz sozinho com autoplay muted loop playsinline)
 
     </script>
   </body>
