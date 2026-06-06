@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julia &amp; Robert · A história de vocês ♥</title>
+    <meta name="description" content="A história de Julia e Robert em forma de lembrança. Feito com amor pela Estúdio Papuli.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Yellowtail&display=swap" rel="stylesheet">
+
+    <style>
+      :root {
+        --cream: #efe3cf;
+        --cream-soft: #f7efe0;
+        --cream-deep: #e6d8c0;
+        --red: #c8302a;
+        --red-bright: #e04a3f;
+        --red-deep: #9b211d;
+        --ink: #2b2a28;
+        --ink-soft: #5a5651;
+        --paper: #fbf6ea;
+        --tape: rgba(43, 42, 40, 0.18);
+
+        --script: "Yellowtail", cursive;
+        --display: "Fraunces", "Times New Roman", serif;
+        --body: "Newsreader", Georgia, serif;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: var(--body);
+        background: var(--cream);
+        color: var(--ink);
+        overflow-x: hidden;
+        line-height: 1.6;
+      }
+
+      img { max-width: 100%; display: block; }
+
+      /* ─────────── HERO ─────────── */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 60px 24px 80px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before, .hero::after {
+        content: "♥";
+        position: absolute;
+        color: var(--red);
+        opacity: 0.08;
+        font-size: 220px;
+        line-height: 1;
+        pointer-events: none;
+      }
+      .hero::before { top: 10%; left: -40px; transform: rotate(-12deg); }
+      .hero::after { bottom: 8%; right: -40px; transform: rotate(15deg); }
+
+      .hero-photo-wrap {
+        position: relative;
+        margin-bottom: 36px;
+        max-width: 360px;
+        width: 100%;
+      }
+
+      .hero-photo {
+        width: 100%;
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+        background: var(--paper);
+        padding: 14px 14px 50px;
+        box-shadow:
+          0 30px 60px -20px rgba(43, 42, 40, 0.4),
+          0 8px 20px -8px rgba(43, 42, 40, 0.18);
+        transform: rotate(-2deg);
+        transition: transform 0.5s ease;
+      }
+      .hero-photo:hover { transform: rotate(0) scale(1.02); }
+
+      .hero-tape {
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-3deg);
+        width: 140px;
+        height: 28px;
+        background: var(--tape);
+      }
+
+      .hero-eyebrow {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 14px;
+        color: var(--red);
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+      }
+
+      .hero-names {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: clamp(48px, 9vw, 88px);
+        line-height: 1;
+        color: var(--ink);
+        margin-bottom: 6px;
+      }
+
+      .hero-names .amp {
+        font-family: var(--script);
+        font-weight: 400;
+        color: var(--red);
+        font-size: 0.78em;
+        margin: 0 0.08em;
+        display: inline-block;
+        transform: translateY(0.08em);
+      }
+
+      .hero-frase {
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(18px, 2.2vw, 23px);
+        max-width: 580px;
+        margin: 28px auto 0;
+        color: var(--ink-soft);
+        line-height: 1.5;
+        text-wrap: pretty;
+      }
+
+      /* Contador ao vivo */
+      .counter {
+        margin-top: 44px;
+        padding: 22px 30px;
+        background: var(--paper);
+        border: 1.5px solid var(--ink);
+        border-radius: 4px;
+        box-shadow: 4px 4px 0 var(--ink);
+        display: inline-flex;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+      }
+      .counter-label {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 13px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--red);
+      }
+      .counter-grid {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+      }
+      .counter-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 56px;
+      }
+      .counter-num {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 28px;
+        line-height: 1;
+        color: var(--ink);
+      }
+      .counter-tag {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 11px;
+        color: var(--ink-soft);
+        margin-top: 4px;
+        letter-spacing: 0.06em;
+      }
+
+      /* ─────────── SECTION BASE ─────────── */
+      section {
+        padding: clamp(64px, 9vw, 120px) 24px;
+      }
+
+      .container {
+        max-width: 920px;
+        margin: 0 auto;
+      }
+
+      .section-eyebrow {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 14px;
+        color: var(--red);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 14px;
+      }
+
+      .section-title {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: clamp(34px, 5vw, 54px);
+        line-height: 1.1;
+        text-align: center;
+        margin-bottom: 24px;
+        color: var(--ink);
+      }
+      .section-title .script {
+        font-family: var(--script);
+        color: var(--red);
+        font-weight: 400;
+        font-size: 1.08em;
+      }
+
+      .section-lead {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 18px;
+        color: var(--ink-soft);
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.55;
+      }
+
+      /* ─────────── PLAYLIST ─────────── */
+      .playlist-section {
+        background: var(--paper);
+        position: relative;
+      }
+      .playlist-wrap {
+        max-width: 640px;
+        margin: 36px auto 0;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow:
+          0 20px 50px -16px rgba(43, 42, 40, 0.32),
+          0 6px 16px -6px rgba(43, 42, 40, 0.14);
+      }
+      .playlist-wrap iframe {
+        width: 100%;
+        height: 380px;
+        display: block;
+        border: 0;
+      }
+      .playlist-hint {
+        text-align: center;
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 14px;
+        color: var(--red);
+        margin-top: 18px;
+        letter-spacing: 0.04em;
+      }
+      .playlist-hint .pulse {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--red);
+        animation: pulse 1.6s ease-in-out infinite;
+        margin-right: 6px;
+        vertical-align: middle;
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 0.4; transform: scale(0.9); }
+        50% { opacity: 1; transform: scale(1.2); }
+      }
+
+      /* ─────────── HISTÓRIA (5 marcos) ─────────── */
+      .historia-section { background: var(--cream); }
+
+      .historia-list {
+        max-width: 820px;
+        margin: 60px auto 0;
+        display: flex;
+        flex-direction: column;
+        gap: 60px;
+      }
+
+      .historia-item {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+      .historia-item:nth-child(even) {
+        direction: rtl;
+      }
+      .historia-item:nth-child(even) > * {
+        direction: ltr;
+      }
+
+      .historia-photo-frame {
+        background: var(--paper);
+        padding: 12px 12px 32px;
+        box-shadow:
+          0 14px 36px -12px rgba(43, 42, 40, 0.36),
+          0 4px 10px -4px rgba(43, 42, 40, 0.14);
+        transform: rotate(-2deg);
+        transition: transform 0.4s ease;
+      }
+      .historia-item:nth-child(even) .historia-photo-frame {
+        transform: rotate(2deg);
+      }
+      .historia-photo-frame:hover { transform: rotate(0) scale(1.03); }
+
+      .historia-photo-frame img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+      }
+
+      .historia-text .marco-data {
+        font-family: var(--script);
+        font-size: 36px;
+        color: var(--red);
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+      .historia-text .marco-titulo {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 28px;
+        line-height: 1.2;
+        margin-bottom: 14px;
+        color: var(--ink);
+      }
+      .historia-text .marco-desc {
+        font-family: var(--body);
+        font-size: 16px;
+        line-height: 1.7;
+        color: var(--ink-soft);
+        font-style: italic;
+      }
+
+      /* ─────────── DECLARAÇÃO ─────────── */
+      .declaracao-section {
+        background: var(--red);
+        color: var(--cream-soft);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .declaracao-section::before, .declaracao-section::after {
+        content: "♥";
+        position: absolute;
+        font-size: 120px;
+        color: rgba(247, 239, 224, 0.1);
+      }
+      .declaracao-section::before { top: 40px; left: 10%; transform: rotate(-12deg); }
+      .declaracao-section::after { bottom: 40px; right: 10%; transform: rotate(12deg); }
+
+      .declaracao-section .section-eyebrow { color: var(--cream-soft); opacity: 0.7; }
+
+      .declaracao-text {
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(22px, 2.6vw, 30px);
+        line-height: 1.55;
+        max-width: 720px;
+        margin: 30px auto 0;
+        color: var(--cream-soft);
+        text-wrap: pretty;
+        position: relative;
+        z-index: 1;
+      }
+      .declaracao-assinatura {
+        font-family: var(--script);
+        font-size: 32px;
+        margin-top: 28px;
+        color: var(--cream-soft);
+        opacity: 0.85;
+      }
+
+      /* ─────────── GALERIA ─────────── */
+      .galeria-section { background: var(--cream); }
+
+      .galeria-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        max-width: 920px;
+        margin: 50px auto 0;
+      }
+
+      .galeria-item {
+        background: var(--paper);
+        padding: 8px 8px 22px;
+        box-shadow:
+          0 10px 24px -10px rgba(43, 42, 40, 0.32),
+          0 3px 8px -3px rgba(43, 42, 40, 0.12);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+      .galeria-item:nth-child(3n+1) { transform: rotate(-1.5deg); }
+      .galeria-item:nth-child(3n+2) { transform: rotate(0.8deg); }
+      .galeria-item:nth-child(3n+3) { transform: rotate(-0.5deg); }
+      .galeria-item:hover {
+        transform: rotate(0) scale(1.04);
+        z-index: 2;
+        box-shadow:
+          0 18px 38px -12px rgba(43, 42, 40, 0.45),
+          0 6px 14px -4px rgba(43, 42, 40, 0.2);
+      }
+
+      .galeria-item img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+      }
+
+      /* ─────────── FRASE FINAL ─────────── */
+      .frase-final {
+        background: var(--paper);
+        padding: clamp(80px, 12vw, 140px) 24px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .frase-final-texto {
+        font-family: var(--script);
+        font-size: clamp(56px, 10vw, 110px);
+        color: var(--red);
+        line-height: 1.05;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .frase-final-texto small {
+        display: block;
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(18px, 2vw, 24px);
+        color: var(--ink-soft);
+        margin-top: 20px;
+        letter-spacing: 0.04em;
+      }
+
+      /* ─────────── ASSINATURA ─────────── */
+      .assinatura {
+        background: var(--ink);
+        color: var(--cream-soft);
+        text-align: center;
+        padding: 48px 24px;
+      }
+      .assinatura-marca {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 18px;
+        margin-bottom: 6px;
+      }
+      .assinatura-marca .heart {
+        color: var(--red-bright);
+        margin: 0 4px;
+      }
+      .assinatura-sub {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 13px;
+        opacity: 0.55;
+        letter-spacing: 0.06em;
+      }
+      .assinatura-sub a {
+        color: var(--cream-soft);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(247, 239, 224, 0.3);
+        transition: border-color 0.2s, color 0.2s;
+      }
+      .assinatura-sub a:hover { color: var(--red-bright); border-color: var(--red-bright); }
+
+      /* ─────────── REVEAL ANIMATION ─────────── */
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      [data-reveal].in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Easter egg: coraçãozinho voando */
+      .floating-heart {
+        position: fixed;
+        font-size: 24px;
+        color: var(--red);
+        pointer-events: none;
+        z-index: 9999;
+        animation: floatUp 2s ease-out forwards;
+        user-select: none;
+      }
+      @keyframes floatUp {
+        0% { opacity: 1; transform: translate(-50%, 0) scale(0.5); }
+        100% { opacity: 0; transform: translate(-50%, -120px) scale(1.5); }
+      }
+
+      /* ─────────── MOBILE ─────────── */
+      @media (max-width: 720px) {
+        .historia-item {
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+        .historia-item:nth-child(even) { direction: ltr; }
+        .historia-photo-frame { max-width: 320px; margin: 0 auto; }
+
+        .galeria-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+        }
+
+        .counter-grid { gap: 12px; }
+        .counter-unit { min-width: 48px; }
+        .counter-num { font-size: 22px; }
+
+        .playlist-wrap iframe { height: 352px; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ───────────── HERO ───────────── -->
+    <section class="hero">
+      <div class="hero-photo-wrap" data-reveal>
+        <div class="hero-tape"></div>
+        <img class="hero-photo" src="/album/julia-robert/fotos/principal.jpg" alt="Julia e Robert">
+      </div>
+
+      <p class="hero-eyebrow" data-reveal>♥ a história de vocês</p>
+      <h1 class="hero-names" data-reveal>Julia <span class="amp">&amp;</span> Robert</h1>
+
+      <p class="hero-frase" data-reveal>
+        "Amar também é escolher ficar,<br>mesmo quando seria mais fácil partir."
+      </p>
+
+      <div class="counter" data-reveal>
+        <span class="counter-label">juntos há</span>
+        <div class="counter-grid">
+          <div class="counter-unit"><span class="counter-num" id="d-years">0</span><span class="counter-tag">anos</span></div>
+          <div class="counter-unit"><span class="counter-num" id="d-months">0</span><span class="counter-tag">meses</span></div>
+          <div class="counter-unit"><span class="counter-num" id="d-days">0</span><span class="counter-tag">dias</span></div>
+          <div class="counter-unit"><span class="counter-num" id="d-hours">00</span><span class="counter-tag">h</span></div>
+          <div class="counter-unit"><span class="counter-num" id="d-mins">00</span><span class="counter-tag">min</span></div>
+          <div class="counter-unit"><span class="counter-num" id="d-secs">00</span><span class="counter-tag">seg</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── PLAYLIST ───────────── -->
+    <section class="playlist-section">
+      <div class="container">
+        <p class="section-eyebrow" data-reveal>aperta o play</p>
+        <h2 class="section-title" data-reveal>
+          a <span class="script">trilha sonora</span> da gente.
+        </h2>
+        <p class="section-lead" data-reveal>
+          As músicas que tocaram nos melhores momentos de vocês. Deixa rolando enquanto vê o resto.
+        </p>
+
+        <div class="playlist-wrap" data-reveal>
+          <iframe
+            src="https://open.spotify.com/embed/playlist/4AKHdMj01U2ASK7mTpNiU0?utm_source=generator&theme=0"
+            allowfullscreen
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy">
+          </iframe>
+        </div>
+        <p class="playlist-hint" data-reveal><span class="pulse"></span>tocando agora ♥</p>
+      </div>
+    </section>
+
+    <!-- ───────────── NOSSA HISTÓRIA ───────────── -->
+    <section class="historia-section">
+      <div class="container">
+        <p class="section-eyebrow" data-reveal>nossa história</p>
+        <h2 class="section-title" data-reveal>
+          cinco momentos que <span class="script">mudaram</span> a gente.
+        </h2>
+
+        <div class="historia-list">
+
+          <div class="historia-item" data-reveal>
+            <div class="historia-photo-frame">
+              <img src="/album/julia-robert/fotos/foto-1.jpg" alt="Quando se conheceram">
+            </div>
+            <div class="historia-text">
+              <p class="marco-data">o começo</p>
+              <h3 class="marco-titulo">A gente se conheceu.</h3>
+              <p class="marco-desc">Não tinha como saber que aquele encontro qualquer ia virar tudo. Mas virou.</p>
+            </div>
+          </div>
+
+          <div class="historia-item" data-reveal>
+            <div class="historia-photo-frame">
+              <img src="/album/julia-robert/fotos/foto-5.jpg" alt="27 de junho de 2022">
+            </div>
+            <div class="historia-text">
+              <p class="marco-data">27 de junho de 2022</p>
+              <h3 class="marco-titulo">O dia do "sim".</h3>
+              <p class="marco-desc">A data oficial. Mas a gente já era da gente faz tempo, né?</p>
+            </div>
+          </div>
+
+          <div class="historia-item" data-reveal>
+            <div class="historia-photo-frame">
+              <img src="/album/julia-robert/fotos/foto-10.jpg" alt="Primeira viagem">
+            </div>
+            <div class="historia-text">
+              <p class="marco-data">a primeira viagem</p>
+              <h3 class="marco-titulo">A primeira mala arrumada.</h3>
+              <p class="marco-desc">Descobrir o mundo é bom. Descobrir junto com você é melhor.</p>
+            </div>
+          </div>
+
+          <div class="historia-item" data-reveal>
+            <div class="historia-photo-frame">
+              <img src="/album/julia-robert/fotos/foto-15.jpg" alt="Nosso lugar">
+            </div>
+            <div class="historia-text">
+              <p class="marco-data">nosso lugar</p>
+              <h3 class="marco-titulo">A gente criou um cantinho.</h3>
+              <p class="marco-desc">Aquele lugar que é só nosso. Onde a gente é mais a gente do que em qualquer outro.</p>
+            </div>
+          </div>
+
+          <div class="historia-item" data-reveal>
+            <div class="historia-photo-frame">
+              <img src="/album/julia-robert/fotos/foto-20.jpg" alt="Hoje">
+            </div>
+            <div class="historia-text">
+              <p class="marco-data">hoje</p>
+              <h3 class="marco-titulo">E a gente continua aqui.</h3>
+              <p class="marco-desc">Escolhendo um ao outro, todo dia, em cada detalhe pequeno. É assim que a gente fica.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── DECLARAÇÃO ───────────── -->
+    <section class="declaracao-section">
+      <div class="container">
+        <p class="section-eyebrow" data-reveal>uma carta</p>
+        <h2 class="section-title" style="color: var(--cream-soft);" data-reveal>
+          o que eu queria <span class="script" style="color: rgba(247,239,224,0.85);">te dizer.</span>
+        </h2>
+
+        <p class="declaracao-text" data-reveal>
+          Sabe quando alguém te conhece tão bem que sabe o que você vai falar antes de você abrir a boca? É assim que eu te conheço. E é assim que você me conhece.<br><br>
+          Obrigado por escolher ficar nos dias bons e nos difíceis. Por ser a primeira pessoa que eu quero contar tudo. Por fazer da rotina algo que eu quero ter pra sempre.<br><br>
+          Não importa quanto tempo passe, eu vou continuar escolhendo você.
+        </p>
+
+        <p class="declaracao-assinatura" data-reveal>com todo meu amor ♥</p>
+      </div>
+    </section>
+
+    <!-- ───────────── GALERIA ───────────── -->
+    <section class="galeria-section">
+      <div class="container">
+        <p class="section-eyebrow" data-reveal>os melhores cliques</p>
+        <h2 class="section-title" data-reveal>
+          os <span class="script">momentos</span> que ficaram.
+        </h2>
+
+        <div class="galeria-grid">
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-2.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-3.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-4.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-6.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-7.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-8.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-9.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-11.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-12.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-13.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-14.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-16.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-17.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-18.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-19.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-21.jpg" alt=""></div>
+          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-22.jpg" alt=""></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── FRASE FINAL ───────────── -->
+    <section class="frase-final">
+      <p class="frase-final-texto" data-reveal>
+        te amo<br>pra sempre
+        <small>Julia &amp; Robert ♥</small>
+      </p>
+    </section>
+
+    <!-- ───────────── ASSINATURA ───────────── -->
+    <footer class="assinatura">
+      <p class="assinatura-marca">Estúdio Papuli <span class="heart">♥</span></p>
+      <p class="assinatura-sub">
+        a sua história em forma de lembrança ·
+        <a href="https://zunno.digital/namorados" target="_blank" rel="noopener">faça o seu também</a>
+      </p>
+    </footer>
+
+    <script>
+      // ────────── Contador ao vivo ──────────
+      (function () {
+        const inicio = new Date("2022-06-27T00:00:00-03:00");
+        const elY = document.getElementById("d-years");
+        const elM = document.getElementById("d-months");
+        const elD = document.getElementById("d-days");
+        const elH = document.getElementById("d-hours");
+        const elMin = document.getElementById("d-mins");
+        const elS = document.getElementById("d-secs");
+
+        function pad(n) { return String(n).padStart(2, "0"); }
+
+        function tick() {
+          const now = new Date();
+
+          // calcula anos/meses/dias respeitando calendário
+          let years = now.getFullYear() - inicio.getFullYear();
+          let months = now.getMonth() - inicio.getMonth();
+          let days = now.getDate() - inicio.getDate();
+
+          if (days < 0) {
+            months -= 1;
+            // dias do mês anterior
+            const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+            days += prevMonth;
+          }
+          if (months < 0) {
+            years -= 1;
+            months += 12;
+          }
+
+          // horas/min/seg do dia em curso
+          const h = now.getHours() - inicio.getHours();
+          const m = now.getMinutes() - inicio.getMinutes();
+          const s = now.getSeconds() - inicio.getSeconds();
+
+          let hh = h, mm = m, ss = s;
+          if (ss < 0) { ss += 60; mm -= 1; }
+          if (mm < 0) { mm += 60; hh -= 1; }
+          if (hh < 0) { hh += 24; }
+
+          elY.textContent = years;
+          elM.textContent = months;
+          elD.textContent = days;
+          elH.textContent = pad(hh);
+          elMin.textContent = pad(mm);
+          elS.textContent = pad(ss);
+        }
+
+        tick();
+        setInterval(tick, 1000);
+      })();
+
+      // ────────── Reveal on scroll ──────────
+      (function () {
+        const els = document.querySelectorAll("[data-reveal]");
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+              setTimeout(() => e.target.classList.add("in"), i * 60);
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        els.forEach((el) => io.observe(el));
+      })();
+
+      // ────────── Easter egg: corações ao tocar/clicar ──────────
+      (function () {
+        function spawn(x, y) {
+          const h = document.createElement("span");
+          h.className = "floating-heart";
+          h.textContent = "♥";
+          h.style.left = x + "px";
+          h.style.top = y + "px";
+          document.body.appendChild(h);
+          setTimeout(() => h.remove(), 2000);
+        }
+        // Limita a 1 a cada 80ms pra não pesar
+        let last = 0;
+        function handler(e) {
+          const t = Date.now();
+          if (t - last < 80) return;
+          last = t;
+          const x = e.touches ? e.touches[0].clientX : e.clientX;
+          const y = e.touches ? e.touches[0].clientY : e.clientY;
+          spawn(x, y);
+        }
+        window.addEventListener("click", handler);
+        window.addEventListener("touchstart", handler, { passive: true });
+      })();
+    </script>
+  </body>
+</html>
