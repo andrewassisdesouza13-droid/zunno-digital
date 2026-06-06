@@ -1116,14 +1116,21 @@
 
         let current = 0;
 
-        function slideW() {
-          return slides[0].offsetWidth + 32; // 32 = gap
-        }
-
-        function setPos() {
-          const offset = vp.offsetWidth / 2 - slides[0].offsetWidth / 2;
-          track.style.transform = "translateX(" + (offset - current * slideW()) + "px)";
+        // Centraliza o slide ATIVO usando offsetLeft + offsetWidth
+        // (independente de scale/transform — sempre alinha perfeito)
+        function setPos(animate = true) {
+          // Marca o ativo PRIMEIRO pra ele expandir (scale 1.05) antes da medida
           slides.forEach((s, i) => s.classList.toggle("is-active", i === current));
+          // Espera o reflow pra pegar o tamanho final
+          requestAnimationFrame(() => {
+            const ativo = slides[current];
+            const centroAtivo = ativo.offsetLeft + ativo.offsetWidth / 2;
+            const centroVP = vp.offsetWidth / 2;
+            track.style.transition = animate
+              ? "transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+              : "none";
+            track.style.transform = "translateX(" + (centroVP - centroAtivo) + "px)";
+          });
           if (atual) atual.textContent = current + 1;
         }
 
@@ -1172,9 +1179,9 @@
           if (e.key === "ArrowRight") go(1);
         });
 
-        window.addEventListener("resize", setPos);
-        // Init depois do paint
-        setTimeout(setPos, 0);
+        window.addEventListener("resize", () => setPos(false));
+        // Init sem animacao depois do paint
+        requestAnimationFrame(() => setPos(false));
       })();
 
       // ────────── Lightbox (galeria + timeline) ──────────
