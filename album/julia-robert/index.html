@@ -38,6 +38,9 @@
         color: var(--ink);
         overflow-x: hidden;
         line-height: 1.6;
+        /* iOS/Android renderizam ♥ como emoji colorido por padrao.
+           Forca o "text presentation" pra usar a glyph da fonte. */
+        font-variant-emoji: text;
       }
 
       img { max-width: 100%; display: block; }
@@ -56,7 +59,7 @@
       }
 
       .hero::before, .hero::after {
-        content: "♥";
+        content: "\2665\FE0E";
         position: absolute;
         color: var(--red);
         opacity: 0.08;
@@ -432,7 +435,7 @@
         overflow: hidden;
       }
       .declaracao-section::before, .declaracao-section::after {
-        content: "♥";
+        content: "\2665\FE0E";
         position: absolute;
         font-size: 120px;
         color: rgba(247, 239, 224, 0.1);
@@ -832,7 +835,7 @@
         <img class="hero-photo" src="/album/julia-robert/fotos/principal.jpg" alt="Julia e Robert">
       </div>
 
-      <p class="hero-eyebrow" data-reveal>♥ a história de vocês</p>
+      <p class="hero-eyebrow" data-reveal>♥&#xFE0E; a história de vocês</p>
       <h1 class="hero-names" data-reveal>Julia <span class="amp">&amp;</span> Robert</h1>
 
       <p class="hero-frase" data-reveal>
@@ -871,7 +874,7 @@
             loading="lazy">
           </iframe>
         </div>
-        <p class="playlist-hint" data-reveal><span class="pulse"></span>tocando agora ♥</p>
+        <p class="playlist-hint" data-reveal><span class="pulse"></span>tocando agora ♥&#xFE0E;</p>
       </div>
     </section>
 
@@ -886,7 +889,7 @@
         <div class="timeline">
 
           <div class="timeline-item" data-reveal>
-            <div class="timeline-marker"><div class="timeline-marker-dot">♥</div></div>
+            <div class="timeline-marker"><div class="timeline-marker-dot">♥&#xFE0E;</div></div>
             <div class="timeline-card">
               <p class="timeline-data">o começo</p>
               <h3 class="timeline-titulo">A gente se conheceu.</h3>
@@ -896,7 +899,7 @@
           </div>
 
           <div class="timeline-item" data-reveal>
-            <div class="timeline-marker"><div class="timeline-marker-dot">♥</div></div>
+            <div class="timeline-marker"><div class="timeline-marker-dot">♥&#xFE0E;</div></div>
             <div class="timeline-card">
               <p class="timeline-data">27 de junho de 2022</p>
               <h3 class="timeline-titulo">O dia do "sim".</h3>
@@ -906,7 +909,7 @@
           </div>
 
           <div class="timeline-item" data-reveal>
-            <div class="timeline-marker"><div class="timeline-marker-dot">♥</div></div>
+            <div class="timeline-marker"><div class="timeline-marker-dot">♥&#xFE0E;</div></div>
             <div class="timeline-card">
               <p class="timeline-data">a primeira viagem</p>
               <h3 class="timeline-titulo">A primeira mala arrumada.</h3>
@@ -916,7 +919,7 @@
           </div>
 
           <div class="timeline-item" data-reveal>
-            <div class="timeline-marker"><div class="timeline-marker-dot">♥</div></div>
+            <div class="timeline-marker"><div class="timeline-marker-dot">♥&#xFE0E;</div></div>
             <div class="timeline-card">
               <p class="timeline-data">nosso lugar</p>
               <h3 class="timeline-titulo">A gente criou um cantinho.</h3>
@@ -926,7 +929,7 @@
           </div>
 
           <div class="timeline-item" data-reveal>
-            <div class="timeline-marker"><div class="timeline-marker-dot">♥</div></div>
+            <div class="timeline-marker"><div class="timeline-marker-dot">♥&#xFE0E;</div></div>
             <div class="timeline-card">
               <p class="timeline-data">hoje</p>
               <h3 class="timeline-titulo">E a gente continua aqui.</h3>
@@ -953,7 +956,7 @@
           Não importa quanto tempo passe, eu vou continuar escolhendo você.
         </p>
 
-        <p class="declaracao-assinatura" data-reveal>com todo meu amor ♥</p>
+        <p class="declaracao-assinatura" data-reveal>com todo meu amor ♥&#xFE0E;</p>
       </div>
     </section>
 
@@ -966,7 +969,7 @@
         </h2>
 
         <p class="galeria-conversa" data-reveal>
-          antes de passar pra próxima, queríamos que vocês <strong>conversassem sobre esse momento</strong> ♥
+          antes de passar pra próxima, queríamos que vocês <strong>conversassem sobre esse momento</strong> ♥&#xFE0E;
         </p>
       </div>
 
@@ -1007,7 +1010,7 @@
     <section class="frase-final">
       <p class="frase-final-texto" data-reveal>
         te amo<br>pra sempre
-        <small>Julia &amp; Robert ♥</small>
+        <small>Julia &amp; Robert ♥&#xFE0E;</small>
       </p>
     </section>
 
@@ -1022,7 +1025,7 @@
 
     <!-- ───────────── ASSINATURA ───────────── -->
     <footer class="assinatura">
-      <p class="assinatura-marca">Estúdio Papuli <span class="heart">♥</span></p>
+      <p class="assinatura-marca">Estúdio Papuli <span class="heart">♥&#xFE0E;</span></p>
       <p class="assinatura-sub">
         a sua história em forma de lembrança ·
         <a href="https://zunno.digital/namorados" target="_blank" rel="noopener">faça o seu também</a>
@@ -1235,26 +1238,26 @@
         function spawn(x, y) {
           const h = document.createElement("span");
           h.className = "floating-heart";
-          h.textContent = "♥";
+          h.textContent = "♥︎";
           h.style.left = x + "px";
           h.style.top = y + "px";
           document.body.appendChild(h);
           setTimeout(() => h.remove(), 2000);
         }
-        // Limita a 1 a cada 80ms pra não pesar
+        // Filtros pra nao chover coracao a toa:
+        //  - so dispara em click (NAO em touchstart, senao chove ao scrollar)
+        //  - ignora fotos, botoes, links, iframes
+        //  - no mobile, click dispara depois do touchend SE foi tap rapido,
+        //    entao scroll nao gera click → seguro
         let last = 0;
         function handler(e) {
-          // não dispara em fotos do lightbox, botões nem dentro do lightbox aberto
-          if (e.target.closest("[data-lightbox], .lightbox, .lightbox-close, .lightbox-nav, button, a, iframe, input")) return;
+          if (e.target.closest("[data-lightbox], .lightbox, .lightbox-close, .lightbox-nav, .galeria-btn, .galeria-slide, button, a, iframe, input, .timeline-marker-dot, .playlist-wrap")) return;
           const t = Date.now();
-          if (t - last < 80) return;
+          if (t - last < 250) return;
           last = t;
-          const x = e.touches ? e.touches[0].clientX : e.clientX;
-          const y = e.touches ? e.touches[0].clientY : e.clientY;
-          spawn(x, y);
+          spawn(e.clientX, e.clientY);
         }
         window.addEventListener("click", handler);
-        window.addEventListener("touchstart", handler, { passive: true });
       })();
     </script>
   </body>
