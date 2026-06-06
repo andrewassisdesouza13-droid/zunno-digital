@@ -2374,12 +2374,19 @@
             </div>
             <div class="vitrine-moldura">
               <video
-                src="/videos/teaser.mp4"
                 poster="/fotos/3.jpg"
                 autoplay muted loop playsinline
                 preload="metadata"
                 controls
-              ></video>
+                playsinline
+                webkit-playsinline
+              >
+                <!-- Cloudinary entrega WebM (mais leve) pra Chrome/Firefox/Edge;
+                     MP4 (compativel universal) pra Safari/iOS.
+                     q_auto = qualidade automatica adaptativa -->
+                <source src="https://res.cloudinary.com/dglkacizk/video/upload/q_auto/0606_2_mszo7o.webm" type="video/webm">
+                <source src="https://res.cloudinary.com/dglkacizk/video/upload/q_auto/0606_2_mszo7o.mp4" type="video/mp4">
+              </video>
             </div>
           </div>
 
