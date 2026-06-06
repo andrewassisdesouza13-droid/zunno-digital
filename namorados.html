@@ -616,9 +616,12 @@
 
       .vitrine-moldura video,
       .vitrine-moldura img {
-        width: clamp(240px, 32vw, 320px);
-        aspect-ratio: 9 / 16;
+        /* Desktop: formato FEED (4:5) — corta o topo/baixo do video stories
+           via object-fit: cover, mostrando o miolo do quadro */
+        width: clamp(300px, 36vw, 400px);
+        aspect-ratio: 4 / 5;
         object-fit: cover;
+        object-position: center;
         display: block;
         background: var(--ink);
       }
@@ -647,6 +650,8 @@
         .vitrine-moldura video,
         .vitrine-moldura img {
           width: min(75vw, 320px);
+          /* Mobile mantém STORIES cheio (9:16) */
+          aspect-ratio: 9 / 16;
         }
       }
 
