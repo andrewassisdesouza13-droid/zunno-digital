@@ -655,19 +655,67 @@
         }
       }
 
-      /* Destaque do slide central no mobile (igual site /album) */
+      /* Destaque do slide central + setas + contador no mobile (igual site /album) */
+      .nf-mobile-ctrl {
+        display: none;
+      }
+
       @media (max-width: 640px) {
         .nf-slide {
-          transform: scale(0.82);
-          opacity: 0.5;
-          transition: transform 0.45s ease, opacity 0.45s ease, box-shadow 0.45s ease;
+          transform: scale(0.86);
+          opacity: 0.35;
+          transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.5s ease;
         }
         .nf-slide.is-center {
-          transform: scale(1.04);
+          transform: scale(1);
           opacity: 1;
           box-shadow:
-            0 24px 50px -16px rgba(43, 42, 40, 0.5),
-            0 8px 18px -6px rgba(43, 42, 40, 0.2);
+            0 20px 44px -14px rgba(43, 42, 40, 0.45),
+            0 6px 16px -6px rgba(43, 42, 40, 0.18);
+        }
+
+        /* Setas circulares prev/next (igual /album) */
+        .nf-mobile-ctrl { display: block; position: relative; max-width: 100%; }
+
+        .nf-mobile-btn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 4;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: var(--paper);
+          border: 2px solid var(--ink);
+          color: var(--ink);
+          font-size: 22px;
+          font-family: var(--display);
+          line-height: 1;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 3px 3px 0 var(--ink);
+          padding: 0;
+          transition: background 0.2s, color 0.2s, transform 0.15s;
+        }
+        .nf-mobile-btn:active {
+          background: var(--ink);
+          color: var(--cream-soft);
+          box-shadow: 4px 4px 0 var(--red);
+        }
+        .nf-mobile-btn.prev { left: 12px; }
+        .nf-mobile-btn.next { right: 12px; }
+
+        /* Contador X / N */
+        .nf-mobile-counter {
+          text-align: center;
+          font-family: var(--display);
+          font-style: italic;
+          color: var(--red);
+          font-size: 14px;
+          letter-spacing: 0.18em;
+          margin-top: 8px;
         }
       }
 
@@ -1364,12 +1412,15 @@
         -webkit-user-drag: none;
       }
 
-      /* Mobile: 1 slide + ~44px peek em cada lado */
+      /* Mobile: 1 slide quase cheio + peek bem fininho (igual site /album) */
       @media (max-width: 640px) {
         .nf-slider-outer::before,
-        .nf-slider-outer::after { width: 50px; }
-        .nf-slide { flex: 0 0 calc(100% - 88px); padding: 8px 8px 28px; }
-        .nf-slider-track { gap: 10px; }
+        .nf-slider-outer::after { width: 24px; }
+        .nf-slide {
+          flex: 0 0 calc(100% - 56px);
+          padding: 10px 10px 36px;
+        }
+        .nf-slider-track { gap: 14px; padding: 24px 0 30px; }
       }
 
       /* ---------- Testimonial cards — 3 colunas estáticas ---------- */
@@ -2337,6 +2388,11 @@
         <!-- Embaixo: slider Netflix de fotos (vai de borda a borda) -->
         <p class="carousel-label" data-reveal>fotos reais do produto ♥&#xFE0E;</p>
         <div class="nf-slider-outer" data-reveal>
+          <!-- Setas + contador (visíveis SÓ no mobile) -->
+          <div class="nf-mobile-ctrl">
+            <button class="nf-mobile-btn prev" id="nfPrev2" aria-label="Foto anterior">‹</button>
+            <button class="nf-mobile-btn next" id="nfNext2" aria-label="Próxima foto">›</button>
+          </div>
           <div class="nf-slider-viewport" id="nfViewport2">
             <div class="nf-slider-track" id="nfTrack2">
               <!-- Clones do final (loop infinito) -->
@@ -2360,6 +2416,7 @@
               <div class="nf-slide nf-clone"><img src="/fotos/3.jpg" alt="" aria-hidden="true"></div>
             </div>
           </div>
+          <p class="nf-mobile-counter"><span id="nfAtual2">1</span> / 10</p>
         </div>
       </section>
 
@@ -2935,10 +2992,42 @@
         });
 
         window.addEventListener("resize", () => setPos(current, false));
+
+        // Expoe o advance pra uso externo (botoes mobile, contador, etc)
+        return { advance };
       }
 
       // Slider de fotos da seção "cada foto é um capítulo"
-      makeSlider("nfViewport2", "nfTrack2", 3, 10, 16);
+      const slider2 = makeSlider("nfViewport2", "nfTrack2", 3, 10, 16);
+
+      // Liga botoes mobile + contador X/10 ao slider 2
+      (function () {
+        const prev = document.getElementById("nfPrev2");
+        const next = document.getElementById("nfNext2");
+        const atual = document.getElementById("nfAtual2");
+        const track = document.getElementById("nfTrack2");
+        if (!prev || !next || !track || !slider2) return;
+
+        const CLONES = 3, TOTAL = 10;
+
+        prev.addEventListener("click", () => slider2.advance(-1));
+        next.addEventListener("click", () => slider2.advance(1));
+
+        // Observa quando o slide central muda → atualiza contador
+        function updateCounter() {
+          const slides = Array.from(track.children);
+          const i = slides.findIndex(s => s.classList.contains("is-center"));
+          if (i < 0) return;
+          // Converte index com clones pra "1..TOTAL" (1-based)
+          let n = i - CLONES + 1;
+          if (n < 1) n += TOTAL;
+          if (n > TOTAL) n -= TOTAL;
+          atual.textContent = n;
+        }
+        const observer = new MutationObserver(updateCounter);
+        Array.from(track.children).forEach(s => observer.observe(s, { attributes: true, attributeFilter: ["class"] }));
+        updateCounter();
+      })();
 
       // (testimonials são estáticos — sem slider)
 
