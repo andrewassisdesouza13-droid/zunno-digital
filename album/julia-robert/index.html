@@ -463,41 +463,166 @@
         opacity: 0.85;
       }
 
-      /* ─────────── GALERIA ─────────── */
+      /* ─────────── GALERIA (carrossel com destaque central) ─────────── */
       .galeria-section { background: var(--cream); }
 
-      .galeria-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 14px;
-        max-width: 920px;
-        margin: 50px auto 0;
+      .galeria-conversa {
+        text-align: center;
+        font-family: var(--display);
+        font-style: italic;
+        font-size: clamp(15px, 1.6vw, 17px);
+        color: var(--ink-soft);
+        max-width: 560px;
+        margin: 24px auto 50px;
+        line-height: 1.6;
+      }
+      .galeria-conversa strong {
+        color: var(--red);
+        font-weight: 500;
       }
 
-      .galeria-item {
+      .galeria-slider-outer {
+        position: relative;
+        max-width: 1100px;
+        margin: 0 auto;
+        overflow: hidden;
+      }
+
+      /* Fades nas bordas */
+      .galeria-slider-outer::before,
+      .galeria-slider-outer::after {
+        content: "";
+        position: absolute;
+        top: 0; bottom: 0;
+        width: 100px;
+        z-index: 3;
+        pointer-events: none;
+      }
+      .galeria-slider-outer::before {
+        left: 0;
+        background: linear-gradient(to right, var(--cream), transparent);
+      }
+      .galeria-slider-outer::after {
+        right: 0;
+        background: linear-gradient(to left, var(--cream), transparent);
+      }
+
+      .galeria-viewport {
+        overflow: visible;
+        cursor: grab;
+        user-select: none;
+      }
+      .galeria-viewport:active { cursor: grabbing; }
+
+      .galeria-track {
+        display: flex;
+        gap: 32px;
+        align-items: center;
+        transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        will-change: transform;
+        padding: 60px 0 70px;
+      }
+
+      .galeria-slide {
+        flex: 0 0 38%;
+        max-width: 420px;
         background: var(--paper);
-        padding: 8px 8px 22px;
+        padding: 14px 14px 50px;
         box-shadow:
-          0 10px 24px -10px rgba(43, 42, 40, 0.32),
-          0 3px 8px -3px rgba(43, 42, 40, 0.12);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        cursor: pointer;
-      }
-      .galeria-item:nth-child(3n+1) { transform: rotate(-1.5deg); }
-      .galeria-item:nth-child(3n+2) { transform: rotate(0.8deg); }
-      .galeria-item:nth-child(3n+3) { transform: rotate(-0.5deg); }
-      .galeria-item:hover {
-        transform: rotate(0) scale(1.04);
-        z-index: 2;
-        box-shadow:
-          0 18px 38px -12px rgba(43, 42, 40, 0.45),
-          0 6px 14px -4px rgba(43, 42, 40, 0.2);
+          0 14px 36px -14px rgba(43, 42, 40, 0.34),
+          0 4px 10px -4px rgba(43, 42, 40, 0.12);
+        transform: scale(0.78);
+        opacity: 0.45;
+        transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.5s ease;
+        pointer-events: none;
+        user-select: none;
+        position: relative;
       }
 
-      .galeria-item img {
+      .galeria-slide.is-active {
+        transform: scale(1.05);
+        opacity: 1;
+        box-shadow:
+          0 30px 60px -20px rgba(43, 42, 40, 0.55),
+          0 10px 24px -8px rgba(43, 42, 40, 0.2);
+        z-index: 2;
+      }
+
+      /* Tape no slide ativo */
+      .galeria-slide.is-active::before {
+        content: "";
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-3deg);
+        width: 110px;
+        height: 22px;
+        background: var(--tape);
+      }
+
+      .galeria-slide img {
         width: 100%;
         aspect-ratio: 1 / 1;
         object-fit: cover;
+        display: block;
+        pointer-events: auto;
+        cursor: zoom-in;
+      }
+
+      /* Indicador de momento */
+      .galeria-info {
+        text-align: center;
+        margin-top: 8px;
+        min-height: 28px;
+      }
+      .galeria-info-num {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 14px;
+        color: var(--red);
+        letter-spacing: 0.16em;
+      }
+
+      /* Botões */
+      .galeria-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 4;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--paper);
+        border: 2px solid var(--ink);
+        color: var(--ink);
+        font-size: 26px;
+        font-family: var(--display);
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 3px 3px 0 var(--ink);
+        transition: background 0.2s, color 0.2s, transform 0.2s;
+        padding: 0;
+      }
+      .galeria-btn:hover {
+        background: var(--ink);
+        color: var(--cream-soft);
+        box-shadow: 4px 4px 0 var(--red);
+        transform: translateY(calc(-50% - 1px));
+      }
+      .galeria-btn.prev { left: 20px; }
+      .galeria-btn.next { right: 20px; }
+
+      @media (max-width: 720px) {
+        .galeria-slide { flex: 0 0 70%; max-width: 320px; padding: 10px 10px 36px; }
+        .galeria-track { gap: 20px; padding: 36px 0 50px; }
+        .galeria-slider-outer::before,
+        .galeria-slider-outer::after { width: 50px; }
+        .galeria-btn { width: 40px; height: 40px; font-size: 20px; }
+        .galeria-btn.prev { left: 8px; }
+        .galeria-btn.next { right: 8px; }
       }
 
       /* ─────────── LIGHTBOX ─────────── */
@@ -690,11 +815,6 @@
         .timeline-titulo { font-size: 19px; }
         .timeline-foto { aspect-ratio: 3 / 2; }
 
-        .galeria-grid {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 10px;
-        }
-
         .counter-grid { gap: 12px; }
         .counter-unit { min-width: 48px; }
         .counter-num { font-size: 24px; }
@@ -837,7 +957,7 @@
       </div>
     </section>
 
-    <!-- ───────────── GALERIA ───────────── -->
+    <!-- ───────────── GALERIA (carrossel com destaque central) ───────────── -->
     <section class="galeria-section">
       <div class="container">
         <p class="section-eyebrow" data-reveal>os melhores cliques</p>
@@ -845,24 +965,40 @@
           os <span class="script">momentos</span> que ficaram.
         </h2>
 
-        <div class="galeria-grid">
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-2.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-3.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-4.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-6.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-7.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-8.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-9.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-11.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-12.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-13.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-14.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-16.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-17.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-18.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-19.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-21.jpg" alt="" data-lightbox></div>
-          <div class="galeria-item" data-reveal><img src="/album/julia-robert/fotos/foto-22.jpg" alt="" data-lightbox></div>
+        <p class="galeria-conversa" data-reveal>
+          antes de passar pra próxima, queríamos que vocês <strong>conversassem sobre esse momento</strong> ♥
+        </p>
+      </div>
+
+      <div class="galeria-slider-outer" data-reveal>
+        <button class="galeria-btn prev" id="gPrev" aria-label="Foto anterior">‹</button>
+
+        <div class="galeria-viewport" id="gViewport">
+          <div class="galeria-track" id="gTrack">
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-2.jpg"  alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-3.jpg"  alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-4.jpg"  alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-6.jpg"  alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-7.jpg"  alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-8.jpg"  alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-9.jpg"  alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-11.jpg" alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-12.jpg" alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-13.jpg" alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-14.jpg" alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-16.jpg" alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-17.jpg" alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-18.jpg" alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-19.jpg" alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-21.jpg" alt="" data-lightbox></div>
+            <div class="galeria-slide"><img src="/album/julia-robert/fotos/foto-22.jpg" alt="" data-lightbox></div>
+          </div>
+        </div>
+
+        <button class="galeria-btn next" id="gNext" aria-label="Próxima foto">›</button>
+
+        <div class="galeria-info" data-reveal>
+          <span class="galeria-info-num"><span id="gAtual">1</span> / <span id="gTotal">17</span></span>
         </div>
       </div>
     </section>
@@ -959,6 +1095,83 @@
           });
         }, { threshold: 0.12 });
         els.forEach((el) => io.observe(el));
+      })();
+
+      // ────────── Carrossel da galeria (foco central) ──────────
+      (function () {
+        const vp     = document.getElementById("gViewport");
+        const track  = document.getElementById("gTrack");
+        const prev   = document.getElementById("gPrev");
+        const next   = document.getElementById("gNext");
+        const atual  = document.getElementById("gAtual");
+        const total  = document.getElementById("gTotal");
+        if (!track) return;
+
+        const slides = Array.from(track.children);
+        const N = slides.length;
+        if (total) total.textContent = N;
+
+        let current = 0;
+
+        function slideW() {
+          return slides[0].offsetWidth + 32; // 32 = gap
+        }
+
+        function setPos() {
+          const offset = vp.offsetWidth / 2 - slides[0].offsetWidth / 2;
+          track.style.transform = "translateX(" + (offset - current * slideW()) + "px)";
+          slides.forEach((s, i) => s.classList.toggle("is-active", i === current));
+          if (atual) atual.textContent = current + 1;
+        }
+
+        function go(dir) {
+          current = ((current + dir) % N + N) % N;
+          setPos();
+        }
+
+        prev.addEventListener("click", () => go(-1));
+        next.addEventListener("click", () => go(1));
+
+        // Click numa foto não-ativa → vai pra ela
+        slides.forEach((s, i) => {
+          s.addEventListener("click", (e) => {
+            if (i === current) return; // ativa abre lightbox via img click
+            e.stopPropagation();
+            e.preventDefault();
+            current = i;
+            setPos();
+          }, true);
+        });
+
+        // Drag mouse
+        let startX = 0, sT = 0, drag = false;
+        vp.addEventListener("mousedown", (e) => {
+          startX = e.clientX; sT = Date.now(); drag = true;
+          e.preventDefault();
+        });
+        window.addEventListener("mouseup", (e) => {
+          if (!drag) return; drag = false;
+          const diff = startX - e.clientX;
+          if (Math.abs(diff) > 40) go(diff > 0 ? 1 : -1);
+        });
+
+        // Swipe touch
+        vp.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; sT = Date.now(); }, { passive: true });
+        vp.addEventListener("touchend", (e) => {
+          const diff = startX - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 40) go(diff > 0 ? 1 : -1);
+        });
+
+        // Teclado
+        document.addEventListener("keydown", (e) => {
+          if (document.getElementById("lightbox")?.classList.contains("open")) return; // lightbox tem prioridade
+          if (e.key === "ArrowLeft")  go(-1);
+          if (e.key === "ArrowRight") go(1);
+        });
+
+        window.addEventListener("resize", setPos);
+        // Init depois do paint
+        setTimeout(setPos, 0);
       })();
 
       // ────────── Lightbox (galeria + timeline) ──────────
