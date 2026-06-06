@@ -563,30 +563,46 @@
         margin: 0 auto 48px;
       }
 
-      /* Vitrine: foto (esquerda) + video stories (direita) */
-      .vitrine {
+      /* Vitrine topo: textos à esquerda + vídeo (moldura polaroid) à direita */
+      .vitrine-topo {
         display: grid;
         grid-template-columns: 1fr auto;
-        gap: clamp(24px, 4vw, 56px);
+        gap: clamp(32px, 5vw, 72px);
         align-items: center;
-        justify-content: center;
-        max-width: 980px;
-        margin: 0 auto;
+        max-width: 1080px;
+        margin: 0 auto 60px;
       }
 
-      .vitrine-foto {
+      .vitrine-topo-textos {
+        text-align: left;
+      }
+      .vitrine-topo-textos .section-eyebrow {
+        text-align: left;
+        margin-bottom: 14px;
+      }
+      .vitrine-topo-textos .section-title {
+        text-align: left;
+        margin-bottom: 22px;
+      }
+      .vitrine-topo-textos .section-lead {
+        text-align: left;
+        margin: 0;
+      }
+
+      /* Moldura polaroid (foto OU vídeo dentro) */
+      .vitrine-moldura {
         position: relative;
         background: var(--paper);
         padding: 14px 14px 50px;
         box-shadow:
-          0 20px 50px -18px rgba(43, 42, 40, 0.42),
-          0 8px 18px -6px rgba(43, 42, 40, 0.16);
-        transform: rotate(-2deg);
+          0 24px 60px -20px rgba(43, 42, 40, 0.5),
+          0 10px 24px -8px rgba(43, 42, 40, 0.2);
+        transform: rotate(1.5deg);
         transition: transform 0.5s ease;
       }
-      .vitrine-foto:hover { transform: rotate(0) scale(1.02); }
+      .vitrine-moldura:hover { transform: rotate(0) scale(1.02); }
 
-      .vitrine-foto::before {
+      .vitrine-moldura::before {
         content: "";
         position: absolute;
         top: -14px;
@@ -595,66 +611,58 @@
         width: 130px;
         height: 26px;
         background: var(--tape);
+        z-index: 2;
       }
 
-      .vitrine-foto img {
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-        display: block;
-        max-width: 460px;
-      }
-
-      .vitrine-video {
-        position: relative;
-        border-radius: 24px;
-        overflow: hidden;
-        background: var(--ink);
-        height: clamp(420px, 62vh, 640px);
+      .vitrine-moldura video,
+      .vitrine-moldura img {
+        width: clamp(240px, 32vw, 320px);
         aspect-ratio: 9 / 16;
-        box-shadow:
-          0 24px 60px -20px rgba(43, 42, 40, 0.55),
-          0 8px 20px -8px rgba(43, 42, 40, 0.18);
-        transform: rotate(1.5deg);
-        transition: transform 0.5s ease;
-      }
-      .vitrine-video:hover { transform: rotate(0) scale(1.02); }
-
-      .vitrine-video video {
-        width: 100%;
-        height: 100%;
         object-fit: cover;
         display: block;
+        background: var(--ink);
       }
 
-      /* Badge "ao vivo" no vídeo (cara de stories) */
-      .vitrine-video::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border: 3px solid var(--paper);
-        border-radius: 24px;
-        pointer-events: none;
-      }
-
-      /* Mobile: video em cima, foto embaixo */
+      /* Mobile: textos em cima, vídeo embaixo, ambos centralizados */
       @media (max-width: 800px) {
-        .vitrine {
+        .vitrine-topo {
           grid-template-columns: 1fr;
           gap: 32px;
-          max-width: 420px;
+          max-width: 480px;
+          margin-bottom: 40px;
         }
-        .vitrine-video {
+        .vitrine-topo-textos {
+          text-align: center;
+        }
+        .vitrine-topo-textos .section-eyebrow,
+        .vitrine-topo-textos .section-title,
+        .vitrine-topo-textos .section-lead {
+          text-align: center;
+        }
+        .vitrine-moldura {
           order: -1;
-          width: 100%;
-          height: auto;
-          max-height: 70vh;
+          margin: 0 auto;
           transform: rotate(0);
         }
-        .vitrine-foto {
-          transform: rotate(0);
-          max-width: 340px;
-          margin: 0 auto;
+        .vitrine-moldura video,
+        .vitrine-moldura img {
+          width: min(75vw, 320px);
+        }
+      }
+
+      /* Destaque do slide central no mobile (igual site /album) */
+      @media (max-width: 640px) {
+        .nf-slide {
+          transform: scale(0.82);
+          opacity: 0.5;
+          transition: transform 0.45s ease, opacity 0.45s ease, box-shadow 0.45s ease;
+        }
+        .nf-slide.is-center {
+          transform: scale(1.04);
+          opacity: 1;
+          box-shadow:
+            0 24px 50px -16px rgba(43, 42, 40, 0.5),
+            0 8px 18px -6px rgba(43, 42, 40, 0.2);
         }
       }
 
@@ -2296,20 +2304,19 @@
 
       <section class="video-section">
         <div class="container">
-          <p class="section-eyebrow" data-reveal>o que vai dentro</p>
-          <h2 class="section-title" data-reveal>
-            cada foto é <span class="script">um capítulo</span><br>que vocês escreveram.
-          </h2>
-          <p class="section-lead" data-reveal>
-            8 fotos estilo Polaroid pra espalhar pela casa. 14 figurinhas com frases românticas dentro do álbum. 3 Ferrero pra abrir junto. Tudo impresso em papel premium, do jeito que a história aconteceu.
-          </p>
 
-          <!-- Vitrine: foto à esquerda, vídeo stories à direita -->
-          <div class="vitrine" data-reveal>
-            <div class="vitrine-foto">
-              <img src="/fotos/1.jpg" alt="Kit Estúdio Papuli">
+          <!-- Topo: textos (esq) + vídeo (dir) com moldura polaroid -->
+          <div class="vitrine-topo" data-reveal>
+            <div class="vitrine-topo-textos">
+              <p class="section-eyebrow">o que vai dentro</p>
+              <h2 class="section-title">
+                cada foto é <span class="script">um capítulo</span><br>que vocês escreveram.
+              </h2>
+              <p class="section-lead">
+                8 fotos estilo Polaroid pra espalhar pela casa. 14 figurinhas com frases românticas dentro do álbum. 3 Ferrero pra abrir junto. Tudo impresso em papel premium, do jeito que a história aconteceu.
+              </p>
             </div>
-            <div class="vitrine-video">
+            <div class="vitrine-moldura">
               <video
                 src="/videos/teaser.mp4"
                 poster="/fotos/3.jpg"
@@ -2317,6 +2324,35 @@
                 preload="metadata"
                 controls
               ></video>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Embaixo: slider Netflix de fotos (vai de borda a borda) -->
+        <p class="carousel-label" data-reveal>fotos reais do produto ♥&#xFE0E;</p>
+        <div class="nf-slider-outer" data-reveal>
+          <div class="nf-slider-viewport" id="nfViewport2">
+            <div class="nf-slider-track" id="nfTrack2">
+              <!-- Clones do final (loop infinito) -->
+              <div class="nf-slide nf-clone"><img src="/fotos/8.jpg"  alt="" aria-hidden="true"></div>
+              <div class="nf-slide nf-clone"><img src="/fotos/9.jpg"  alt="" aria-hidden="true"></div>
+              <div class="nf-slide nf-clone"><img src="/fotos/10.jpg" alt="" aria-hidden="true"></div>
+              <!-- Slides reais -->
+              <div class="nf-slide"><img src="/fotos/1.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/2.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/3.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/4.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/5.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/6.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/7.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/8.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/9.jpg"  alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/10.jpg" alt="Kit Estúdio Papuli"></div>
+              <!-- Clones do início (loop infinito) -->
+              <div class="nf-slide nf-clone"><img src="/fotos/1.jpg" alt="" aria-hidden="true"></div>
+              <div class="nf-slide nf-clone"><img src="/fotos/2.jpg" alt="" aria-hidden="true"></div>
+              <div class="nf-slide nf-clone"><img src="/fotos/3.jpg" alt="" aria-hidden="true"></div>
             </div>
           </div>
         </div>
@@ -2841,6 +2877,10 @@
             ? "transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)"
             : "none";
           track.style.transform = "translateX(" + getTranslate(idx) + "px)";
+          // Marca o slide central pra ganhar destaque no mobile (.is-center)
+          Array.from(track.children).forEach((s, i) => {
+            s.classList.toggle("is-center", i === idx);
+          });
         }
 
         function advance(dir) {
@@ -2892,9 +2932,10 @@
         window.addEventListener("resize", () => setPos(current, false));
       }
 
+      // Slider de fotos da seção "cada foto é um capítulo"
+      makeSlider("nfViewport2", "nfTrack2", 3, 10, 16);
+
       // (testimonials são estáticos — sem slider)
-      // (Vitrine de foto + vídeo na "como chega na sua casa" é HTML puro,
-      //  o <video> reproduz sozinho com autoplay muted loop playsinline)
 
     </script>
   </body>
