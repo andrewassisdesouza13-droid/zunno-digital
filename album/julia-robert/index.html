@@ -418,7 +418,7 @@
 
       .timeline-foto {
         width: 100%;
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 3 / 4;
         object-fit: cover;
         border-radius: 4px;
         cursor: pointer;
@@ -765,6 +765,229 @@
       }
       .assinatura-sub a:hover { color: var(--red-bright); border-color: var(--red-bright); }
 
+      /* ─────────── COVER DE ABERTURA (surpresa) ─────────── */
+      .cover {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background:
+          radial-gradient(circle at 30% 20%, rgba(200, 48, 42, 0.18) 0, transparent 50%),
+          radial-gradient(circle at 70% 80%, rgba(200, 48, 42, 0.14) 0, transparent 55%),
+          var(--cream);
+        text-align: center;
+        padding: 40px 24px;
+        transition: opacity 0.6s ease, visibility 0.6s ease;
+        overflow: hidden;
+      }
+
+      .cover.fechar {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      /* Corações decorativos flutuando ao fundo */
+      .cover-bg-heart {
+        position: absolute;
+        color: var(--red);
+        opacity: 0.08;
+        pointer-events: none;
+        animation: floatBg 6s ease-in-out infinite;
+      }
+      .cover-bg-heart:nth-child(1) { top: 10%; left: 8%;  font-size: 80px; animation-delay: 0s; }
+      .cover-bg-heart:nth-child(2) { top: 18%; right: 12%; font-size: 56px; animation-delay: 1.2s; }
+      .cover-bg-heart:nth-child(3) { bottom: 15%; left: 14%; font-size: 100px; animation-delay: 2.4s; }
+      .cover-bg-heart:nth-child(4) { bottom: 22%; right: 8%; font-size: 64px; animation-delay: 0.8s; }
+      .cover-bg-heart:nth-child(5) { top: 50%; left: 4%; font-size: 44px; animation-delay: 1.8s; }
+      .cover-bg-heart:nth-child(6) { top: 60%; right: 4%; font-size: 48px; animation-delay: 0.4s; }
+      @keyframes floatBg {
+        0%, 100% { transform: translateY(0) rotate(-8deg); }
+        50% { transform: translateY(-12px) rotate(6deg); }
+      }
+
+      .cover-eyebrow {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 13px;
+        color: var(--red);
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+        animation: fadeUp 0.8s ease 0.1s backwards;
+      }
+
+      .cover-titulo {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: clamp(34px, 6vw, 64px);
+        line-height: 1.05;
+        color: var(--ink);
+        margin: 0 0 14px;
+        max-width: 720px;
+        animation: fadeUp 0.8s ease 0.3s backwards;
+      }
+      .cover-titulo .script {
+        font-family: var(--script);
+        color: var(--red);
+        font-weight: 400;
+        font-size: 1.08em;
+      }
+
+      .cover-sub {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: clamp(16px, 1.8vw, 19px);
+        color: var(--ink-soft);
+        margin: 0 0 44px;
+        max-width: 480px;
+        line-height: 1.5;
+        animation: fadeUp 0.8s ease 0.5s backwards;
+      }
+
+      /* Caixinha (envelope) que vai abrir */
+      .cover-presente {
+        position: relative;
+        width: 180px;
+        height: 180px;
+        margin-bottom: 36px;
+        cursor: pointer;
+        animation: fadeUp 0.8s ease 0.7s backwards, breath 2.4s ease-in-out 1.5s infinite;
+        transform-origin: center bottom;
+      }
+      @keyframes breath {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-4px) scale(1.04); }
+      }
+
+      .cover-presente-caixa {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 140px;
+        height: 110px;
+        background: var(--paper);
+        border: 2px solid var(--ink);
+        border-radius: 4px;
+        box-shadow:
+          0 14px 30px -10px rgba(43, 42, 40, 0.4),
+          inset 0 -20px 0 rgba(200, 48, 42, 0.08);
+      }
+      /* Faixa vertical da caixa */
+      .cover-presente-caixa::before {
+        content: "";
+        position: absolute;
+        top: 0; bottom: 0;
+        left: 50%;
+        width: 16px;
+        transform: translateX(-50%);
+        background: var(--red);
+      }
+      /* Faixa horizontal */
+      .cover-presente-caixa::after {
+        content: "";
+        position: absolute;
+        left: 0; right: 0;
+        top: 50%;
+        height: 16px;
+        transform: translateY(-50%);
+        background: var(--red);
+      }
+
+      /* Tampa */
+      .cover-presente-tampa {
+        position: absolute;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 156px;
+        height: 30px;
+        background: var(--red);
+        border: 2px solid var(--ink);
+        border-radius: 4px;
+        z-index: 2;
+        transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform-origin: bottom center;
+      }
+      /* Laço (bow) */
+      .cover-presente-laco {
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 26px;
+        z-index: 3;
+        transition: transform 0.6s ease;
+      }
+      .cover-presente-laco::before,
+      .cover-presente-laco::after {
+        content: "";
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        background: var(--red);
+        border: 2px solid var(--ink);
+        border-radius: 50% 50% 50% 0;
+        top: 0;
+      }
+      .cover-presente-laco::before { left: 0; transform: rotate(-30deg); }
+      .cover-presente-laco::after  { right: 0; transform: rotate(30deg) scaleX(-1); }
+
+      /* Hover/abertura */
+      .cover-presente:hover .cover-presente-tampa {
+        transform: translateX(-50%) translateY(-6px) rotate(-3deg);
+      }
+      .cover-presente:hover .cover-presente-laco {
+        transform: translateX(-50%) translateY(-8px) rotate(3deg);
+      }
+
+      /* Estado "abrindo" (depois do clique) */
+      .cover-presente.abrindo .cover-presente-tampa {
+        transform: translateX(-50%) translateY(-50px) rotate(-25deg);
+      }
+      .cover-presente.abrindo .cover-presente-laco {
+        transform: translateX(-50%) translateY(-70px) rotate(25deg);
+        opacity: 0.6;
+      }
+
+      .cover-btn {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 17px;
+        padding: 16px 36px;
+        background: var(--red);
+        color: var(--cream-soft);
+        border: 2px solid var(--ink);
+        border-radius: 999px;
+        cursor: pointer;
+        box-shadow: 4px 4px 0 var(--ink);
+        transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+        animation: fadeUp 0.8s ease 0.9s backwards;
+        letter-spacing: 0.02em;
+      }
+      .cover-btn:hover {
+        background: var(--red-deep);
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0 var(--ink);
+      }
+      .cover-btn:active {
+        transform: translate(1px, 1px);
+        box-shadow: 2px 2px 0 var(--ink);
+      }
+
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Quando o cover tá ativo, body não rola */
+      body.cover-aberto { overflow: hidden; }
+
       /* ─────────── REVEAL ANIMATION ─────────── */
       [data-reveal] {
         opacity: 0;
@@ -816,7 +1039,7 @@
         .timeline-card::before { left: -7px !important; right: auto !important; top: 28px; }
         .timeline-card { padding: 18px 18px 18px; }
         .timeline-titulo { font-size: 19px; }
-        .timeline-foto { aspect-ratio: 3 / 2; }
+        .timeline-foto { aspect-ratio: 3 / 4; }
 
         .counter-grid { gap: 12px; }
         .counter-unit { min-width: 48px; }
@@ -826,7 +1049,36 @@
       }
     </style>
   </head>
-  <body>
+  <body class="cover-aberto">
+
+    <!-- ───────────── COVER (página de abertura "abra uma surpresa") ───────────── -->
+    <div class="cover" id="cover" role="dialog" aria-label="Abra sua surpresa">
+      <!-- Corações decorativos flutuando ao fundo -->
+      <span class="cover-bg-heart">♥&#xFE0E;</span>
+      <span class="cover-bg-heart">♥&#xFE0E;</span>
+      <span class="cover-bg-heart">♥&#xFE0E;</span>
+      <span class="cover-bg-heart">♥&#xFE0E;</span>
+      <span class="cover-bg-heart">♥&#xFE0E;</span>
+      <span class="cover-bg-heart">♥&#xFE0E;</span>
+
+      <p class="cover-eyebrow">você tem uma surpresa</p>
+      <h1 class="cover-titulo">
+        abra uma das suas <span class="script">surpresas</span> ♥&#xFE0E;
+      </h1>
+      <p class="cover-sub">
+        feita com carinho pra você. respira fundo, prepara o coração e clica embaixo.
+      </p>
+
+      <div class="cover-presente" id="coverPresente" aria-hidden="true">
+        <div class="cover-presente-caixa"></div>
+        <div class="cover-presente-tampa"></div>
+        <div class="cover-presente-laco"></div>
+      </div>
+
+      <button class="cover-btn" id="coverBtn" type="button">
+        abrir minha surpresa ♥&#xFE0E;
+      </button>
+    </div>
 
     <!-- ───────────── HERO ───────────── -->
     <section class="hero">
@@ -839,7 +1091,7 @@
       <h1 class="hero-names" data-reveal>Julia <span class="amp">&amp;</span> Robert</h1>
 
       <p class="hero-frase" data-reveal>
-        "Amar também é escolher ficar,<br>mesmo quando seria mais fácil partir."
+        "Dentre todas as histórias de amor,<br>a nossa é a minha preferida."
       </p>
 
       <div class="counter" data-reveal>
@@ -1026,13 +1278,33 @@
     <!-- ───────────── ASSINATURA ───────────── -->
     <footer class="assinatura">
       <p class="assinatura-marca">Estúdio Papuli <span class="heart">♥&#xFE0E;</span></p>
-      <p class="assinatura-sub">
-        a sua história em forma de lembrança ·
-        <a href="https://zunno.digital/namorados" target="_blank" rel="noopener">faça o seu também</a>
-      </p>
+      <p class="assinatura-sub">a sua história em forma de lembrança</p>
     </footer>
 
     <script>
+      // ────────── Cover de abertura ──────────
+      (function () {
+        const cover    = document.getElementById("cover");
+        const btn      = document.getElementById("coverBtn");
+        const presente = document.getElementById("coverPresente");
+        if (!cover) return;
+
+        function abrir() {
+          // anima o presente abrindo
+          presente.classList.add("abrindo");
+          // depois fade out + libera scroll
+          setTimeout(() => {
+            cover.classList.add("fechar");
+            document.body.classList.remove("cover-aberto");
+            // remove do DOM depois da animacao
+            setTimeout(() => cover.remove(), 700);
+          }, 700);
+        }
+
+        btn.addEventListener("click", abrir);
+        presente.addEventListener("click", abrir);
+      })();
+
       // ────────── Contador ao vivo ──────────
       (function () {
         const inicio = new Date("2022-06-27T00:00:00-03:00");
