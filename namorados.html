@@ -72,8 +72,19 @@
       .br-desktop { display: none; }
       @media (min-width: 641px) { .br-desktop { display: inline; } }
 
+      html, body {
+        /* Trava a pagina horizontalmente — nada de scroll lateral no mobile */
+        max-width: 100vw;
+        overflow-x: clip; /* clip > hidden: nao cria scroll container, ate position:sticky funciona */
+      }
+
       html {
         scroll-behavior: smooth;
+      }
+
+      /* Fallback pra browsers sem suporte a 'clip' */
+      @supports not (overflow-x: clip) {
+        html, body { overflow-x: hidden; }
       }
 
       body {
@@ -2403,27 +2414,23 @@
           <div class="nf-slider-viewport" id="nfViewport2">
             <div class="nf-slider-track" id="nfTrack2">
               <!-- Clones do final (loop infinito) -->
-              <div class="nf-slide nf-clone"><img src="/fotos/8.jpg"  alt="" aria-hidden="true"></div>
-              <div class="nf-slide nf-clone"><img src="/fotos/9.jpg"  alt="" aria-hidden="true"></div>
-              <div class="nf-slide nf-clone"><img src="/fotos/10.jpg" alt="" aria-hidden="true"></div>
+              <div class="nf-slide nf-clone"><img src="/fotos/4.jpg" alt="" aria-hidden="true"></div>
+              <div class="nf-slide nf-clone"><img src="/fotos/5.jpg" alt="" aria-hidden="true"></div>
+              <div class="nf-slide nf-clone"><img src="/fotos/6.jpg" alt="" aria-hidden="true"></div>
               <!-- Slides reais -->
-              <div class="nf-slide"><img src="/fotos/1.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/2.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/3.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/4.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/5.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/6.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/7.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/8.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/9.jpg"  alt="Kit Estúdio Papuli"></div>
-              <div class="nf-slide"><img src="/fotos/10.jpg" alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/1.jpg" alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/2.jpg" alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/3.jpg" alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/4.jpg" alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/5.jpg" alt="Kit Estúdio Papuli"></div>
+              <div class="nf-slide"><img src="/fotos/6.jpg" alt="Kit Estúdio Papuli"></div>
               <!-- Clones do início (loop infinito) -->
               <div class="nf-slide nf-clone"><img src="/fotos/1.jpg" alt="" aria-hidden="true"></div>
               <div class="nf-slide nf-clone"><img src="/fotos/2.jpg" alt="" aria-hidden="true"></div>
               <div class="nf-slide nf-clone"><img src="/fotos/3.jpg" alt="" aria-hidden="true"></div>
             </div>
           </div>
-          <p class="nf-mobile-counter"><span id="nfAtual2">1</span> / 10</p>
+          <p class="nf-mobile-counter"><span id="nfAtual2">1</span> / 6</p>
         </div>
       </section>
 
@@ -3005,9 +3012,9 @@
       }
 
       // Slider de fotos da seção "cada foto é um capítulo"
-      const slider2 = makeSlider("nfViewport2", "nfTrack2", 3, 10, 16);
+      const slider2 = makeSlider("nfViewport2", "nfTrack2", 3, 6, 16);
 
-      // Liga botoes mobile + contador X/10 ao slider 2
+      // Liga botoes mobile + contador X/6 ao slider 2
       (function () {
         const prev = document.getElementById("nfPrev2");
         const next = document.getElementById("nfNext2");
@@ -3015,7 +3022,7 @@
         const track = document.getElementById("nfTrack2");
         if (!prev || !next || !track || !slider2) return;
 
-        const CLONES = 3, TOTAL = 10;
+        const CLONES = 3, TOTAL = 6;
 
         prev.addEventListener("click", () => slider2.advance(-1));
         next.addEventListener("click", () => slider2.advance(1));
