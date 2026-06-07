@@ -2058,6 +2058,22 @@
         margin: 4px 0 0;
       }
 
+      .dados-skip {
+        background: none;
+        border: none;
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 14px;
+        color: var(--ink-soft);
+        cursor: pointer;
+        margin-top: 4px;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        padding: 6px 12px;
+        transition: color 0.2s;
+      }
+      .dados-skip:hover { color: var(--red); }
+
       /* ---------- FAQ ---------- */
       .faq {
         background: var(--cream-deep);
@@ -2803,6 +2819,25 @@
 
     </main>
 
+    <!-- ===== Modal minimalista: só WhatsApp (com botão pular) ===== -->
+    <div class="dados-overlay" id="dadosModal" aria-hidden="true">
+      <div class="dados-card" role="dialog" aria-modal="true" aria-labelledby="dadosTitle">
+        <button class="dados-close" id="dadosClose" type="button" aria-label="Fechar">×</button>
+        <span class="dados-eyebrow">só pra te avisar ♥&#xFE0E;</span>
+        <h3 class="dados-title" id="dadosTitle">Deixa seu WhatsApp<br>e te ajudamos no que precisar</h3>
+        <p class="dados-plano" id="dadosPlanoLabel"></p>
+        <form class="dados-form" id="dadosForm" novalidate>
+          <label class="dados-label" style="text-align:left;">
+            Seu WhatsApp
+            <input class="dados-input" id="dadosWhats" type="tel" inputmode="numeric" placeholder="(16) 99999-9999" autocomplete="tel">
+          </label>
+          <button class="dados-submit" id="dadosSubmit" type="submit">Continuar pro pagamento</button>
+          <button type="button" class="dados-skip" id="dadosSkip">ou pular essa etapa</button>
+          <p class="dados-hint">é só pra te chamar se precisarmos das fotos ♥&#xFE0E;</p>
+        </form>
+      </div>
+    </div>
+
     <footer>
       <div>
         Estúdio Papuli ♥&#xFE0E; Edição especial Dia dos Namorados 2026 · uma parceria com a Zunno.Digital
@@ -2890,12 +2925,11 @@
         prasempre: { value: 157.90, name: "Album + Fotos Polaroid + Ferrero + Site" }
       };
 
-      async function iniciarCheckout(planoKey, btn) {
-        const labelOriginal = btn.textContent;
-        btn.textContent = "Abrindo pagamento…";
-        btn.style.pointerEvents = "none";
+      async function iniciarCheckout(planoKey, whatsapp, submitBtn) {
+        const labelOriginal = submitBtn.textContent;
+        submitBtn.textContent = "Abrindo pagamento…";
+        submitBtn.disabled = true;
 
-        // dispara InitiateCheckout no Pixel
         if (typeof fbq === "function") {
           const info = PLANO_VALORES[planoKey];
           if (info) {
@@ -2913,9 +2947,8 @@
           const resp = await fetch("/api/infinitepay-checkout", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ plano: planoKey })
+            body: JSON.stringify({ plano: planoKey, whatsapp: whatsapp || "" })
           });
-
           const data = await resp.json();
           if (!resp.ok || !data.url) {
             console.error("checkout error:", resp.status, data);
@@ -2925,18 +2958,83 @@
         } catch (err) {
           console.error("Erro ao iniciar checkout:", err);
           alert("Tivemos um problema ao abrir o pagamento. Tenta de novo ou chama a gente no WhatsApp.");
-          btn.textContent = labelOriginal;
-          btn.style.pointerEvents = "";
+          submitBtn.textContent = labelOriginal;
+          submitBtn.disabled = false;
         }
       }
 
-      // ---------- Botão "Quero esse plano" vai DIRETO pro checkout ----------
-      document.querySelectorAll("[data-plano]").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          e.preventDefault();
-          iniciarCheckout(btn.getAttribute("data-plano"), btn);
+      // ---------- Modal minimalista (so WhatsApp, com pular) ----------
+      (function () {
+        const overlay  = document.getElementById("dadosModal");
+        const form     = document.getElementById("dadosForm");
+        const inputWa  = document.getElementById("dadosWhats");
+        const submitBtn = document.getElementById("dadosSubmit");
+        const closeBtn  = document.getElementById("dadosClose");
+        const skipBtn   = document.getElementById("dadosSkip");
+        const planoLabel = document.getElementById("dadosPlanoLabel");
+        if (!overlay) return;
+
+        let planoAtual = null;
+
+        const NOMES_BONITOS = {
+          essencial: "Box de Fotos + Ferrero · R$ 57,90",
+          polaroid:  "Álbum + Fotos + Ferrero · R$ 97,90",
+          prasempre: "Álbum + Fotos + Ferrero + Site · R$ 157,90"
+        };
+
+        function abrir(plano) {
+          planoAtual = plano;
+          planoLabel.textContent = NOMES_BONITOS[plano] || "";
+          submitBtn.textContent = "Continuar pro pagamento";
+          submitBtn.disabled = false;
+          inputWa.value = "";
+          overlay.classList.add("open");
+          document.body.style.overflow = "hidden";
+          setTimeout(() => inputWa.focus(), 120);
+        }
+        function fechar() {
+          overlay.classList.remove("open");
+          document.body.style.overflow = "";
+        }
+
+        // mascara de telefone BR
+        inputWa.addEventListener("input", () => {
+          let v = inputWa.value.replace(/\D/g, "").slice(0, 11);
+          if (v.length > 6)      v = "(" + v.slice(0,2) + ") " + v.slice(2,7) + "-" + v.slice(7);
+          else if (v.length > 2) v = "(" + v.slice(0,2) + ") " + v.slice(2);
+          else if (v.length > 0) v = "(" + v;
+          inputWa.value = v;
         });
-      });
+
+        // Click em "Quero esse plano" abre o modal
+        document.querySelectorAll("[data-plano]").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            abrir(btn.getAttribute("data-plano"));
+          });
+        });
+
+        closeBtn.addEventListener("click", fechar);
+        overlay.addEventListener("click", (e) => { if (e.target === overlay) fechar(); });
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape" && overlay.classList.contains("open")) fechar(); });
+
+        // PULAR: vai direto pro checkout sem whatsapp
+        skipBtn.addEventListener("click", () => {
+          iniciarCheckout(planoAtual, "", submitBtn);
+        });
+
+        // SUBMETER: valida whatsapp e vai pro checkout
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const whats = inputWa.value.replace(/\D/g, "");
+          if (whats.length < 10) {
+            // Se whatsapp invalido, oferece pular
+            inputWa.focus();
+            return;
+          }
+          iniciarCheckout(planoAtual, inputWa.value.trim(), submitBtn);
+        });
+      })();
 
       // ---------- Video placeholder ----------
       const videoFrame = document.getElementById("videoFrame");
