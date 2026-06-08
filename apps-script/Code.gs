@@ -559,8 +559,14 @@ function criarAbaFiltro_(ss, nomeAba, formula) {
     aba = ss.insertSheet(nomeAba);
   }
 
-  // Cabecalho
-  aba.getRange(1, 1, 1, COLUNAS.length).setValues([COLUNAS]);
+  // Cabecalho — usa setValue na A1 explicitamente pra evitar Sheets
+  // interpretar "# Pedido" como referencia e gerar #REF!
+  // Forca formato texto na A1 ANTES de escrever
+  aba.getRange(1, 1).setNumberFormat("@").setValue(COLUNAS[0]);
+  for (var i = 1; i < COLUNAS.length; i++) {
+    aba.getRange(1, i + 1).setValue(COLUNAS[i]);
+  }
+
   var header = aba.getRange(1, 1, 1, COLUNAS.length);
   header.setBackground(COR_HEADER_BG);
   header.setFontColor(COR_HEADER_TEXT);
@@ -574,14 +580,21 @@ function criarAbaFiltro_(ss, nomeAba, formula) {
   // Larguras
   LARGURAS.forEach(function (w, i) { aba.setColumnWidth(i + 1, w); });
 
-  // Formula de filtro na A2
-  aba.getRange(2, 1).setFormula(formula);
+  // FORMATAÇÃO POR COLUNA — DEVE VIR ANTES da formula
+  // Coluna A (# Pedido) como TEXTO (evita Sheets interpretar valores como ref)
+  aba.getRange(2, 1, 500, 1).setNumberFormat("@").setFontFamily("Courier New").setFontSize(10);
+  // Coluna B (Data) com formato data+hora
+  aba.getRange(2, 2, 500, 1).setNumberFormat("dd/MM/yyyy HH:mm");
+  // Coluna D (Valor)
+  aba.getRange(2, 4, 500, 1).setNumberFormat("R$ #,##0.00").setFontColor(COR_ACCENT).setFontWeight("bold");
 
-  // Format valor (col 4) e bandas alternadas
-  aba.getRange(2, 4, 500).setNumberFormat("R$ #,##0.00").setFontColor(COR_ACCENT).setFontWeight("bold");
+  // Bandas alternadas
   var existentes = aba.getBandings();
   existentes.forEach(function (b) { b.remove(); });
   aba.getRange(2, 1, 500, COLUNAS.length).applyRowBanding(SpreadsheetApp.BandingTheme.LIGHT_GREY, false, false);
+
+  // Formula de filtro na A2 (DEPOIS de aplicar os formatos)
+  aba.getRange(2, 1).setFormula(formula);
 }
 
 // ── Forca verificacao manual de um pedido (caso webhook InfinitePay falhe) ──
