@@ -488,8 +488,37 @@
 
       @media (max-width: 720px) {
         .declaracao-text { padding: 0 4px; }
-        .declaracao-text p { font-size: 16px; line-height: 1.72; margin-bottom: 18px; }
-        .declaracao-text p:first-child { font-size: 18px; }
+        .declaracao-text p {
+          font-size: 16px;
+          line-height: 1.72;
+          margin-bottom: 18px;
+          /* Wrap bonitinho: evita orfas, palavra unica em ultima linha,
+             e força quebra entre palavras (nao no meio de palavras longas) */
+          text-wrap: pretty;
+          word-break: keep-all;
+          overflow-wrap: break-word;
+          hyphens: auto;
+          -webkit-hyphens: auto;
+        }
+        .declaracao-text p:first-child {
+          font-size: 18px;
+          text-wrap: balance;
+        }
+        .declaracao-assinatura { text-wrap: balance; }
+        /* Aplica nas outras secoes tambem (timeline, hero, etc) */
+        .timeline-desc,
+        .timeline-titulo,
+        .section-lead,
+        .hero-frase {
+          text-wrap: pretty;
+          overflow-wrap: break-word;
+        }
+        .section-title,
+        .hero-names,
+        .cover-titulo,
+        .frase-final-texto small {
+          text-wrap: balance;
+        }
       }
 
       /* ─────────── GALERIA (carrossel com destaque central) ─────────── */
