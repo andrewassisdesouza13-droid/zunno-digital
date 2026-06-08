@@ -500,10 +500,130 @@ function parseDataBR_(s) {
   return new Date(+m[3], +m[2] - 1, +m[1], +(m[4] || 0), +(m[5] || 0)).getTime();
 }
 
+// ── Criar abas-dashboard (Pagos / Aguardando) ───────────────
+// Cria 2 abas que filtram automaticamente da aba principal "Pedidos".
+// Sao views read-only: quando voce edita "Pedidos", as views se atualizam.
+//
+// Estrategia:
+//   "🟢 Pagos"      → filtra linhas com 'PAGO' no Pagamento
+//   "🟡 Aguardando" → filtra linhas com 'aguardando' no Pagamento (sem PAGO)
+function setupAbas() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  // Garante que a aba principal existe e tem dados
+  var principal = ss.getSheetByName(SHEET_NAME);
+  if (!principal) {
+    SpreadsheetApp.getUi().alert("Aba '" + SHEET_NAME + "' nao encontrada. Rode setupSheet() primeiro.");
+    return;
+  }
+
+  criarAbaFiltro_(
+    ss,
+    "🟢 Pagos",
+    "=IFERROR(FILTER(Pedidos!A2:N, REGEXMATCH(TO_TEXT(Pedidos!E2:E), \"PAGO\")), \"sem pedidos pagos ainda\")"
+  );
+
+  criarAbaFiltro_(
+    ss,
+    "🟡 Aguardando",
+    "=IFERROR(FILTER(Pedidos!A2:N, Pedidos!E2:E=\"aguardando pgto\"), \"todos pagos!\")"
+  );
+
+  // Move pro inicio: Aguardando primeiro (pra ver o que precisa de follow-up),
+  // depois Pagos, depois Pedidos (mestra)
+  ss.setActiveSheet(ss.getSheetByName("🟡 Aguardando"));
+  ss.moveActiveSheet(1);
+  ss.setActiveSheet(ss.getSheetByName("🟢 Pagos"));
+  ss.moveActiveSheet(2);
+
+  SpreadsheetApp.getUi().alert(
+    "✓ Abas criadas!",
+    "Voce agora tem 3 abas:\n\n" +
+    "  🟡 Aguardando — quem nao pagou ainda (chamar no Zap)\n" +
+    "  🟢 Pagos — vendas concluidas\n" +
+    "  Pedidos — aba mestra (edite aqui o status, nome, endereco...)\n\n" +
+    "As abas-dashboard atualizam SOZINHAS quando voce edita Pedidos.",
+    SpreadsheetApp.getUi().ButtonSet.OK
+  );
+}
+
+function criarAbaFiltro_(ss, nomeAba, formula) {
+  var aba = ss.getSheetByName(nomeAba);
+  if (aba) {
+    aba.clear();
+  } else {
+    aba = ss.insertSheet(nomeAba);
+  }
+
+  // Cabecalho
+  aba.getRange(1, 1, 1, COLUNAS.length).setValues([COLUNAS]);
+  var header = aba.getRange(1, 1, 1, COLUNAS.length);
+  header.setBackground(COR_HEADER_BG);
+  header.setFontColor(COR_HEADER_TEXT);
+  header.setFontWeight("bold");
+  header.setFontFamily("Arial");
+  header.setFontSize(11);
+  header.setVerticalAlignment("middle");
+  aba.setRowHeight(1, 38);
+  aba.setFrozenRows(1);
+
+  // Larguras
+  LARGURAS.forEach(function (w, i) { aba.setColumnWidth(i + 1, w); });
+
+  // Formula de filtro na A2
+  aba.getRange(2, 1).setFormula(formula);
+
+  // Format valor (col 4) e bandas alternadas
+  aba.getRange(2, 4, 500).setNumberFormat("R$ #,##0.00").setFontColor(COR_ACCENT).setFontWeight("bold");
+  var existentes = aba.getBandings();
+  existentes.forEach(function (b) { b.remove(); });
+  aba.getRange(2, 1, 500, COLUNAS.length).applyRowBanding(SpreadsheetApp.BandingTheme.LIGHT_GREY, false, false);
+}
+
+// ── Forca verificacao manual de um pedido (caso webhook InfinitePay falhe) ──
+// Use quando souber que o cliente pagou mas a planilha continua 'aguardando'.
+// Marca o pedido como PAGO e dispara CAPI pro Meta.
+function marcarComoPago() {
+  var ui = SpreadsheetApp.getUi();
+  var resp = ui.prompt("Marcar pedido como PAGO", "Cola o # do pedido (ex: MQ5MEKXZC4O4):", ui.ButtonSet.OK_CANCEL);
+  if (resp.getSelectedButton() !== ui.Button.OK) return;
+  var pedidoId = resp.getResponseText().trim();
+  if (!pedidoId) return;
+
+  var ss    = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(SHEET_NAME);
+  var ultima = sheet.getLastRow();
+  if (ultima < 2) return;
+
+  var dados = sheet.getRange(2, 1, ultima - 1, COLUNAS.length).getValues();
+  for (var i = 0; i < dados.length; i++) {
+    if (String(dados[i][0]).trim() === pedidoId) {
+      var linha = i + 2;
+      var dataStr = Utilities.formatDate(new Date(), "America/Sao_Paulo", "dd/MM/yyyy HH:mm");
+      sheet.getRange(linha, COL_PAGAMENTO).setValue("PAGO ✓ " + dataStr);
+
+      // Dispara CAPI pro Meta
+      var plano    = dados[i][2];
+      var total    = dados[i][3];
+      var nome     = dados[i][5];
+      var whatsapp = dados[i][6];
+      enviarPurchaseCAPI_(pedidoId, total, plano, whatsapp, nome);
+
+      ui.alert("✓ " + pedidoId + " marcado como PAGO e enviado pro Meta.");
+      return;
+    }
+  }
+  ui.alert("Pedido " + pedidoId + " nao encontrado.");
+}
+
 // ── Menu customizado: adiciona acoes na barra do Sheets ──────
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu("📋 Papuli")
+    .addItem("✨ Criar abas Pagos / Aguardando", "setupAbas")
+    .addSeparator()
+    .addItem("Marcar pedido como PAGO (manual)", "marcarComoPago")
+    .addSeparator()
     .addItem("Compactar pedidos (remove linhas vazias)", "compactarPedidos")
     .addItem("Ordenar por data (mais recente em cima)", "ordenarPorDataDecrescente")
     .addToUi();
