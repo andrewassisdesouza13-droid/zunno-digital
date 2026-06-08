@@ -446,24 +446,50 @@
       .declaracao-section .section-eyebrow { color: var(--cream-soft); opacity: 0.7; }
 
       .declaracao-text {
+        max-width: 680px;
+        margin: 40px auto 0;
+        position: relative;
+        z-index: 1;
+        text-align: left;
+      }
+      .declaracao-text p {
         font-family: var(--display);
         font-style: italic;
         font-weight: 400;
-        font-size: clamp(22px, 2.6vw, 30px);
-        line-height: 1.55;
-        max-width: 720px;
-        margin: 30px auto 0;
+        font-size: clamp(17px, 1.8vw, 20px);
+        line-height: 1.78;
         color: var(--cream-soft);
+        margin: 0 0 22px;
         text-wrap: pretty;
-        position: relative;
-        z-index: 1;
+      }
+      .declaracao-text p:first-child {
+        font-size: clamp(20px, 2.2vw, 24px);
+        font-weight: 500;
+        margin-bottom: 26px;
       }
       .declaracao-assinatura {
-        font-family: var(--script);
-        font-size: 32px;
-        margin-top: 28px;
+        text-align: center;
+        font-family: var(--display);
+        font-style: italic;
+        font-size: clamp(18px, 2vw, 22px);
+        margin-top: 40px;
         color: var(--cream-soft);
-        opacity: 0.85;
+        opacity: 0.92;
+        line-height: 1.6;
+      }
+      .declaracao-nome {
+        font-family: var(--script);
+        font-size: clamp(38px, 4.5vw, 56px);
+        color: var(--cream-soft);
+        line-height: 1;
+        display: inline-block;
+        margin-top: 6px;
+      }
+
+      @media (max-width: 720px) {
+        .declaracao-text { padding: 0 4px; }
+        .declaracao-text p { font-size: 16px; line-height: 1.72; margin-bottom: 18px; }
+        .declaracao-text p:first-child { font-size: 18px; }
       }
 
       /* ─────────── GALERIA (carrossel com destaque central) ─────────── */
@@ -1146,7 +1172,7 @@
               <p class="timeline-data">o começo</p>
               <h3 class="timeline-titulo">A gente se conheceu.</h3>
               <p class="timeline-desc">Não tinha como saber que aquele encontro qualquer ia virar tudo. Mas virou.</p>
-              <img class="timeline-foto" src="/album/julia-robert/fotos/foto-1.jpg" alt="Quando se conheceram" data-lightbox>
+              <img class="timeline-foto" src="/album/julia-robert/fotos/momento-1.jpg" alt="Quando se conheceram" data-lightbox>
             </div>
           </div>
 
@@ -1156,7 +1182,7 @@
               <p class="timeline-data">27 de junho de 2022</p>
               <h3 class="timeline-titulo">O dia do "sim".</h3>
               <p class="timeline-desc">A data oficial. Mas a gente já era da gente faz tempo, né?</p>
-              <img class="timeline-foto" src="/album/julia-robert/fotos/foto-5.jpg" alt="Início do namoro" data-lightbox>
+              <img class="timeline-foto" src="/album/julia-robert/fotos/momento-2.jpg" alt="O dia do sim" data-lightbox>
             </div>
           </div>
 
@@ -1166,7 +1192,7 @@
               <p class="timeline-data">a primeira viagem</p>
               <h3 class="timeline-titulo">A primeira mala arrumada.</h3>
               <p class="timeline-desc">Descobrir o mundo é bom. Descobrir junto com você é melhor.</p>
-              <img class="timeline-foto" src="/album/julia-robert/fotos/foto-10.jpg" alt="Primeira viagem" data-lightbox>
+              <img class="timeline-foto" src="/album/julia-robert/fotos/momento-3.jpg" alt="A primeira viagem" data-lightbox>
             </div>
           </div>
 
@@ -1176,7 +1202,7 @@
               <p class="timeline-data">nosso lugar</p>
               <h3 class="timeline-titulo">A gente criou um cantinho.</h3>
               <p class="timeline-desc">Aquele lugar que é só nosso. Onde a gente é mais a gente do que em qualquer outro.</p>
-              <img class="timeline-foto" src="/album/julia-robert/fotos/foto-15.jpg" alt="Nosso lugar" data-lightbox>
+              <img class="timeline-foto" src="/album/julia-robert/fotos/momento-4.jpg" alt="Nosso lugar" data-lightbox>
             </div>
           </div>
 
@@ -1186,7 +1212,7 @@
               <p class="timeline-data">hoje</p>
               <h3 class="timeline-titulo">E a gente continua aqui.</h3>
               <p class="timeline-desc">Escolhendo um ao outro, todo dia, em cada detalhe pequeno. É assim que a gente fica.</p>
-              <img class="timeline-foto" src="/album/julia-robert/fotos/foto-20.jpg" alt="Hoje" data-lightbox>
+              <img class="timeline-foto" src="/album/julia-robert/fotos/momento-5.jpg" alt="Hoje" data-lightbox>
             </div>
           </div>
 
@@ -1202,13 +1228,22 @@
           o que eu queria <span class="script" style="color: rgba(247,239,224,0.85);">te dizer.</span>
         </h2>
 
-        <p class="declaracao-text" data-reveal>
-          Sabe quando alguém te conhece tão bem que sabe o que você vai falar antes de você abrir a boca? É assim que eu te conheço. E é assim que você me conhece.<br><br>
-          Obrigado por escolher ficar nos dias bons e nos difíceis. Por ser a primeira pessoa que eu quero contar tudo. Por fazer da rotina algo que eu quero ter pra sempre.<br><br>
-          Não importa quanto tempo passe, eu vou continuar escolhendo você.
-        </p>
+        <div class="declaracao-text" data-reveal>
+          <p>Meu amor,</p>
+          <p>Fazer esse presente foi uma forma de colocar em palavras e lembranças um pouco de tudo que você significa para mim. Não é fácil traduzir em texto o tamanho do carinho, do amor e da admiração que eu sinto por você, mas eu queria tentar.</p>
+          <p>Eu admiro muito a pessoa que você é. Seu jeito dedicado, responsável, cuidadoso, o quanto você se esforça pelas coisas, o quanto leva a sério aquilo que importa para você. Eu admiro sua bondade, seu coração, sua forma de se importar, mesmo quando às vezes você não percebe o quanto isso aparece nos pequenos gestos. Admiro o homem que você é, a sua história, sua honestidade, sua força e até esse seu jeitinho tão seu, que sempre me fez sorrir.</p>
+          <p>Você foi se tornando uma das pessoas mais importantes da minha vida. Em você eu encontrei amor, companhia, planos, vontade de construir, vontade de ficar. Encontrei alguém com quem eu quis dividir os dias bons, os dias difíceis, as viagens, os planos, os sonhos e até as coisas simples da rotina.</p>
+          <p>Eu sei que a nossa história nunca foi perfeita. A gente teve desafios, diferenças, momentos difíceis e coisas que talvez pudéssemos ter cuidado melhor. Mas, mesmo com tudo isso, quando eu olho para nós, eu vejo uma história verdadeira. Vejo amor. Vejo duas pessoas que viveram muita coisa juntas e que deixaram marcas profundas uma na outra.</p>
+          <p>Eu te amo de um jeito muito bonito e muito sincero. Amo quem você é, amo as memórias que construímos, amo o que eu sinto quando estou perto de você. Amo a sensação de casa que muitas vezes encontrei no seu abraço. Amo lembrar de nós e perceber que, em tantos momentos, a vida ficou mais leve porque você estava ali.</p>
+          <p>Você é muito importante para mim. Mais do que talvez eu tenha conseguido demonstrar em alguns momentos. E se eu pudesse te dizer uma coisa com toda a honestidade do meu coração, seria que eu ainda quero viver a vida com você. Quero construir, amadurecer, aprender, cuidar melhor, dividir planos, criar novas memórias e escolher a gente com mais calma, mais carinho e mais consciência.</p>
+          <p>Eu não quero que esse presente seja só sobre o passado. Ele também carrega tudo aquilo que eu sinto, tudo aquilo que eu admiro em você e tudo aquilo que ainda existe em mim quando penso em nós.</p>
+          <p>Obrigada por ser parte tão bonita da minha vida.<br>Obrigada pelas memórias, pelo amor, pelo cuidado e por tudo que vivemos.</p>
+        </div>
 
-        <p class="declaracao-assinatura" data-reveal>com todo meu amor ♥&#xFE0E;</p>
+        <p class="declaracao-assinatura" data-reveal>
+          com todo o meu amor,<br>
+          <span class="declaracao-nome">Julia</span> ♥&#xFE0E;
+        </p>
       </div>
     </section>
 
