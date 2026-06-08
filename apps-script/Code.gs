@@ -254,7 +254,13 @@ function doPost(e) {
     var pago = (origem === "webhook" || origem === "obrigado");
     var statusPgto = pago ? ("PAGO ✓ " + dataStr) : "aguardando pgto";
 
-    sheet.appendRow([
+    // Acha a PRIMEIRA linha vazia (coluna A sem # Pedido), em vez de usar
+    // appendRow que ia depois de QUALQUER linha formatada.
+    // Assim, se o usuario inseriu linhas no meio, a linha nova vai na primeira
+    // posicao realmente livre.
+    var linhaDestino = acharProximaLinhaLivre_(sheet);
+
+    var valores = [
       pedidoId,            // # Pedido
       dataStr,             // Data
       plano,               // Plano
@@ -269,13 +275,15 @@ function doPost(e) {
       "aguardando",        // Status Envio
       "",                  // Rastreio
       ""                   // Obs
-    ]);
+    ];
 
-    var ultimaLinha = sheet.getLastRow();
-    sheet.getRange(ultimaLinha, 1, 1, COLUNAS.length)
+    sheet.getRange(linhaDestino, 1, 1, valores.length).setValues([valores]);
+    sheet.getRange(linhaDestino, 1, 1, COLUNAS.length)
       .setFontFamily("Arial")
       .setFontSize(10)
       .setVerticalAlignment("middle");
+
+    var ultimaLinha = linhaDestino;
 
     // Se a linha ja nasceu paga (webhook/obrigado chegou antes do checkout), dispara CAPI
     if (pago) {
@@ -379,4 +387,124 @@ function doGet(e) {
   return ContentService
     .createTextOutput("Papuli Order Logger ativo ✓")
     .setMimeType(ContentService.MimeType.TEXT);
+}
+
+// ── Acha primeira linha sem # Pedido na coluna A ──────────────
+// Diferente de getLastRow() (que vai pra ultima linha COM QUALQUER conteudo),
+// essa funcao pula linhas vazias e retorna a primeira realmente livre.
+function acharProximaLinhaLivre_(sheet) {
+  var ultima = sheet.getLastRow();
+  if (ultima < 2) return 2; // primeira linha apos cabecalho
+
+  // Lê toda a coluna A (do pedido) de uma vez
+  var valores = sheet.getRange(2, 1, ultima - 1, 1).getValues();
+
+  // Procura a primeira linha vazia
+  for (var i = 0; i < valores.length; i++) {
+    if (!String(valores[i][0]).trim()) {
+      return i + 2; // +2 porque comecamos em row 2
+    }
+  }
+
+  // Nao achou vazia no meio → vai depois da ultima
+  return ultima + 1;
+}
+
+// ── MANUTENCAO: compacta a planilha (remove buracos vazios entre linhas) ──
+// Rode manualmente quando a planilha estiver bagunçada.
+// IMPORTANTE: faca uma copia (Arquivo > Fazer uma copia) antes, por garantia.
+function compactarPedidos() {
+  var ss    = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) return;
+
+  var ultima = sheet.getLastRow();
+  if (ultima < 2) return;
+
+  // Pega todos os dados (incluindo formatacao) das linhas com # Pedido preenchido
+  var dados = sheet.getRange(2, 1, ultima - 1, COLUNAS.length).getValues();
+  var formulas = sheet.getRange(2, 1, ultima - 1, COLUNAS.length).getFormulas();
+
+  // Filtra so as linhas com pedido na coluna A
+  var preenchidas = [];
+  var formulasFiltradas = [];
+  for (var i = 0; i < dados.length; i++) {
+    if (String(dados[i][0]).trim()) {
+      preenchidas.push(dados[i]);
+      formulasFiltradas.push(formulas[i]);
+    }
+  }
+
+  if (preenchidas.length === 0) return;
+
+  // Limpa tudo apos o cabecalho
+  sheet.getRange(2, 1, ultima - 1, COLUNAS.length).clearContent();
+
+  // Reescreve sem buracos
+  sheet.getRange(2, 1, preenchidas.length, COLUNAS.length).setValues(preenchidas);
+
+  // Restaura formulas onde tinham
+  for (var r = 0; r < formulasFiltradas.length; r++) {
+    for (var c = 0; c < formulasFiltradas[r].length; c++) {
+      if (formulasFiltradas[r][c]) {
+        sheet.getRange(r + 2, c + 1).setFormula(formulasFiltradas[r][c]);
+      }
+    }
+  }
+
+  SpreadsheetApp.getUi().alert(
+    "✓ Planilha compactada!",
+    preenchidas.length + " pedidos reorganizados. " +
+    "As linhas vazias entre eles foram removidas.",
+    SpreadsheetApp.getUi().ButtonSet.OK
+  );
+}
+
+// ── MANUTENCAO: ordena pedidos por data (mais recente em cima) ──
+function ordenarPorDataDecrescente() {
+  var ss    = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) return;
+
+  // Compacta antes (remove linhas vazias no meio)
+  var ultima = sheet.getLastRow();
+  if (ultima < 3) return;
+
+  var dados = sheet.getRange(2, 1, ultima - 1, COLUNAS.length).getValues();
+  var preenchidas = dados.filter(function (row) {
+    return String(row[0]).trim();
+  });
+
+  // Ordena por data (coluna 2 = indice 1) decrescente
+  // Data ta no formato "dd/MM/yyyy HH:mm" → parse manual
+  preenchidas.sort(function (a, b) {
+    return parseDataBR_(b[1]) - parseDataBR_(a[1]);
+  });
+
+  // Limpa e reescreve
+  sheet.getRange(2, 1, ultima - 1, COLUNAS.length).clearContent();
+  sheet.getRange(2, 1, preenchidas.length, COLUNAS.length).setValues(preenchidas);
+
+  SpreadsheetApp.getUi().alert(
+    "✓ Pedidos ordenados!",
+    preenchidas.length + " pedidos do mais recente pro mais antigo.",
+    SpreadsheetApp.getUi().ButtonSet.OK
+  );
+}
+
+function parseDataBR_(s) {
+  if (!s) return 0;
+  // formato esperado: "dd/MM/yyyy HH:mm" ou "dd/MM/yyyy"
+  var m = String(s).match(/(\d{2})\/(\d{2})\/(\d{4})(?:\s+(\d{2}):(\d{2}))?/);
+  if (!m) return 0;
+  return new Date(+m[3], +m[2] - 1, +m[1], +(m[4] || 0), +(m[5] || 0)).getTime();
+}
+
+// ── Menu customizado: adiciona acoes na barra do Sheets ──────
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu("📋 Papuli")
+    .addItem("Compactar pedidos (remove linhas vazias)", "compactarPedidos")
+    .addItem("Ordenar por data (mais recente em cima)", "ordenarPorDataDecrescente")
+    .addToUi();
 }
