@@ -517,16 +517,20 @@ function setupAbas() {
     return;
   }
 
+  // Fórmulas robustas:
+  //  - Range fechado (A2:N2000) pra evitar problemas de tamanho virtual
+  //  - SEARCH+ISNUMBER em vez de REGEXMATCH+TO_TEXT (funciona em array)
+  //  - IFERROR cobre o caso "sem dados" sem dar #ERROR!
   criarAbaFiltro_(
     ss,
     "🟢 Pagos",
-    "=IFERROR(FILTER(Pedidos!A2:N, REGEXMATCH(TO_TEXT(Pedidos!E2:E), \"PAGO\")), \"sem pedidos pagos ainda\")"
+    '=IFERROR(FILTER(Pedidos!A2:N2000, ISNUMBER(SEARCH("PAGO", Pedidos!E2:E2000))), "sem pedidos pagos ainda")'
   );
 
   criarAbaFiltro_(
     ss,
     "🟡 Aguardando",
-    "=IFERROR(FILTER(Pedidos!A2:N, Pedidos!E2:E=\"aguardando pgto\"), \"todos pagos!\")"
+    '=IFERROR(FILTER(Pedidos!A2:N2000, ISNUMBER(SEARCH("aguardando", Pedidos!E2:E2000))), "todos pagos!")'
   );
 
   // Move pro inicio: Aguardando primeiro (pra ver o que precisa de follow-up),
