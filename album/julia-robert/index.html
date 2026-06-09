@@ -424,6 +424,108 @@
         cursor: pointer;
         transition: opacity 0.25s;
       }
+
+      /* ─────────── DATAS ESPECIAIS (diário) ─────────── */
+      .datas-section { background: var(--paper); }
+
+      .datas-wrap {
+        max-width: 760px;
+        margin: 60px auto 0;
+        position: relative;
+      }
+
+      /* Linha vertical sutil à esquerda */
+      .datas-wrap::before {
+        content: "";
+        position: absolute;
+        top: 12px;
+        bottom: 12px;
+        left: 8px;
+        width: 2px;
+        background: repeating-linear-gradient(
+          to bottom,
+          var(--red) 0 6px,
+          transparent 6px 14px
+        );
+        opacity: 0.5;
+      }
+
+      .datas-ano {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 48px 0 22px;
+        padding-left: 0;
+        position: relative;
+        z-index: 1;
+      }
+      .datas-ano:first-child { margin-top: 0; }
+
+      .datas-ano-num {
+        font-family: var(--script);
+        font-size: clamp(54px, 7vw, 78px);
+        color: var(--red);
+        line-height: 0.9;
+        background: var(--paper);
+        padding-right: 14px;
+        position: relative;
+        z-index: 2;
+      }
+      .datas-ano-linha {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(to right, rgba(200, 48, 42, 0.25), transparent);
+      }
+
+      .datas-item {
+        position: relative;
+        padding: 0 0 22px 36px;
+        margin-left: 0;
+      }
+      .datas-item:last-child { padding-bottom: 0; }
+
+      .datas-item::before {
+        content: "";
+        position: absolute;
+        left: 2px;
+        top: 8px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--paper);
+        border: 2px solid var(--red);
+        z-index: 2;
+      }
+
+      .datas-data {
+        display: inline-block;
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.08em;
+        color: var(--red);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+
+      .datas-texto {
+        font-family: var(--body);
+        font-style: italic;
+        font-size: 16px;
+        line-height: 1.65;
+        color: var(--ink);
+        margin: 0;
+      }
+
+      @media (max-width: 720px) {
+        .datas-wrap { margin-top: 40px; }
+        .datas-wrap::before { left: 6px; }
+        .datas-item { padding-left: 28px; padding-bottom: 20px; }
+        .datas-item::before { left: 0; width: 10px; height: 10px; }
+        .datas-data { font-size: 12px; }
+        .datas-texto { font-size: 15px; line-height: 1.6; text-wrap: pretty; }
+        .datas-ano { gap: 12px; margin: 36px 0 18px; }
+      }
       .timeline-foto:hover { opacity: 0.92; }
 
       /* ─────────── DECLARAÇÃO ─────────── */
@@ -1243,6 +1345,213 @@
               <p class="timeline-desc">Escolhendo um ao outro, todo dia, em cada detalhe pequeno. É assim que a gente fica.</p>
               <img class="timeline-foto" src="/album/julia-robert/fotos/momento-5.jpg" alt="Hoje" data-lightbox>
             </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── DATAS ESPECIAIS (diário de memórias) ───────────── -->
+    <section class="datas-section">
+      <div class="container">
+        <p class="section-eyebrow" data-reveal>datas que ficaram</p>
+        <h2 class="section-title" data-reveal>
+          as <span class="script">memórias</span> que a gente<br>escolheu guardar.
+        </h2>
+        <p class="section-lead" data-reveal>
+          Cada uma dessas datas tem uma história, um detalhe, um sorriso. São os pedaços pequenos que, juntos, fazem a gente.
+        </p>
+
+        <div class="datas-wrap" data-reveal>
+
+          <div class="datas-ano">
+            <span class="datas-ano-num">2022</span>
+            <span class="datas-ano-linha"></span>
+          </div>
+
+          <div class="datas-item">
+            <p class="datas-data">7 de setembro</p>
+            <p class="datas-texto">Nos conhecemos pessoalmente.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">9 de dezembro</p>
+            <p class="datas-texto">Seu primeiro aniversário que passaríamos juntos. Eu comprei um bolinho escrito "Fofoqueiro desde 2000".</p>
+          </div>
+
+          <div class="datas-ano">
+            <span class="datas-ano-num">2023</span>
+            <span class="datas-ano-linha"></span>
+          </div>
+
+          <div class="datas-item">
+            <p class="datas-data">1 de janeiro</p>
+            <p class="datas-texto">Primeiro Réveillon que passamos juntos.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">18 de fevereiro</p>
+            <p class="datas-texto">A Gabi e a Rapha foram viajar e ficamos na casa delas para cuidar da Bela. Cozinhamos juntos e nadamos.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">9 de abril</p>
+            <p class="datas-texto">Nossa primeira viagem juntos para Porto Seguro e a primeira vez que você voou de avião.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">14 de abril</p>
+            <p class="datas-texto">Andamos de quadriciclo na viagem e você corria muito, quase me deixou cair.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">21 de abril</p>
+            <p class="datas-texto">Fomos ao Bosque e tinha aquele ouriço bebê que tinha escapado da gaiola.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">28 de abril</p>
+            <p class="datas-texto">Te levei ao restaurante do Túlio Santini. Foi muito bom, mas também muito caro.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">7 de setembro</p>
+            <p class="datas-texto">Minha família foi para a sua cidade e ficamos hospedados naquela fazenda perto da sua casa.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">23 de setembro</p>
+            <p class="datas-texto">Fomos para Serra Negra e conhecemos alguns lugares ali perto. Você dirigiu e quase não subiu o morro.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">21 de outubro</p>
+            <p class="datas-texto">Fomos ao Encontro das Tribos. Você queria ver Hariel e Racionais, mas Racionais não foram. Eu queria muito ver Pitty.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">25 de novembro</p>
+            <p class="datas-texto">Fomos à exposição do Van Gogh e naquele restaurante que fazia macarrão dentro do queijo em São Paulo.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">21 de dezembro</p>
+            <p class="datas-texto">Comprei um bolo e fiz uma surpresa no seu aniversário. Depois, fomos à churrascaria, depois de você cortar o cabelo.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">25 de dezembro</p>
+            <p class="datas-texto">Passamos o Natal juntos com a minha família na casa da Gabi.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">29 de dezembro</p>
+            <p class="datas-texto">Fomos para a praia com meus amigos e passamos o Réveillon.</p>
+          </div>
+
+          <div class="datas-ano">
+            <span class="datas-ano-num">2024</span>
+            <span class="datas-ano-linha"></span>
+          </div>
+
+          <div class="datas-item">
+            <p class="datas-data">7 de janeiro</p>
+            <p class="datas-texto">Fomos juntos à Fazenda Atalaia.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">29 de fevereiro</p>
+            <p class="datas-texto">Fizemos massa caseira na sua casa.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">29 de março</p>
+            <p class="datas-texto">Fomos viajar para a Argentina.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">10 de abril</p>
+            <p class="datas-texto">Você comprou um bolo e um balão no meu aniversário.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">15 de abril</p>
+            <p class="datas-texto">Fomos para o Rio porque eu tinha um evento, mas conseguimos conhecer alguns lugares.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">19 de abril</p>
+            <p class="datas-texto">No Rio, a moça me deu bronca porque fui dar uma castanha para o macaquinho.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">26 de junho</p>
+            <p class="datas-texto">Compramos nosso apartamento.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">17 de agosto</p>
+            <p class="datas-texto">A Gabi nos deu ingressos para o show do Sorriso Maroto e fomos juntos.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">21 de setembro</p>
+            <p class="datas-texto">Fomos ao Cirque du Soleil em São Paulo.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">27 de outubro</p>
+            <p class="datas-texto">Você ensinou sua sobrinha a andar de bicicleta e eu fiquei olhando, porque também não sabia kkk.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">23 de novembro</p>
+            <p class="datas-texto">Fizemos uma lasanha caseira juntos, mas não ficou tão boa quanto a da minha avó.</p>
+          </div>
+
+          <div class="datas-ano">
+            <span class="datas-ano-num">2025</span>
+            <span class="datas-ano-linha"></span>
+          </div>
+
+          <div class="datas-item">
+            <p class="datas-data">1 de janeiro</p>
+            <p class="datas-texto">Passamos o Réveillon juntos.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">25 de janeiro</p>
+            <p class="datas-texto">Passeamos com a Nicoly no shopping e você fez massagem naquelas cadeiras. Nesse mesmo dia, levamos ela ao parque do Gorilão, mas choveu e não deu para aproveitar muito.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">10 de abril</p>
+            <p class="datas-texto">Você passou meu aniversário comigo.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">12 de junho</p>
+            <p class="datas-texto">Fui à sua casa e levei presentes de Dia dos Namorados. Você também tinha comprado um buquê e um ursinho de surpresa.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">27 de junho</p>
+            <p class="datas-texto">Fizemos 3 anos de namoro e eu fiz um vídeo que não ficou tão bom, mas foi sincero.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">14 de julho</p>
+            <p class="datas-texto">Você foi à minha colação de grau.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">21 de dezembro</p>
+            <p class="datas-texto">Fomos à sua casa de surpresa para comemorar seu aniversário.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">25 de dezembro</p>
+            <p class="datas-texto">Passamos o Natal juntos.</p>
+          </div>
+
+          <div class="datas-ano">
+            <span class="datas-ano-num">2026</span>
+            <span class="datas-ano-linha"></span>
+          </div>
+
+          <div class="datas-item">
+            <p class="datas-data">1 de janeiro</p>
+            <p class="datas-texto">Passamos o Réveillon juntos.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">16 de janeiro</p>
+            <p class="datas-texto">Você me mandou um bolo de cenoura de surpresa, com um recado muito fofo.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">21 de fevereiro</p>
+            <p class="datas-texto">Fomos àquele restaurante em Jaguariúna, que não estava muito bom, e a pizza não tinha molho.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">1 de março</p>
+            <p class="datas-texto">Fomos àquele restaurante em Mogi, o Macaúbas, mas não deu tempo de comer porque eu ia perder a carona kkkk.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">10 de abril</p>
+            <p class="datas-texto">Você passou as férias e meu aniversário comigo.</p>
+          </div>
+          <div class="datas-item">
+            <p class="datas-data">25 de abril</p>
+            <p class="datas-texto">Entrega do nosso apartamento.</p>
           </div>
 
         </div>
