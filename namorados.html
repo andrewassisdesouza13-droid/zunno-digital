@@ -1275,6 +1275,47 @@
         box-shadow: 2px 2px 0 var(--ink);
       }
 
+      /* Card esgotado: overlay semi-transparente + carimbo "esgotado" diagonal */
+      .product.esgotado {
+        position: relative;
+        opacity: 0.6;
+        pointer-events: none;
+        filter: saturate(0.4);
+      }
+      .product.esgotado::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(251, 246, 234, 0.35);
+        pointer-events: none;
+        z-index: 1;
+      }
+      .product-esgotado-selo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-12deg);
+        background: var(--red);
+        color: var(--cream-soft);
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 700;
+        font-size: clamp(22px, 3vw, 30px);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        padding: 14px 32px;
+        box-shadow: 4px 4px 0 var(--ink), inset 0 0 0 2px var(--cream-soft);
+        border: 2px solid var(--ink);
+        z-index: 3;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+      .product.esgotado .product-cta {
+        background: var(--ink-soft);
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
       .product-tag {
         font-family: var(--script);
         font-size: 22px;
@@ -2623,8 +2664,8 @@
               <a class="product-cta" href="#" data-plano="essencial">Quero esse plano</a>
             </div>
 
-            <div class="product featured" data-reveal>
-              <div class="product-badge">mais escolhido</div>
+            <div class="product esgotado" data-reveal aria-disabled="true">
+              <div class="product-esgotado-selo">esgotado</div>
               <p class="product-tag">o queridinho</p>
               <h3 class="product-name">Álbum + Fotos estilo Polaroid + Ferrero</h3>
               <div class="product-price">
@@ -2632,7 +2673,7 @@
                 <span class="value">97</span>
                 <span class="cents">,90</span>
               </div>
-              <p class="product-price-note">parcelado em até 12x · frete incluso</p>
+              <p class="product-price-note">acabou nosso estoque ♥&#xFE0E;</p>
               <ul class="product-list">
                 <li><strong>Álbum A5</strong> em papel perolado premium</li>
                 <li><strong>14 figurinhas 6×6 cm</strong> com frases românticas já impressas</li>
@@ -2640,24 +2681,25 @@
                 <li><strong>3 Ferrero Rocher</strong> dentro da embalagem</li>
                 <li>Entrega antes da sexta dia 12</li>
               </ul>
-              <a class="product-cta" href="#" data-plano="polaroid">Quero esse plano</a>
+              <span class="product-cta" aria-disabled="true">Esgotado</span>
             </div>
 
-            <div class="product" data-reveal>
+            <div class="product featured" data-reveal>
+              <div class="product-badge">mais escolhido</div>
               <p class="product-tag">o pra sempre</p>
-              <h3 class="product-name">Álbum + Fotos estilo Polaroid + Ferrero + Site</h3>
+              <h3 class="product-name">Fotos estilo Polaroid + Ferrero + Site</h3>
               <div class="product-price">
                 <span class="currency">R$</span>
-                <span class="value">157</span>
+                <span class="value">97</span>
                 <span class="cents">,90</span>
               </div>
               <p class="product-price-note">parcelado em até 12x · frete incluso</p>
               <ul class="product-list">
-                <li><strong>Álbum A5</strong> em papel perolado premium</li>
-                <li><strong>14 figurinhas 6×6 cm</strong> dentro do álbum</li>
                 <li><strong>8 fotos estilo Polaroid 7×9 cm</strong> em papel fotográfico</li>
                 <li><strong>3 Ferrero Rocher</strong> dentro da embalagem</li>
                 <li><strong>+ Site personalizado</strong> com cartão e QR Code</li>
+                <li>Box pronta pra presentear</li>
+                <li>Entrega antes da sexta dia 12</li>
               </ul>
               <a class="product-cta" href="#" data-plano="prasempre">Quero esse plano</a>
             </div>
@@ -2923,7 +2965,7 @@
       const PLANO_VALORES = {
         essencial: { value: 57.90, name: "Box Fotos Polaroid + Ferrero" },
         polaroid:  { value: 97.90, name: "Album + Fotos Polaroid + Ferrero" },
-        prasempre: { value: 157.90, name: "Album + Fotos Polaroid + Ferrero + Site" }
+        prasempre: { value: 97.90, name: "Fotos Polaroid + Ferrero + Site" }
       };
 
       async function iniciarCheckout(planoKey, whatsapp, submitBtn) {
@@ -2980,7 +3022,7 @@
         const NOMES_BONITOS = {
           essencial: "Box de Fotos + Ferrero · R$ 57,90",
           polaroid:  "Álbum + Fotos + Ferrero · R$ 97,90",
-          prasempre: "Álbum + Fotos + Ferrero + Site · R$ 157,90"
+          prasempre: "Fotos Polaroid + Ferrero + Site · R$ 97,90"
         };
 
         function abrir(plano) {
