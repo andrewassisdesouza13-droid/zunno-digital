@@ -526,6 +526,175 @@
         .datas-texto { font-size: 15px; line-height: 1.6; text-wrap: pretty; }
         .datas-ano { gap: 12px; margin: 36px 0 18px; }
       }
+
+      /* ─────────── MURAL DE MEMÓRIAS (datas em bilhetes) ─────────── */
+      .mural-section {
+        background:
+          radial-gradient(circle at 15% 20%, rgba(200, 48, 42, 0.06) 0, transparent 40%),
+          radial-gradient(circle at 85% 75%, rgba(200, 48, 42, 0.05) 0, transparent 45%),
+          var(--cream-deep);
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Decoração: textura tipo cortiça com pontos sutis */
+      .mural-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          radial-gradient(rgba(43, 42, 40, 0.06) 1px, transparent 1.5px),
+          radial-gradient(rgba(43, 42, 40, 0.04) 1px, transparent 1.5px);
+        background-size: 22px 22px, 38px 38px;
+        background-position: 0 0, 11px 11px;
+        opacity: 0.6;
+        pointer-events: none;
+      }
+
+      .mural-section .container {
+        position: relative;
+        z-index: 1;
+      }
+
+      .mural-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 18px;
+        margin-top: 56px;
+        padding: 16px 0;
+      }
+
+      /* Bilhete: cada data como um post-it colado */
+      .mural-card {
+        position: relative;
+        background: var(--paper);
+        padding: 18px 14px 14px;
+        border-radius: 3px;
+        box-shadow:
+          0 8px 18px -8px rgba(43, 42, 40, 0.28),
+          0 2px 6px -2px rgba(43, 42, 40, 0.12),
+          inset 0 0 0 1px rgba(43, 42, 40, 0.06);
+        text-align: center;
+        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                    box-shadow 0.4s ease,
+                    z-index 0s 0.4s;
+        cursor: default;
+      }
+
+      /* Rotações alternadas — dão a sensação de "colado a mão" */
+      .mural-card:nth-child(7n+1) { transform: rotate(-2deg); }
+      .mural-card:nth-child(7n+2) { transform: rotate(1.5deg); }
+      .mural-card:nth-child(7n+3) { transform: rotate(-1deg); }
+      .mural-card:nth-child(7n+4) { transform: rotate(2deg); }
+      .mural-card:nth-child(7n+5) { transform: rotate(-1.5deg); }
+      .mural-card:nth-child(7n+6) { transform: rotate(0.8deg); }
+      .mural-card:nth-child(7n+7) { transform: rotate(-0.5deg); }
+
+      /* Tape colada no topo (alternando estilos) */
+      .mural-card::before {
+        content: "";
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        width: 44px;
+        height: 14px;
+        background: var(--tape);
+        transform: translateX(-50%) rotate(-3deg);
+      }
+      .mural-card:nth-child(3n+2)::before {
+        background: rgba(200, 48, 42, 0.18);
+        transform: translateX(-50%) rotate(4deg);
+        width: 38px;
+      }
+      .mural-card:nth-child(5n+3)::before {
+        width: 50px;
+        transform: translateX(-50%) rotate(-6deg);
+      }
+
+      /* Variação de cores (3 estilos) */
+      .mural-card:nth-child(4n+2) {
+        background: var(--cream-soft);
+      }
+      .mural-card:nth-child(7n+3) {
+        background: linear-gradient(180deg, var(--paper) 0%, #fcefe5 100%);
+      }
+
+      .mural-card:hover {
+        transform: rotate(0) scale(1.08) translateY(-4px);
+        box-shadow:
+          0 18px 36px -10px rgba(43, 42, 40, 0.4),
+          0 6px 14px -4px rgba(43, 42, 40, 0.2);
+        z-index: 2;
+        transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                    box-shadow 0.35s ease;
+      }
+
+      .mural-dia {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: clamp(36px, 4vw, 46px);
+        line-height: 0.9;
+        color: var(--ink);
+        letter-spacing: -0.02em;
+      }
+
+      .mural-mes {
+        font-family: var(--script);
+        font-size: clamp(22px, 2.6vw, 28px);
+        color: var(--red);
+        line-height: 1;
+        margin-top: -2px;
+      }
+
+      .mural-divider {
+        width: 28px;
+        height: 1px;
+        background: rgba(43, 42, 40, 0.2);
+        margin: 8px auto 6px;
+      }
+
+      .mural-ano {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 12px;
+        color: var(--ink-soft);
+        letter-spacing: 0.12em;
+      }
+
+      /* Variação: alguns cards têm o vermelho dominante */
+      .mural-card.destaque {
+        background: var(--red);
+        color: var(--cream-soft);
+      }
+      .mural-card.destaque .mural-dia { color: var(--cream-soft); }
+      .mural-card.destaque .mural-mes { color: rgba(247, 239, 224, 0.92); }
+      .mural-card.destaque .mural-divider { background: rgba(247, 239, 224, 0.4); }
+      .mural-card.destaque .mural-ano { color: rgba(247, 239, 224, 0.7); }
+
+      /* Coração mini no canto dos destaques */
+      .mural-card.destaque::after {
+        content: "\2665\FE0E";
+        position: absolute;
+        bottom: 6px;
+        right: 9px;
+        font-size: 11px;
+        color: rgba(247, 239, 224, 0.5);
+        line-height: 1;
+      }
+
+      @media (max-width: 720px) {
+        .mural-grid {
+          grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+          gap: 12px;
+          margin-top: 40px;
+        }
+        .mural-card { padding: 14px 10px 12px; }
+        .mural-card::before { width: 32px; height: 10px; top: -6px; }
+        .mural-dia { font-size: 30px; }
+        .mural-mes { font-size: 20px; }
+        .mural-divider { width: 22px; margin: 6px auto 4px; }
+        .mural-ano { font-size: 11px; }
+      }
       .timeline-foto:hover { opacity: 0.92; }
 
       /* ─────────── DECLARAÇÃO ─────────── */
@@ -1554,6 +1723,71 @@
             <p class="datas-texto">Entrega do nosso apartamento.</p>
           </div>
 
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── MURAL DE MEMÓRIAS (todas as datas em bilhetes) ───────────── -->
+    <section class="mural-section">
+      <div class="container">
+        <p class="section-eyebrow" data-reveal>todas elas</p>
+        <h2 class="section-title" data-reveal>
+          cada data, um <span class="script">capítulo</span><br>da gente.
+        </h2>
+        <p class="section-lead" data-reveal>
+          Um mural com todos os dias que viraram lembrança. Os destacados em vermelho são os marcos que mudaram tudo.
+        </p>
+
+        <div class="mural-grid" data-reveal>
+          <!-- 2022 -->
+          <div class="mural-card destaque"><div class="mural-dia">07</div><div class="mural-mes">setembro</div><div class="mural-divider"></div><div class="mural-ano">2022</div></div>
+          <div class="mural-card"><div class="mural-dia">09</div><div class="mural-mes">dezembro</div><div class="mural-divider"></div><div class="mural-ano">2022</div></div>
+
+          <!-- 2023 -->
+          <div class="mural-card destaque"><div class="mural-dia">01</div><div class="mural-mes">janeiro</div><div class="mural-divider"></div><div class="mural-ano">2023</div></div>
+          <div class="mural-card"><div class="mural-dia">18</div><div class="mural-mes">fevereiro</div><div class="mural-divider"></div><div class="mural-ano">2023</div></div>
+          <div class="mural-card destaque"><div class="mural-dia">09</div><div class="mural-mes">abril</div><div class="mural-divider"></div><div class="mural-ano">2023</div></div>
+          <div class="mural-card"><div class="mural-dia">14</div><div class="mural-mes">abril</div><div class="mural-divider"></div><div class="mural-ano">2023</div></div>
+          <div class="mural-card"><div class="mural-dia">21</div><div class="mural-mes">abril</div><div class="mural-divider"></div><div class="mural-ano">2023</div></div>
+          <div class="mural-card"><div class="mural-dia">28</div><div class="mural-mes">abril</div><div class="mural-divider"></div><div class="mural-ano">2023</div></div>
+          <div class="mural-card"><div class="mural-dia">07</div><div class="mural-mes">setembro</div><div class="mural-divider"></div><div class="mural-ano">2023</div></div>
+          <div class="mural-card"><div class="mural-dia">23</div><div class="mural-mes">setembro</div><div class="mural-divider"></div><div class="mural-ano">2023</div></div>
+          <div class="mural-card"><div class="mural-dia">21</div><div class="mural-mes">outubro</div><div class="mural-divider"></div><div class="mural-ano">2023</div></div>
+          <div class="mural-card"><div class="mural-dia">25</div><div class="mural-mes">novembro</div><div class="mural-divider"></div><div class="mural-ano">2023</div></div>
+          <div class="mural-card"><div class="mural-dia">21</div><div class="mural-mes">dezembro</div><div class="mural-divider"></div><div class="mural-ano">2023</div></div>
+          <div class="mural-card"><div class="mural-dia">25</div><div class="mural-mes">dezembro</div><div class="mural-divider"></div><div class="mural-ano">2023</div></div>
+          <div class="mural-card"><div class="mural-dia">29</div><div class="mural-mes">dezembro</div><div class="mural-divider"></div><div class="mural-ano">2023</div></div>
+
+          <!-- 2024 -->
+          <div class="mural-card"><div class="mural-dia">07</div><div class="mural-mes">janeiro</div><div class="mural-divider"></div><div class="mural-ano">2024</div></div>
+          <div class="mural-card"><div class="mural-dia">29</div><div class="mural-mes">fevereiro</div><div class="mural-divider"></div><div class="mural-ano">2024</div></div>
+          <div class="mural-card"><div class="mural-dia">29</div><div class="mural-mes">março</div><div class="mural-divider"></div><div class="mural-ano">2024</div></div>
+          <div class="mural-card"><div class="mural-dia">10</div><div class="mural-mes">abril</div><div class="mural-divider"></div><div class="mural-ano">2024</div></div>
+          <div class="mural-card"><div class="mural-dia">15</div><div class="mural-mes">abril</div><div class="mural-divider"></div><div class="mural-ano">2024</div></div>
+          <div class="mural-card"><div class="mural-dia">19</div><div class="mural-mes">abril</div><div class="mural-divider"></div><div class="mural-ano">2024</div></div>
+          <div class="mural-card destaque"><div class="mural-dia">26</div><div class="mural-mes">junho</div><div class="mural-divider"></div><div class="mural-ano">2024</div></div>
+          <div class="mural-card"><div class="mural-dia">17</div><div class="mural-mes">agosto</div><div class="mural-divider"></div><div class="mural-ano">2024</div></div>
+          <div class="mural-card"><div class="mural-dia">21</div><div class="mural-mes">setembro</div><div class="mural-divider"></div><div class="mural-ano">2024</div></div>
+          <div class="mural-card"><div class="mural-dia">27</div><div class="mural-mes">outubro</div><div class="mural-divider"></div><div class="mural-ano">2024</div></div>
+          <div class="mural-card"><div class="mural-dia">23</div><div class="mural-mes">novembro</div><div class="mural-divider"></div><div class="mural-ano">2024</div></div>
+
+          <!-- 2025 -->
+          <div class="mural-card"><div class="mural-dia">01</div><div class="mural-mes">janeiro</div><div class="mural-divider"></div><div class="mural-ano">2025</div></div>
+          <div class="mural-card"><div class="mural-dia">25</div><div class="mural-mes">janeiro</div><div class="mural-divider"></div><div class="mural-ano">2025</div></div>
+          <div class="mural-card"><div class="mural-dia">10</div><div class="mural-mes">abril</div><div class="mural-divider"></div><div class="mural-ano">2025</div></div>
+          <div class="mural-card"><div class="mural-dia">12</div><div class="mural-mes">junho</div><div class="mural-divider"></div><div class="mural-ano">2025</div></div>
+          <div class="mural-card destaque"><div class="mural-dia">27</div><div class="mural-mes">junho</div><div class="mural-divider"></div><div class="mural-ano">2025</div></div>
+          <div class="mural-card destaque"><div class="mural-dia">14</div><div class="mural-mes">julho</div><div class="mural-divider"></div><div class="mural-ano">2025</div></div>
+          <div class="mural-card"><div class="mural-dia">21</div><div class="mural-mes">dezembro</div><div class="mural-divider"></div><div class="mural-ano">2025</div></div>
+          <div class="mural-card"><div class="mural-dia">25</div><div class="mural-mes">dezembro</div><div class="mural-divider"></div><div class="mural-ano">2025</div></div>
+
+          <!-- 2026 -->
+          <div class="mural-card"><div class="mural-dia">01</div><div class="mural-mes">janeiro</div><div class="mural-divider"></div><div class="mural-ano">2026</div></div>
+          <div class="mural-card"><div class="mural-dia">16</div><div class="mural-mes">janeiro</div><div class="mural-divider"></div><div class="mural-ano">2026</div></div>
+          <div class="mural-card"><div class="mural-dia">21</div><div class="mural-mes">fevereiro</div><div class="mural-divider"></div><div class="mural-ano">2026</div></div>
+          <div class="mural-card"><div class="mural-dia">01</div><div class="mural-mes">março</div><div class="mural-divider"></div><div class="mural-ano">2026</div></div>
+          <div class="mural-card"><div class="mural-dia">10</div><div class="mural-mes">abril</div><div class="mural-divider"></div><div class="mural-ano">2026</div></div>
+          <div class="mural-card destaque"><div class="mural-dia">25</div><div class="mural-mes">abril</div><div class="mural-divider"></div><div class="mural-ano">2026</div></div>
         </div>
       </div>
     </section>
