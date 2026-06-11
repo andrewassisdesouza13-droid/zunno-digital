@@ -18,8 +18,8 @@ const PLANOS = {
     quantity: 1
   },
   prasempre: {
-    description: "Box de 8 Polaroids + 3 Ferrero Rocher + Site Personalizado (Edicao Namorados 2026)",
-    price: 9790,
+    description: "Site Personalizado do Casal (Edicao Namorados 2026)",
+    price: 4990,
     quantity: 1
   }
 };

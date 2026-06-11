@@ -2633,19 +2633,20 @@
         <div class="container">
 
           <div class="products-head">
-            <p class="section-eyebrow" data-reveal>escolha o seu</p>
+            <p class="section-eyebrow" data-reveal>último disponível</p>
             <h2 class="section-title" data-reveal>
-              três combos e<br>
-              <span class="script">um propósito:</span> vocês nunca se esquecerem disso.
+              a história de vocês,<br>
+              <span class="script">eterna</span> em um site só de vocês.
             </h2>
             <p class="section-lead" data-reveal>
-              Fotos estilo Polaroid pra espalhar pela casa, álbum pra colar juntos, site personalizado pra durar pra sempre. Cada combo vem com chocolate e chega pronto pra aproveitarem juntinhos.
+              Nossos kits físicos esgotaram, mas a gente ainda consegue eternizar a história de vocês no digital. Um site personalizado, feito à mão, com QR Code pra acessar sempre que quiser.
             </p>
           </div>
 
           <div class="product-grid">
 
-            <div class="product" data-reveal>
+            <div class="product esgotado" data-reveal aria-disabled="true">
+              <div class="product-esgotado-selo">esgotado</div>
               <p class="product-tag">o doce começo</p>
               <h3 class="product-name">Box de Fotos estilo Polaroid + Ferrero</h3>
               <div class="product-price">
@@ -2653,7 +2654,7 @@
                 <span class="value">57</span>
                 <span class="cents">,90</span>
               </div>
-              <p class="product-price-note">parcelado em até 12x · frete incluso</p>
+              <p class="product-price-note">acabou nosso estoque ♥&#xFE0E;</p>
               <ul class="product-list">
                 <li><strong>8 fotos estilo Polaroid 7×9 cm</strong> em papel fotográfico</li>
                 <li><strong>3 Ferrero Rocher</strong> dentro da box, pra adoçar o gesto</li>
@@ -2661,7 +2662,7 @@
                 <li>Pra espalhar pela geladeira, espelho, cabeceira</li>
                 <li>Entrega antes da sexta dia 12</li>
               </ul>
-              <a class="product-cta" href="#" data-plano="essencial">Quero esse plano</a>
+              <span class="product-cta" aria-disabled="true">Esgotado</span>
             </div>
 
             <div class="product esgotado" data-reveal aria-disabled="true">
@@ -2685,21 +2686,22 @@
             </div>
 
             <div class="product featured" data-reveal>
-              <div class="product-badge">mais escolhido</div>
+              <div class="product-badge">único disponível</div>
               <p class="product-tag">o pra sempre</p>
-              <h3 class="product-name">Fotos estilo Polaroid + Ferrero + Site</h3>
+              <h3 class="product-name">Site Personalizado do Casal</h3>
               <div class="product-price">
                 <span class="currency">R$</span>
-                <span class="value">97</span>
+                <span class="value">49</span>
                 <span class="cents">,90</span>
               </div>
-              <p class="product-price-note">parcelado em até 12x · frete incluso</p>
+              <p class="product-price-note">pagamento único · acesso pra sempre</p>
               <ul class="product-list">
-                <li><strong>8 fotos estilo Polaroid 7×9 cm</strong> em papel fotográfico</li>
-                <li><strong>3 Ferrero Rocher</strong> dentro da embalagem</li>
-                <li><strong>+ Site personalizado</strong> com cartão e QR Code</li>
-                <li>Box pronta pra presentear</li>
-                <li>Entrega antes da sexta dia 12</li>
+                <li><strong>Site personalizado</strong> com fotos, datas e história de vocês</li>
+                <li><strong>Contador ao vivo</strong> mostrando há quanto tempo estão juntos</li>
+                <li><strong>Playlist do casal</strong> embedada (Spotify)</li>
+                <li><strong>Carta digital</strong> com sua dedicatória</li>
+                <li><strong>QR Code</strong> pra acessar quando quiser</li>
+                <li>Entrega <strong>em até 24h</strong> no seu WhatsApp</li>
               </ul>
               <a class="product-cta" href="#" data-plano="prasempre">Quero esse plano</a>
             </div>
@@ -2965,7 +2967,7 @@
       const PLANO_VALORES = {
         essencial: { value: 57.90, name: "Box Fotos Polaroid + Ferrero" },
         polaroid:  { value: 97.90, name: "Album + Fotos Polaroid + Ferrero" },
-        prasempre: { value: 97.90, name: "Fotos Polaroid + Ferrero + Site" }
+        prasempre: { value: 49.90, name: "Site Personalizado do Casal" }
       };
 
       async function iniciarCheckout(planoKey, whatsapp, submitBtn) {
@@ -3022,7 +3024,7 @@
         const NOMES_BONITOS = {
           essencial: "Box de Fotos + Ferrero · R$ 57,90",
           polaroid:  "Álbum + Fotos + Ferrero · R$ 97,90",
-          prasempre: "Fotos Polaroid + Ferrero + Site · R$ 97,90"
+          prasempre: "Site Personalizado do Casal · R$ 49,90"
         };
 
         function abrir(plano) {
