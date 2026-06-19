@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presente Especial · Bingo Festa Junina 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  min-height: 100vh;
+  background: #20284d;
+  font-family: 'Nunito', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+}
+svg.bandeira-topo {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 70px;
+  z-index: 10;
+  pointer-events: none;
+}
+.container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 420px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px 40px;
+}
+.titulo-topo {
+  color: #fde68a;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.subtitulo-topo {
+  color: #c7d2fe;
+  font-size: 30px;
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.2;
+  margin-bottom: 28px;
+}
+.card {
+  background: #fff;
+  border-radius: 28px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.card-header {
+  background: #3b82f6;
+  padding: 32px 28px 36px;
+  text-align: center;
+  position: relative;
+}
+.card-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 28px;
+  background: #fff;
+  border-radius: 50% 50% 0 0;
+}
+.card-header-titulo {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.card-body {
+  padding: 24px 28px 32px;
+  text-align: center;
+}
+.misterio-texto {
+  color: #374151;
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+.btn-revelar {
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 18px 40px;
+  font-size: 18px;
+  font-weight: 900;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+  box-shadow: 0 6px 20px rgba(59,130,246,0.4);
+}
+.btn-revelar:active { transform: scale(0.97); }
+.presente-nome {
+  color: #1e293b;
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+.presente-desc {
+  color: #64748b;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.valor-box {
+  background: #eff6ff;
+  border: 2px dashed #3b82f6;
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+}
+.valor-label {
+  color: #1e40af;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.valor-num {
+  color: #2563eb;
+  font-size: 60px;
+  font-weight: 900;
+  line-height: 1;
+}
+.valor-sub {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+.polaroid-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 0 0 16px;
+}
+.polaroid {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 6px 6px 18px;
+  width: 56px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.polaroid:nth-child(1) { transform: rotate(-4deg); }
+.polaroid:nth-child(2) { transform: rotate(2deg); }
+.polaroid:nth-child(3) { transform: rotate(-1deg); }
+.polaroid:nth-child(4) { transform: rotate(3deg); }
+.polaroid-inner {
+  background: #dbeafe;
+  border-radius: 2px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.divider {
+  border: none;
+  border-top: 1.5px dashed #e2e8f0;
+  margin: 0 0 20px;
+}
+.instrucao {
+  color: #475569;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+.btn-wpp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #22c55e;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 50px;
+  padding: 16px 32px;
+  font-size: 17px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(34,197,94,0.4);
+}
+.btn-wpp:active { transform: scale(0.97); }
+.card-fechado { display: block; }
+.card-revelado { display: none; }
+
+/* ─────────── Rodapé parceria Zunno × Papuli ─────────── */
+.rodape-parceria {
+  margin-top: 32px;
+  text-align: center;
+  padding: 0 8px;
+}
+.parceria-texto {
+  color: rgba(255,255,255,0.45);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.parceria-marcas {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 999px;
+  padding: 10px 18px;
+  backdrop-filter: blur(8px);
+}
+.parceria-marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 800;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.parceria-marca:hover { opacity: 0.85; transform: translateY(-1px); }
+.parceria-marca svg { width: 16px; height: 16px; opacity: 0.85; }
+.parceria-x {
+  color: rgba(255,255,255,0.35);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.estrelinhas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.estrela {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  animation: piscar 2s infinite alternate;
+}
+@keyframes piscar {
+  from { opacity: 0.1; }
+  to { opacity: 0.6; }
+}
+.confeti-item {
+  position: fixed;
+  pointer-events: none;
+  z-index: 100;
+  animation: cair-confeti 3s ease-in forwards;
+}
+@keyframes cair-confeti {
+  from { transform: translateY(-30px) rotate(0deg); opacity: 1; }
+  to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="estrelinhas" id="estrelinhas"></div>
+
+<svg class="bandeira-topo" viewBox="0 0 400 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <line x1="0" y1="16" x2="400" y2="16" stroke="#fde68a" stroke-width="2"/>
+  <polygon points="0,16 28,16 14,50" fill="#ef4444"/>
+  <polygon points="32,16 60,16 46,50" fill="#3b82f6"/>
+  <polygon points="64,16 92,16 78,50" fill="#22c55e"/>
+  <polygon points="96,16 124,16 110,50" fill="#f59e0b"/>
+  <polygon points="128,16 156,16 142,50" fill="#a855f7"/>
+  <polygon points="160,16 188,16 174,50" fill="#ef4444"/>
+  <polygon points="192,16 220,16 206,50" fill="#3b82f6"/>
+  <polygon points="224,16 252,16 238,50" fill="#22c55e"/>
+  <polygon points="256,16 284,16 270,50" fill="#f59e0b"/>
+  <polygon points="288,16 316,16 302,50" fill="#a855f7"/>
+  <polygon points="320,16 348,16 334,50" fill="#ef4444"/>
+  <polygon points="352,16 380,16 366,50" fill="#3b82f6"/>
+</svg>
+
+<div class="container">
+  <div class="titulo-topo">Bingo Festa Junina 2026</div>
+  <div class="subtitulo-topo">Você ganhou<br>um presente!</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-titulo">Surpresa especial pra você</div>
+    </div>
+
+    <div class="card-body">
+      <div class="card-fechado" id="cardFechado">
+        <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin:0 auto 20px;display:block">
+          <rect x="8" y="38" width="74" height="46" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+          <rect x="4" y="28" width="82" height="14" rx="4" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.5"/>
+          <line x1="45" y1="28" x2="45" y2="84" stroke="#fff" stroke-width="3"/>
+          <path d="M45 28 Q33 12 25 16 Q17 20 25 28" fill="#fde68a"/>
+          <path d="M45 28 Q57 12 65 16 Q73 20 65 28" fill="#fde68a"/>
+        </svg>
+        <div class="misterio-texto">Clique no botão abaixo para descobrir o que você ganhou neste bingo!</div>
+        <button class="btn-revelar" onclick="revelar()">Revelar meu presente</button>
+      </div>
+
+      <div class="card-revelado" id="cardRevelado">
+        <div class="polaroid-row">
+          <div class="polaroid"><div class="polaroid-inner"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" fill="#93c5fd"/><path d="M9 2h6l1 3H8L9 2z" fill="#3b82f6"/><rect x="2" y="5" width="20" height="16" rx="2" stroke="#3b82f6" stroke-width="1.5" fill="none"/></svg></div></div>
+          <div class="polaroid"><div class="polaroid-inner"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" fill="#86efac"/><path d="M9 2h6l1 3H8L9 2z" fill="#22c55e"/><rect x="2" y="5" width="20" height="16" rx="2" stroke="#22c55e" stroke-width="1.5" fill="none"/></svg></div></div>
+          <div class="polaroid"><div class="polaroid-inner"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" fill="#fcd34d"/><path d="M9 2h6l1 3H8L9 2z" fill="#f59e0b"/><rect x="2" y="5" width="20" height="16" rx="2" stroke="#f59e0b" stroke-width="1.5" fill="none"/></svg></div></div>
+          <div class="polaroid"><div class="polaroid-inner"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" fill="#fca5a5"/><path d="M9 2h6l1 3H8L9 2z" fill="#ef4444"/><rect x="2" y="5" width="20" height="16" rx="2" stroke="#ef4444" stroke-width="1.5" fill="none"/></svg></div></div>
+        </div>
+        <div class="presente-nome">Box de Fotos Polaroid</div>
+        <div class="presente-desc">Uma caixinha especial com 16 fotos Polaroid para você guardar as melhores memórias!</div>
+        <div class="valor-box">
+          <div class="valor-label">seu presente</div>
+          <div class="valor-num">16</div>
+          <div class="valor-sub">fotos Polaroid em uma box especial</div>
+        </div>
+        <hr class="divider">
+        <div class="instrucao">Fale com a gente pelo WhatsApp para combinar como resgatar o seu presente.</div>
+        <a class="btn-wpp" href="https://wa.me/5516997403781?text=Oi!%20Ganhei%20uma%20box%20de%2016%20fotos%20Polaroid%20no%20bingo%20da%20festa%20junina!" target="_blank">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.532 5.845L.057 23.491a.75.75 0 00.918.919l5.684-1.483A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.93 0-3.74-.522-5.287-1.432l-.378-.224-3.924 1.023 1.04-3.808-.247-.393A9.961 9.961 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+          </svg>
+          Resgatar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="rodape-parceria">
+    <div class="parceria-texto">Uma parceria entre</div>
+    <div class="parceria-marcas">
+      <a class="parceria-marca" href="https://instagram.com/zunno.digital" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        @zunno.digital
+      </a>
+      <span class="parceria-x">×</span>
+      <a class="parceria-marca" href="https://instagram.com/estudiopapuli" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        @estudiopapuli
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+const el = document.getElementById('estrelinhas');
+for (let i = 0; i < 50; i++) {
+  const s = document.createElement('div');
+  s.className = 'estrela';
+  const sz = 1.5 + Math.random() * 2.5;
+  s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${1.5+Math.random()*2}s`;
+  el.appendChild(s);
+}
+function revelar() {
+  document.getElementById('cardFechado').style.display = 'none';
+  document.getElementById('cardRevelado').style.display = 'block';
+  lancarConfeti();
+}
+function lancarConfeti() {
+  const cores = ['#ef4444','#3b82f6','#22c55e','#f59e0b','#a855f7','#fde68a'];
+  for (let i = 0; i < 40; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confeti-item';
+      c.style.background = cores[Math.floor(Math.random()*cores.length)];
+      c.style.left = Math.random()*100 + 'vw';
+      c.style.animationDuration = (2+Math.random()*2) + 's';
+      c.style.width = (8+Math.random()*8) + 'px';
+      c.style.height = (8+Math.random()*8) + 'px';
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 4000);
+    }, i * 60);
+  }
+}
+</script>
+</body>
+</html>
