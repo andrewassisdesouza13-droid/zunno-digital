@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Cell Center — Campanha Copa do Mundo 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #FAFAF7;
+    color: #1A1A1A;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 22mm 20mm;
+    page-break-after: always;
+    background: #FAFAF7;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page:last-child { page-break-after: auto; }
+
+  .brand {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #6B6B6B;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 18mm;
+    left: 20mm;
+    right: 20mm;
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: #999;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* === CAPA === */
+  .cover {
+    background: #FAFAF7;
+    justify-content: space-between;
+  }
+
+  .cover-brand {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #1A1A1A;
+  }
+
+  .cover-title {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .cover-eyebrow {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    color: #6B6B6B;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .cover-headline {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    color: #1A1A1A;
+    max-width: 90%;
+  }
+
+  .cover-headline span {
+    color: #C8A951;
+  }
+
+  .cover-sub {
+    font-size: 16px;
+    color: #6B6B6B;
+    margin-top: 28px;
+    max-width: 70%;
+    line-height: 1.6;
+  }
+
+  .cover-meta {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #6B6B6B;
+    text-transform: uppercase;
+  }
+
+  /* === SEÇÕES === */
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid #E0E0DC;
+    padding-bottom: 14px;
+    margin-bottom: 32px;
+  }
+
+  .section-num {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #6B6B6B;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: #1A1A1A;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .section-intro {
+    font-size: 15px;
+    color: #4A4A4A;
+    max-width: 85%;
+    line-height: 1.65;
+    margin-bottom: 28px;
+  }
+
+  /* === VISÃO GERAL === */
+  .pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 24px;
+  }
+
+  .pillar {
+    background: #FFF;
+    border: 1px solid #ECEAE2;
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+
+  .pillar-num {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #C8A951;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .pillar-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+
+  .pillar-text {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.55;
+  }
+
+  /* === CALENDÁRIO === */
+  .week-block {
+    margin-bottom: 22px;
+    page-break-inside: avoid;
+  }
+
+  .week-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+
+  .week-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #C8A951;
+    text-transform: uppercase;
+    background: #FFF8E6;
+    padding: 4px 9px;
+    border-radius: 4px;
+  }
+
+  .week-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1A1A1A;
+  }
+
+  .post-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .post-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ECEAE2;
+    align-items: start;
+  }
+
+  .post-item:last-child { border-bottom: none; }
+
+  .post-format {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: #6B6B6B;
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+
+  .post-idea {
+    font-size: 13.5px;
+    color: #1A1A1A;
+    line-height: 1.5;
+  }
+
+  .post-idea em {
+    color: #6B6B6B;
+    font-style: normal;
+    font-size: 12px;
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* === CAMPANHA === */
+  .campaign-hero {
+    background: #1A1A1A;
+    color: #FAFAF7;
+    border-radius: 12px;
+    padding: 32px 32px;
+    margin-bottom: 28px;
+  }
+
+  .campaign-hero .eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #C8A951;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .campaign-hero h2 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .campaign-hero p {
+    font-size: 14px;
+    color: #B8B8B0;
+    max-width: 90%;
+    line-height: 1.6;
+  }
+
+  .prizes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 26px;
+  }
+
+  .prize {
+    background: #FFF;
+    border: 1px solid #ECEAE2;
+    border-radius: 10px;
+    padding: 22px;
+  }
+
+  .prize-tag {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .prize-tag.main { background: #1A1A1A; color: #C8A951; }
+  .prize-tag.guaranteed { background: #FFF8E6; color: #8C7421; }
+
+  .prize-name {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: #1A1A1A;
+    margin-bottom: 6px;
+  }
+
+  .prize-criteria {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.55;
+    margin-bottom: 10px;
+  }
+
+  .prize-note {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: #999;
+    text-transform: uppercase;
+  }
+
+  .mechanics {
+    background: #FFF;
+    border: 1px solid #ECEAE2;
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin-bottom: 20px;
+  }
+
+  .mechanics h3 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #1A1A1A;
+    margin-bottom: 14px;
+  }
+
+  .mech-list {
+    list-style: none;
+    counter-reset: mech;
+  }
+
+  .mech-list li {
+    counter-increment: mech;
+    padding: 8px 0 8px 36px;
+    position: relative;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.55;
+  }
+
+  .mech-list li::before {
+    content: counter(mech);
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 22px;
+    height: 22px;
+    background: #C8A951;
+    color: #1A1A1A;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* === POST DA CAMPANHA === */
+  .post-card {
+    background: #FFF;
+    border: 1px solid #ECEAE2;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .post-card-head {
+    background: #F4F2EB;
+    padding: 14px 22px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #6B6B6B;
+    border-bottom: 1px solid #ECEAE2;
+  }
+
+  .post-card-body {
+    padding: 24px 26px;
+  }
+
+  .post-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #C8A951;
+    margin-bottom: 8px;
+  }
+
+  .post-copy {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #1A1A1A;
+    line-height: 1.2;
+    margin-bottom: 22px;
+  }
+
+  .post-caption {
+    background: #FAFAF7;
+    border-left: 3px solid #C8A951;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.65;
+    white-space: pre-line;
+    font-weight: 400;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .post-caption .hashtags {
+    color: #6B6B6B;
+    font-size: 11px;
+    display: block;
+    margin-top: 10px;
+  }
+
+  /* === REGRAS === */
+  .rules {
+    background: #FFF8E6;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-top: 18px;
+  }
+
+  .rules h4 {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8C7421;
+    margin-bottom: 10px;
+  }
+
+  .rules p {
+    font-size: 11.5px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* === ENCERRAMENTO === */
+  .closing {
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .closing-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #C8A951;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+
+  .closing-quote {
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    color: #1A1A1A;
+    margin-bottom: 30px;
+    max-width: 95%;
+  }
+
+  .closing-sub {
+    font-size: 14px;
+    color: #6B6B6B;
+    max-width: 75%;
+    line-height: 1.65;
+  }
+
+  .closing-sign {
+    margin-top: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #1A1A1A;
+    text-transform: uppercase;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ============ CAPA ============ -->
+<section class="page cover">
+  <div class="cover-brand">CELL CENTER</div>
+
+  <div class="cover-title">
+    <div class="cover-eyebrow">CAMPANHA • COPA DO MUNDO 2026</div>
+    <h1 class="cover-headline">A Copa passa.<br>A memória <span>fica.</span></h1>
+    <p class="cover-sub">Direção criativa, calendário de conteúdo e campanha de engajamento para o período da Copa do Mundo. Foco em fortalecer marca, mover seguidores e gerar conversão sem perder o posicionamento premium.</p>
+  </div>
+
+  <div class="cover-meta">@CELLCENTER.BR • LAVRAS & ALFENAS</div>
+</section>
+
+<!-- ============ VISÃO GERAL ============ -->
+<section class="page">
+  <div class="brand">CELL CENTER • COPA 2026</div>
+
+  <div class="section-head" style="margin-top: 18mm;">
+    <div>
+      <div class="section-num">01 — VISÃO GERAL</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">A estratégia<br>em quatro pilares.</h2>
+  <p class="section-intro">A Copa é um terreno disputado e ruidoso. A Cell Center entra com elegância, humor pontual e uma campanha de engajamento real. Sem cara de varejão. Sem promoção gritada. Apenas marca, memória e conversão.</p>
+
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-num">01 EMOCIONAL</div>
+      <div class="pillar-title">Memória como conceito central</div>
+      <div class="pillar-text">O iPhone como testemunha silenciosa das melhores cenas da Copa. Posicionamento premium, sem venda direta.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">02 ENGAJAMENTO</div>
+      <div class="pillar-title">Campanha de bolão</div>
+      <div class="pillar-text">Mecânica de palpites com dois prêmios em camadas. Garante ganhador, gera comentários e cresce alcance.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">03 HUMOR LEVE</div>
+      <div class="pillar-title">Reels com trend e meme</div>
+      <div class="pillar-text">Conteúdo que viraliza durante a Copa, sempre dentro do tom da marca. Nunca destrói o premium.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">04 AUTORIDADE</div>
+      <div class="pillar-title">Conteúdo educativo Apple</div>
+      <div class="pillar-text">Dicas práticas que viram salváveis e compartilháveis. Reforça a marca como referência de tecnologia.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>CELL CENTER</span>
+    <span>02</span>
+  </div>
+</section>
+
+<!-- ============ CALENDÁRIO ============ -->
+<section class="page">
+  <div class="brand">CELL CENTER • COPA 2026</div>
+
+  <div class="section-head" style="margin-top: 18mm;">
+    <div>
+      <div class="section-num">02 — CALENDÁRIO DE POSTS</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Cronograma sugerido.</h2>
+  <p class="section-intro">Calendário enxuto pensado para sustentar presença na Copa inteira sem saturar o feed. Ideias curtas, prontas para serem desenvolvidas em copy e visual.</p>
+
+  <div class="week-block">
+    <div class="week-head">
+      <span class="week-label">SEMANA 01</span>
+      <span class="week-title">Aquecimento e abertura</span>
+    </div>
+    <ul class="post-list">
+      <li class="post-item">
+        <span class="post-format">FEED</span>
+        <span class="post-idea">Post emocional de abertura: "A Copa passa. A memória fica."<em>Lançamento da linha criativa da campanha.</em></span>
+      </li>
+      <li class="post-item">
+        <span class="post-format">REELS</span>
+        <span class="post-idea">"Tipos de torcedor e o iPhone de cada um"<em>Humor leve, gancho viral.</em></span>
+      </li>
+      <li class="post-item">
+        <span class="post-format">CARROSSEL</span>
+        <span class="post-idea">"3 ajustes pra bateria do seu iPhone durar a Copa inteira"<em>Conteúdo útil, salvável, autoridade.</em></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="week-block">
+    <div class="week-head">
+      <span class="week-label">SEMANA 02</span>
+      <span class="week-title">Lançamento do bolão</span>
+    </div>
+    <ul class="post-list">
+      <li class="post-item">
+        <span class="post-format">FEED</span>
+        <span class="post-idea">Anúncio oficial da campanha do bolão Cell Center<em>Detalhado nas próximas páginas.</em></span>
+      </li>
+      <li class="post-item">
+        <span class="post-format">REELS</span>
+        <span class="post-idea">"Espelhar iPhone na TV em 30 segundos"<em>Tutorial educativo de alto compartilhamento.</em></span>
+      </li>
+      <li class="post-item">
+        <span class="post-format">STORY</span>
+        <span class="post-idea">Enquete diária com palpite do próximo jogo<em>Mantém o bolão vivo no topo do feed.</em></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="week-block">
+    <div class="week-head">
+      <span class="week-label">SEMANA 03</span>
+      <span class="week-title">Fase de grupos</span>
+    </div>
+    <ul class="post-list">
+      <li class="post-item">
+        <span class="post-format">FEED</span>
+        <span class="post-idea">"Assistir Copa no iPad é outro nível"<em>Post comercial premium, sem cara de varejão.</em></span>
+      </li>
+      <li class="post-item">
+        <span class="post-format">REELS</span>
+        <span class="post-idea">"POV: você é o iPhone do brasileiro durante a Copa"<em>Humor que vira meme.</em></span>
+      </li>
+      <li class="post-item">
+        <span class="post-format">CARROSSEL</span>
+        <span class="post-idea">"Como gravar o gol sem tremer o vídeo"<em>Educativo + funcionalidade do iPhone.</em></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <span>CELL CENTER</span>
+    <span>03</span>
+  </div>
+</section>
+
+<!-- ============ CALENDÁRIO 2 ============ -->
+<section class="page">
+  <div class="brand">CELL CENTER • COPA 2026</div>
+
+  <div class="section-head" style="margin-top: 18mm;">
+    <div>
+      <div class="section-num">02 — CALENDÁRIO DE POSTS</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Cronograma sugerido.</h2>
+  <p class="section-intro">Continuação do calendário até a fase final. Ritmo intensifica nas oitavas, picos de engajamento nos jogos do Brasil.</p>
+
+  <div class="week-block">
+    <div class="week-head">
+      <span class="week-label">SEMANA 04</span>
+      <span class="week-title">Oitavas de final</span>
+    </div>
+    <ul class="post-list">
+      <li class="post-item">
+        <span class="post-format">FEED</span>
+        <span class="post-idea">"AirPods Pro: o Galvão só pra você"<em>Comercial premium, foco no produto.</em></span>
+      </li>
+      <li class="post-item">
+        <span class="post-format">REELS</span>
+        <span class="post-idea">"Quando o Brasil faz o gol e seu iPhone tá em 4%"<em>Meme curto, gancho comercial sutil.</em></span>
+      </li>
+      <li class="post-item">
+        <span class="post-format">STORY</span>
+        <span class="post-idea">Atualização parcial do ranking do bolão<em>Reativa o público.</em></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="week-block">
+    <div class="week-head">
+      <span class="week-label">SEMANA 05</span>
+      <span class="week-title">Quartas e semifinais</span>
+    </div>
+    <ul class="post-list">
+      <li class="post-item">
+        <span class="post-format">FEED</span>
+        <span class="post-idea">"Apple Watch mediu seu coração no jogo do Brasil?"<em>Produto + insight emocional.</em></span>
+      </li>
+      <li class="post-item">
+        <span class="post-format">REELS</span>
+        <span class="post-idea">Trend "things that just make sense" versão Cell Center<em>Identidade de marca em formato viral.</em></span>
+      </li>
+      <li class="post-item">
+        <span class="post-format">FEED</span>
+        <span class="post-idea">Post pós-vitória: "Hoje o iPhone trabalhou"<em>Conteúdo reativo, publicado no mesmo dia do jogo.</em></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="week-block">
+    <div class="week-head">
+      <span class="week-label">SEMANA 06</span>
+      <span class="week-title">Final e encerramento</span>
+    </div>
+    <ul class="post-list">
+      <li class="post-item">
+        <span class="post-format">FEED</span>
+        <span class="post-idea">Post da final: "A Copa termina hoje. As memórias não."<em>Fechamento emocional do conceito.</em></span>
+      </li>
+      <li class="post-item">
+        <span class="post-format">FEED</span>
+        <span class="post-idea">Divulgação do ganhador do bolão<em>Prova social, conteúdo de entrega.</em></span>
+      </li>
+      <li class="post-item">
+        <span class="post-format">CARROSSEL</span>
+        <span class="post-idea">"Os melhores momentos que ficaram guardados"<em>Retrospectiva da Copa pela Cell Center.</em></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <span>CELL CENTER</span>
+    <span>04</span>
+  </div>
+</section>
+
+<!-- ============ CAMPANHA BOLÃO ============ -->
+<section class="page">
+  <div class="brand">CELL CENTER • COPA 2026</div>
+
+  <div class="section-head" style="margin-top: 18mm;">
+    <div>
+      <div class="section-num">03 — CAMPANHA DO BOLÃO</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Bolão Cell Center.</h2>
+  <p class="section-intro">Mecânica de palpites com dois prêmios em camadas. Garante engajamento alto, ganhador real, e protege a marca com uma regra transparente sobre o prêmio principal.</p>
+
+  <div class="campaign-hero">
+    <div class="eyebrow">CONCEITO</div>
+    <h2>Acertou tudo, leva o iPhone.<br>Chegou perto, leva a camisa.</h2>
+    <p>Uma campanha em camadas que combina o sonho (iPhone 17 Pro Max) com o prêmio garantido (camisa oficial da Seleção). A gente alimenta o engajamento sem comprometer a entrega.</p>
+  </div>
+
+  <div class="prizes">
+    <div class="prize">
+      <span class="prize-tag main">PRÊMIO PRINCIPAL</span>
+      <div class="prize-name">iPhone 17 Pro Max</div>
+      <div class="prize-criteria">Acertar: finalistas, campeão, placar exato da final e autor do primeiro gol.</div>
+      <div class="prize-note">CHAMARIZ • EXCLUSIVIDADE MÁXIMA</div>
+    </div>
+    <div class="prize">
+      <span class="prize-tag guaranteed">PRÊMIO GARANTIDO</span>
+      <div class="prize-name">Camisa Oficial da Seleção</div>
+      <div class="prize-criteria">Para o participante com palpite mais próximo do resultado final, mesmo que ninguém acerte tudo.</div>
+      <div class="prize-note">ENTREGA CERTA • POST DE GANHADOR</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>CELL CENTER</span>
+    <span>05</span>
+  </div>
+</section>
+
+<!-- ============ MECÂNICA ============ -->
+<section class="page">
+  <div class="brand">CELL CENTER • COPA 2026</div>
+
+  <div class="section-head" style="margin-top: 18mm;">
+    <div>
+      <div class="section-num">03 — CAMPANHA DO BOLÃO</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Como participar.</h2>
+  <p class="section-intro">Mecânica simples de entender, fácil de executar e desenhada para escalar alcance organicamente. Cada ação amplia a entrada do participante e o alcance do post.</p>
+
+  <div class="mechanics">
+    <h3>FLUXO DE PARTICIPAÇÃO</h3>
+    <ul class="mech-list">
+      <li>Seguir @cellcenter.br no Instagram.</li>
+      <li>Comentar no post oficial com o palpite (finalistas, campeão, placar e autor do gol).</li>
+      <li>Marcar 2 amigos no comentário para validar a entrada.</li>
+      <li>Story com print do palpite marcando @cellcenter.br conta como entrada dupla.</li>
+      <li>Os palpites podem ser atualizados a cada nova rodada até as quartas de final.</li>
+    </ul>
+  </div>
+
+  <div class="rules">
+    <h4>REGULAMENTO RESUMIDO</h4>
+    <p>Caso nenhum participante acerte os quatro critérios do prêmio principal, o iPhone 17 Pro Max não será distribuído. O participante com palpite mais próximo do resultado final leva a camisa oficial da Seleção Brasileira. Critério de desempate: placar exato da final, seguido por autor do primeiro gol. Resultado divulgado em até 48 horas após o encerramento da Copa.</p>
+  </div>
+
+  <div class="footer">
+    <span>CELL CENTER</span>
+    <span>06</span>
+  </div>
+</section>
+
+<!-- ============ POST DA CAMPANHA ============ -->
+<section class="page">
+  <div class="brand">CELL CENTER • COPA 2026</div>
+
+  <div class="section-head" style="margin-top: 18mm;">
+    <div>
+      <div class="section-num">04 — POST DE LANÇAMENTO</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Anúncio oficial.</h2>
+  <p class="section-intro">Post de lançamento da campanha do bolão. Visual clean, premium, com hierarquia tipográfica forte. Sem cara de promoção comum.</p>
+
+  <div class="post-card">
+    <div class="post-card-head">COPY DA IMAGEM</div>
+    <div class="post-card-body">
+      <div class="post-label">PRINCIPAL</div>
+      <div class="post-copy">Acertou tudo,<br>leva um iPhone 17 Pro Max.</div>
+      <div class="post-label">SECUNDÁRIO</div>
+      <div class="post-copy" style="font-size: 16px; color: #6B6B6B; font-weight: 500;">Chegou perto, leva a camisa da Seleção.</div>
+    </div>
+  </div>
+
+  <div class="post-card">
+    <div class="post-card-head">LEGENDA PRONTA</div>
+    <div class="post-card-body">
+      <div class="post-caption">O bolão Cell Center chegou.
+
+Palpita os finalistas, o campeão, o placar exato e o autor do primeiro gol.
+Acertou tudo? iPhone 17 Pro Max é seu.
+Chegou perto? Camisa oficial da Seleção na sua casa.
+
+Como participar:
+1. Segue @cellcenter.br
+2. Comenta o palpite aqui
+3. Marca 2 amigos pra validar
+
+Story com print do palpite vale entrada dupla.
+
+Bora ver quem entende de Copa.
+
+<span class="hashtags">#CellCenter #BolaoCellCenter #Copa2026 #iPhone17ProMax #LavrasMG #AlfenasMG</span></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>CELL CENTER</span>
+    <span>07</span>
+  </div>
+</section>
+
+<!-- ============ ENCERRAMENTO ============ -->
+<section class="page closing">
+  <div style="margin-top: 25mm;">
+    <div class="closing-eyebrow">PRÓXIMOS PASSOS</div>
+    <h2 class="closing-quote">A campanha tá<br>pronta pra rodar.</h2>
+    <p class="closing-sub">Aprovação da peça de lançamento, definição de data oficial de abertura do bolão, produção dos visuais dos posts emocionais e cronograma de stories durante os jogos do Brasil. Próximo entregável: artes finais do post de abertura e do anúncio do bolão.</p>
+    <div class="closing-sign">CELL CENTER • LAVRAS & ALFENAS</div>
+  </div>
+</section>
+
+</body>
+</html>

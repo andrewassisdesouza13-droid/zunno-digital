@@ -1015,7 +1015,7 @@ h3 {
 
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 }
 
@@ -1376,8 +1376,8 @@ h3 {
     margin-bottom: 18px;
   }
 
-  .dc-body { grid-column: auto; }
-  .dc .dc-tags { grid-column: auto; }
+  .dc-body { grid-column: auto; width: 100%; }
+  .dc .dc-tags { grid-column: auto; width: 100%; }
   .dc-cta-link { grid-column: auto; }
 
   /* Show mobile dots */

@@ -13,6 +13,18 @@
     {
       "source": "/namoradosobrigado",
       "destination": "/namoradosobrigado.html"
+    },
+    {
+      "source": "/lojaveiculos",
+      "destination": "/lojaveiculos.html"
+    },
+    {
+      "source": "/lojacarros",
+      "destination": "/lojaveiculos.html"
+    },
+    {
+      "source": "/cell-center-copa",
+      "destination": "/cell-center-copa-campanha.html"
     }
   ]
 }
