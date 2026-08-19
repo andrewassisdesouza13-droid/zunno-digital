@@ -194,7 +194,7 @@
       .invest-card li { display: flex; gap: 10px; font-size: 0.92rem; color: rgba(255,255,255,0.72); line-height: 1.5; }
       .invest-card li::before { content: "+"; color: var(--accent); font-weight: 700; flex-shrink: 0; }
 
-      /* Comparison table */
+      /* Comparison table (desktop) */
       .comp-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-lg); }
       table.comp-table { width: 100%; border-collapse: collapse; min-width: 760px; }
       table.comp-table th, table.comp-table td { padding: 18px 20px; text-align: left; font-size: 0.9rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
@@ -205,6 +205,18 @@
       table.comp-table tr.invest-row td { font-weight: 700; color: var(--white); }
       table.comp-table tr.invest-row td.zeus-col { color: var(--accent); }
       table.comp-table th:first-child, table.comp-table td:first-child { color: var(--muted); white-space: normal; position: sticky; left: 0; background: var(--bg-2); }
+
+      /* Comparison cards (mobile) */
+      .comp-mobile { display: none; flex-direction: column; gap: 16px; }
+      .comp-card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card-2); padding: 22px; }
+      .comp-card.is-featured { border-color: var(--accent-line); background: var(--accent-soft); }
+      .comp-card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+      .comp-card-head .name { font-weight: 700; color: var(--white); font-size: 1.05rem; }
+      .comp-card-head .price { font-weight: 700; color: var(--white); font-size: 0.92rem; text-align: right; white-space: nowrap; }
+      .comp-card.is-featured .comp-card-head .price { color: var(--accent); }
+      .comp-row { display: flex; justify-content: space-between; gap: 14px; padding: 9px 0; font-size: 0.86rem; }
+      .comp-row .k { color: var(--muted-2); flex-shrink: 0; }
+      .comp-row .v { color: rgba(255,255,255,0.78); text-align: right; }
 
       /* Final CTA */
       .final-cta { text-align: center; padding: 140px 0 120px; }
@@ -233,6 +245,9 @@
         .plan-callout { flex-direction: column; padding: 20px; }
 
         .invest-card { padding: 24px; }
+
+        .comp-table-wrap { display: none; }
+        .comp-mobile { display: flex; }
 
         .final-cta { padding: 90px 0 80px; }
       }
@@ -352,9 +367,9 @@
           </div>
           <div class="plan-grid">
             <div class="plan-card"><div class="idx">01</div><h4>Presença</h4><p>Site institucional ou landing page de alta conversão, pronto para rodar tráfego no dia seguinte.</p></div>
-            <div class="plan-card"><div class="idx">02</div><h4>Aquisição</h4><p>Gestão de tráfego em até 2 canais (Meta Ads e Google Ads) com verba otimizada semanalmente.</p></div>
+            <div class="plan-card"><div class="idx">02</div><h4>Aquisição</h4><p>Gestão de tráfego em 1 canal (Meta Ads) com verba otimizada semanalmente.</p></div>
             <div class="plan-card"><div class="idx">03</div><h4>Comercial</h4><p>Funil de WhatsApp estruturado, com automação inicial de atendimento e resposta em segundos.</p></div>
-            <div class="plan-card"><div class="idx">04</div><h4>Conteúdo</h4><p>8 vídeos por mês e 8 posts estáticos, ritmo médio de 2 publicações por semana.</p></div>
+            <div class="plan-card"><div class="idx">04</div><h4>Conteúdo</h4><p>1 vídeo e 2 posts estáticos por semana.</p></div>
             <div class="plan-card"><div class="idx">05</div><h4>Direção</h4><p>Reunião quinzenal de alinhamento estratégico e dashboard com as métricas que importam.</p></div>
           </div>
           <div class="plan-cta">
@@ -383,9 +398,9 @@
           </div>
           <div class="plan-grid">
             <div class="plan-card"><div class="idx">01</div><h4>Presença</h4><p>Site completo corporativo, com blog ativo para gerar tráfego orgânico e área do cliente sob medida.</p></div>
-            <div class="plan-card"><div class="idx">02</div><h4>Aquisição</h4><p>Tráfego pago em 3 canais (Meta Ads, Google Ads e TikTok Ads) com testes A/B constantes.</p></div>
+            <div class="plan-card"><div class="idx">02</div><h4>Aquisição</h4><p>Tráfego pago em 2 canais (Meta Ads e Google Ads) com testes A/B constantes.</p></div>
             <div class="plan-card"><div class="idx">03</div><h4>Comercial</h4><p>CRM implantado e agente de IA treinado no seu negócio para qualificar lead e acelerar a venda.</p></div>
-            <div class="plan-card"><div class="idx">04</div><h4>Conteúdo</h4><p>12 vídeos por mês, 8 posts estáticos e cobertura diária de stories no Instagram.</p></div>
+            <div class="plan-card"><div class="idx">04</div><h4>Conteúdo</h4><p>3 vídeos e 2 posts estáticos por semana, com cobertura diária de stories no Instagram.</p></div>
             <div class="plan-card"><div class="idx">05</div><h4>Direção</h4><p>Reunião semanal com o time e dashboard em tempo real para decidir com base em dado, não em achismo.</p></div>
           </div>
           <div class="plan-cta">
@@ -414,9 +429,9 @@
           </div>
           <div class="plan-grid">
             <div class="plan-card"><div class="idx">01</div><h4>Presença</h4><p>Site premium com SEO técnico contínuo, ranqueando nas primeiras posições do Google para o seu mercado.</p></div>
-            <div class="plan-card"><div class="idx">02</div><h4>Aquisição</h4><p>Presença em todos os canais relevantes, com alocação estratégica de verba conforme o que está performando.</p></div>
+            <div class="plan-card"><div class="idx">02</div><h4>Aquisição</h4><p>Tráfego pago em 3 canais (Meta Ads, Google Ads e TikTok Ads), com alocação estratégica de verba conforme o que está performando.</p></div>
             <div class="plan-card"><div class="idx">03</div><h4>Comercial</h4><p>CRM ativo, agente de IA em produção e análise semanal profunda de cada etapa do funil de conversão.</p></div>
-            <div class="plan-card"><div class="idx">04</div><h4>Conteúdo</h4><p>16 vídeos por mês, 12 posts estáticos, 3 formatos exclusivos e monitoramento diário de tendências.</p></div>
+            <div class="plan-card"><div class="idx">04</div><h4>Conteúdo</h4><p>4 vídeos e 2 posts estáticos por semana, com monitoramento diário de tendências.</p></div>
             <div class="plan-card"><div class="idx">05</div><h4>Direção</h4><p>Reunião semanal de alta liderança e dashboard em tempo real com os KPIs do crescimento.</p></div>
           </div>
           <div class="plan-cta">
@@ -544,9 +559,9 @@
                 </tr>
                 <tr>
                   <td>Aquisição</td>
-                  <td>Meta + Google</td>
-                  <td>Meta + Google + TikTok</td>
-                  <td>Todos os canais</td>
+                  <td>1 canal · Meta</td>
+                  <td>2 canais · Meta + Google</td>
+                  <td>3 canais · Meta + Google + TikTok</td>
                   <td class="zeus-col">Escala máxima</td>
                 </tr>
                 <tr>
@@ -558,9 +573,9 @@
                 </tr>
                 <tr>
                   <td>Conteúdo</td>
-                  <td>8 vídeos + 8 estáticos</td>
-                  <td>12 vídeos + stories</td>
-                  <td>16 vídeos + 12 estáticos</td>
+                  <td>1 vídeo + 2 estáticos /sem.</td>
+                  <td>3 vídeos + 2 estáticos /sem.</td>
+                  <td>4 vídeos + 2 estáticos /sem.</td>
                   <td class="zeus-col">20 reels em vídeo</td>
                 </tr>
                 <tr>
@@ -580,6 +595,42 @@
               </tbody>
             </table>
           </div>
+
+          <div class="comp-mobile" data-reveal>
+            <div class="comp-card">
+              <div class="comp-card-head"><span class="name">Zoom</span><span class="price">R$ 1.787/mês</span></div>
+              <div class="comp-row"><span class="k">Presença</span><span class="v">Site institucional</span></div>
+              <div class="comp-row"><span class="k">Aquisição</span><span class="v">1 canal · Meta</span></div>
+              <div class="comp-row"><span class="k">Comercial</span><span class="v">Funil WhatsApp</span></div>
+              <div class="comp-row"><span class="k">Conteúdo</span><span class="v">1 vídeo + 2 estáticos/sem.</span></div>
+              <div class="comp-row"><span class="k">Direção</span><span class="v">Quinzenal + dashboard</span></div>
+            </div>
+            <div class="comp-card">
+              <div class="comp-card-head"><span class="name">Zênite</span><span class="price">R$ 2.787/mês</span></div>
+              <div class="comp-row"><span class="k">Presença</span><span class="v">Site + Blog</span></div>
+              <div class="comp-row"><span class="k">Aquisição</span><span class="v">2 canais · Meta + Google</span></div>
+              <div class="comp-row"><span class="k">Comercial</span><span class="v">CRM + Agente IA</span></div>
+              <div class="comp-row"><span class="k">Conteúdo</span><span class="v">3 vídeos + 2 estáticos/sem.</span></div>
+              <div class="comp-row"><span class="k">Direção</span><span class="v">Semanal + tempo real</span></div>
+            </div>
+            <div class="comp-card">
+              <div class="comp-card-head"><span class="name">Zodíaco</span><span class="price">R$ 4.087/mês</span></div>
+              <div class="comp-row"><span class="k">Presença</span><span class="v">Premium + SEO técnico</span></div>
+              <div class="comp-row"><span class="k">Aquisição</span><span class="v">3 canais · Meta + Google + TikTok</span></div>
+              <div class="comp-row"><span class="k">Comercial</span><span class="v">CRM + IA + análise</span></div>
+              <div class="comp-row"><span class="k">Conteúdo</span><span class="v">4 vídeos + 2 estáticos/sem.</span></div>
+              <div class="comp-row"><span class="k">Direção</span><span class="v">Semanal + alta liderança</span></div>
+            </div>
+            <div class="comp-card is-featured">
+              <div class="comp-card-head"><span class="name">Zeus <span class="orc-tag">Recomendado</span></span><span class="price">a partir de R$ 6.500/mês</span></div>
+              <div class="comp-row"><span class="k">Presença</span><span class="v">Ecossistema omnicanal</span></div>
+              <div class="comp-row"><span class="k">Aquisição</span><span class="v">Escala máxima</span></div>
+              <div class="comp-row"><span class="k">Comercial</span><span class="v">CRM integrado + mesa diária</span></div>
+              <div class="comp-row"><span class="k">Conteúdo</span><span class="v">20 reels em vídeo</span></div>
+              <div class="comp-row"><span class="k">Direção</span><span class="v">Mentoria semanal com os sócios</span></div>
+            </div>
+          </div>
+
           <p style="margin-top:20px; font-size:0.88rem; color:var(--muted-2);">Ajuste de verba, canais e formato de conteúdo sob medida, a gente conversa.</p>
         </div>
       </section>
