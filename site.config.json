@@ -11,6 +11,11 @@
   "messages": {
     "primary": "Quero vender mais carros com a Zunno.Digital",
     "final": "Quero falar com a Zunno.Digital sobre minha garagem",
-    "default": "Quero falar com a Zunno.Digital"
+    "default": "Quero falar com a Zunno.Digital",
+    "orcamento": "Vi a proposta comercial da Zunno e quero saber mais",
+    "planoZoom": "Quero começar com o plano Zoom",
+    "planoZenite": "Quero o plano Zênite",
+    "planoZodiaco": "Quero o plano Zodíaco",
+    "planoZeus": "Quero o plano Zeus"
   }
 }

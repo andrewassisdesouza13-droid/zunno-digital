@@ -32,11 +32,14 @@ const applyWhatsAppLinks = (config) => {
 
 const applyConfig = (config) => {
   activeConfig = config;
-  document.title = config.seo.title;
 
-  const metaDescription = document.querySelector('meta[name="description"]');
-  if (metaDescription) {
-    metaDescription.content = config.seo.description;
+  if (document.documentElement.dataset.customSeo !== "true") {
+    document.title = config.seo.title;
+
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.content = config.seo.description;
+    }
   }
 
   applyWhatsAppLinks(config);

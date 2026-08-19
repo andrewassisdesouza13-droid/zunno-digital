@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="pt-BR" data-custom-seo="true">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proposta Comercial 2026 | Zunno.Digital</title>
+    <meta
+      name="description"
+      content="Quatro planos de presença, aquisição e venda desenhados para acompanhar o crescimento do seu negócio: Zoom, Zênite, Zodíaco e Zeus."
+    />
+    <meta name="theme-color" content="#0a0a09" />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1343454604429534');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1343454604429534&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      /* ─── ORÇAMENTO PAGE — scoped additions ─── */
+      .serif-italic {
+        font-family: "Instrument Serif", "Times New Roman", serif;
+        font-style: italic;
+        font-weight: 400;
+      }
+
+      .orc-eyebrow-row {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex-wrap: wrap;
+        margin-top: 28px;
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 0.85rem;
+      }
+      .orc-eyebrow-row .dot { color: rgba(255,255,255,0.22); }
+
+      /* Overview split */
+      .orc-overview {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 60px;
+        align-items: start;
+      }
+      @media (max-width: 900px) {
+        .orc-overview { grid-template-columns: 1fr; gap: 40px; }
+      }
+
+      .orc-pricelist { display: flex; flex-direction: column; gap: 14px; }
+      .orc-price-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 22px 26px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--card-2);
+        transition: border-color 240ms var(--ease), transform 240ms var(--ease);
+      }
+      .orc-price-row:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+      .orc-price-row.is-featured {
+        background: var(--accent-soft);
+        border-color: var(--accent-line);
+      }
+      .orc-price-row .name { font-weight: 700; color: var(--white); font-size: 1.02rem; letter-spacing: -0.01em; }
+      .orc-price-row .focus { color: var(--muted); font-size: 0.85rem; margin-top: 3px; }
+      .orc-price-row .price { text-align: right; white-space: nowrap; }
+      .orc-price-row .price strong { color: var(--white); font-size: 1.15rem; font-weight: 700; }
+      .orc-price-row.is-featured .price strong { color: var(--accent); }
+      .orc-price-row .price span { color: var(--muted-2); font-size: 0.78rem; }
+      .orc-tag {
+        display: inline-block;
+        margin-left: 8px;
+        padding: 3px 9px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #0a0a09;
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        vertical-align: middle;
+      }
+
+      /* Plan blocks */
+      .plan-block { padding: 96px 0; border-top: 1px solid var(--line); }
+      .plan-block.is-featured {
+        background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(216,255,90,0.06), transparent 70%);
+        border-top-color: var(--accent-line);
+      }
+      .plan-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        gap: 24px;
+        margin-bottom: 48px;
+      }
+      .plan-num { color: var(--muted-2); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 10px; }
+      .plan-name {
+        font-family: "Inter", sans-serif;
+        font-size: clamp(2.4rem, 5vw, 3.6rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--white);
+        line-height: 1;
+      }
+      .plan-block.is-featured .plan-name { color: var(--accent); }
+      .plan-tagline { color: var(--muted); margin-top: 10px; font-size: 1.02rem; }
+      .plan-price-box { text-align: right; }
+      .plan-price-box .label { color: var(--muted-2); font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; }
+      .plan-price-box .amount { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; color: var(--white); letter-spacing: -0.02em; line-height: 1.1; }
+      .plan-block.is-featured .plan-price-box .amount { color: var(--accent); }
+      .plan-price-box .per { color: var(--muted-2); font-size: 0.85rem; }
+
+      .plan-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 14px;
+      }
+      .plan-block.is-featured .plan-grid { grid-template-columns: repeat(4, 1fr); }
+      @media (max-width: 1000px) { .plan-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+      @media (max-width: 560px) { .plan-grid { grid-template-columns: 1fr !important; } }
+
+      .plan-card {
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        background: var(--card);
+      }
+      .plan-block.is-featured .plan-card { border-color: rgba(216,255,90,0.14); background: rgba(216,255,90,0.03); }
+      .plan-card .idx { color: var(--accent); font-size: 0.78rem; font-weight: 700; margin-bottom: 10px; }
+      .plan-card h4 { font-size: 0.98rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+      .plan-card p { font-size: 0.88rem; line-height: 1.5; }
+
+      .plan-cta { margin-top: 40px; }
+
+      .plan-callout {
+        margin-top: 36px;
+        display: flex;
+        gap: 16px;
+        padding: 24px 26px;
+        border: 1px solid var(--accent-line);
+        border-radius: var(--radius);
+        background: var(--accent-soft);
+      }
+      .plan-callout .bolt { font-size: 1.3rem; flex-shrink: 0; }
+      .plan-callout strong { display: block; color: var(--white); margin-bottom: 6px; }
+      .plan-callout p { font-size: 0.92rem; }
+
+      /* Investment section */
+      .invest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+      @media (max-width: 760px) { .invest-grid { grid-template-columns: 1fr; } }
+      .invest-card { padding: 32px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--card-2); }
+      .invest-card.is-featured { border-color: var(--accent-line); background: var(--accent-soft); }
+      .invest-card .pill {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 999px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        background: rgba(255,255,255,0.08);
+        color: rgba(255,255,255,0.7);
+        margin-bottom: 14px;
+      }
+      .invest-card.is-featured .pill { background: var(--accent); color: #0a0a09; }
+      .invest-card h3 { font-size: 1.4rem; }
+      .invest-card ul { list-style: none; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px; }
+      .invest-card li { display: flex; gap: 10px; font-size: 0.92rem; color: rgba(255,255,255,0.72); line-height: 1.5; }
+      .invest-card li::before { content: "+"; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+
+      /* Comparison table */
+      .comp-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-lg); }
+      table.comp-table { width: 100%; border-collapse: collapse; min-width: 760px; }
+      table.comp-table th, table.comp-table td { padding: 18px 20px; text-align: left; font-size: 0.9rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
+      table.comp-table th { color: var(--muted-2); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; background: var(--card); }
+      table.comp-table td { color: rgba(255,255,255,0.75); }
+      table.comp-table tr:last-child td { border-bottom: none; }
+      table.comp-table td.zeus-col, table.comp-table th.zeus-col { color: var(--accent); font-weight: 600; }
+      table.comp-table tr.invest-row td { font-weight: 700; color: var(--white); }
+      table.comp-table tr.invest-row td.zeus-col { color: var(--accent); }
+      table.comp-table th:first-child, table.comp-table td:first-child { color: var(--muted); white-space: normal; position: sticky; left: 0; background: var(--bg-2); }
+
+      /* Final CTA */
+      .final-cta { text-align: center; padding: 140px 0 120px; }
+      .final-cta h2 { max-width: 780px; margin: 0 auto; }
+      .final-cta p { max-width: 520px; margin: 24px auto 0; }
+      .final-cta .btn { margin-top: 36px; }
+    </style>
+  </head>
+  <body>
+
+    <header class="site-header" data-reveal>
+      <a class="brand" href="#top" aria-label="Zunno.Digital">
+        <img src="./logo.svg" alt="Zunno Digital" style="height:22px;display:block">
+      </a>
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="#planos">Planos</a>
+        <a href="#comparativo">Comparativo</a>
+        <a href="#investimento">Investimento</a>
+      </nav>
+      <a class="header-cta js-whatsapp" href="#" data-message-key="orcamento">
+        <span>Falar conosco</span>
+        <span class="cta-arrow" aria-hidden="true">→</span>
+      </a>
+    </header>
+
+    <main id="top">
+
+      <!-- HERO -->
+      <section class="hero" style="min-height:auto; padding:180px 0 100px;">
+        <div class="hero-bg" aria-hidden="true">
+          <div class="hero-glow"></div>
+          <div class="hero-grid"></div>
+        </div>
+        <div class="section-shell">
+          <p class="eyebrow">Proposta comercial · 2026</p>
+          <h1>A operação digital<br>que o seu <span class="serif-italic accent" style="font-size:0.92em;">próximo nível</span> exige.</h1>
+          <p class="section-desc" style="font-size:1.1rem; max-width:640px;">
+            Quatro planos de presença, aquisição e venda, desenhados para acompanhar o crescimento
+            do seu negócio — do primeiro site ao comando estratégico com os sócios.
+          </p>
+          <div class="orc-eyebrow-row">
+            <span>+70 empresas atendidas</span>
+            <span class="dot">·</span>
+            <span>Atendimento nacional</span>
+            <span class="dot">·</span>
+            <span>2026</span>
+          </div>
+          <div style="margin-top:36px;">
+            <a class="btn btn-primary btn-lg js-whatsapp" href="#" data-message-key="orcamento">
+              <span>Falar com a Zunno</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- VISÃO GERAL -->
+      <section class="section-pad" id="planos">
+        <div class="section-shell orc-overview">
+          <div data-reveal>
+            <p class="eyebrow">01 · Visão geral</p>
+            <h2>Quatro caminhos <span class="serif-italic accent" style="font-size:0.85em;">para o mesmo destino:</span><br>mais vendas, com previsibilidade.</h2>
+            <p class="section-desc">
+              Cada plano é um funil completo: site, tráfego, comercial e conteúdo. A diferença está
+              no volume, na velocidade e no nível de acompanhamento que o seu momento de mercado
+              pede agora.
+            </p>
+            <p class="section-desc" style="margin-top:14px; font-style:italic; color:rgba(255,255,255,0.35);">
+              Tudo é ajustável ao seu cenário. Esta é a base; o resto a gente desenha junto.
+            </p>
+          </div>
+
+          <div class="orc-pricelist" data-reveal>
+            <a href="#zoom" class="orc-price-row">
+              <div>
+                <div class="name">ZOOM</div>
+                <div class="focus">Estruturação inicial</div>
+              </div>
+              <div class="price"><strong>R$ 1.787</strong> <span>/mês</span></div>
+            </a>
+            <a href="#zenite" class="orc-price-row">
+              <div>
+                <div class="name">ZÊNITE</div>
+                <div class="focus">Expansão de canais</div>
+              </div>
+              <div class="price"><strong>R$ 2.787</strong> <span>/mês</span></div>
+            </a>
+            <a href="#zodiaco" class="orc-price-row">
+              <div>
+                <div class="name">ZODÍACO</div>
+                <div class="focus">Domínio de mercado</div>
+              </div>
+              <div class="price"><strong>R$ 4.087</strong> <span>/mês</span></div>
+            </a>
+            <a href="#zeus" class="orc-price-row is-featured">
+              <div>
+                <div class="name">ZEUS <span class="orc-tag">Recomendado</span></div>
+                <div class="focus">Escala com mentoria</div>
+              </div>
+              <div class="price"><strong>a partir de R$ 6.500</strong> <span>/mês</span></div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ZOOM -->
+      <section class="plan-block" id="zoom">
+        <div class="section-shell">
+          <div class="plan-head">
+            <div>
+              <div class="plan-num">01 · Foco — Estruturação inicial</div>
+              <div class="plan-name">ZOOM</div>
+              <div class="plan-tagline">Para quem está montando a casa.</div>
+            </div>
+            <div class="plan-price-box">
+              <div class="label">R$</div>
+              <div class="amount">1.787</div>
+              <div class="per">/mês</div>
+            </div>
+          </div>
+          <div class="plan-grid">
+            <div class="plan-card"><div class="idx">01</div><h4>Presença</h4><p>Site institucional ou landing page de alta conversão, pronto para rodar tráfego no dia seguinte.</p></div>
+            <div class="plan-card"><div class="idx">02</div><h4>Aquisição</h4><p>Gestão de tráfego em até 2 canais (Meta Ads e Google Ads) com verba otimizada semanalmente.</p></div>
+            <div class="plan-card"><div class="idx">03</div><h4>Comercial</h4><p>Funil de WhatsApp estruturado, com automação inicial de atendimento e resposta em segundos.</p></div>
+            <div class="plan-card"><div class="idx">04</div><h4>Conteúdo</h4><p>8 vídeos por mês e 8 posts estáticos, ritmo médio de 2 publicações por semana.</p></div>
+            <div class="plan-card"><div class="idx">05</div><h4>Direção</h4><p>Reunião quinzenal de alinhamento estratégico e dashboard com as métricas que importam.</p></div>
+          </div>
+          <div class="plan-cta">
+            <a class="btn btn-primary js-whatsapp" href="#" data-message-key="planoZoom">
+              <span>Quero começar com o Zoom</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ZÊNITE -->
+      <section class="plan-block" id="zenite">
+        <div class="section-shell">
+          <div class="plan-head">
+            <div>
+              <div class="plan-num">02 · Foco — Expansão de canais</div>
+              <div class="plan-name">ZÊNITE</div>
+              <div class="plan-tagline">Para quem já tem tração e quer escalar.</div>
+            </div>
+            <div class="plan-price-box">
+              <div class="label">R$</div>
+              <div class="amount">2.787</div>
+              <div class="per">/mês</div>
+            </div>
+          </div>
+          <div class="plan-grid">
+            <div class="plan-card"><div class="idx">01</div><h4>Presença</h4><p>Site completo corporativo, com blog ativo para gerar tráfego orgânico e área do cliente sob medida.</p></div>
+            <div class="plan-card"><div class="idx">02</div><h4>Aquisição</h4><p>Tráfego pago em 3 canais (Meta Ads, Google Ads e TikTok Ads) com testes A/B constantes.</p></div>
+            <div class="plan-card"><div class="idx">03</div><h4>Comercial</h4><p>CRM implantado e agente de IA treinado no seu negócio para qualificar lead e acelerar a venda.</p></div>
+            <div class="plan-card"><div class="idx">04</div><h4>Conteúdo</h4><p>12 vídeos por mês, 8 posts estáticos e cobertura diária de stories no Instagram.</p></div>
+            <div class="plan-card"><div class="idx">05</div><h4>Direção</h4><p>Reunião semanal com o time e dashboard em tempo real para decidir com base em dado, não em achismo.</p></div>
+          </div>
+          <div class="plan-cta">
+            <a class="btn btn-primary js-whatsapp" href="#" data-message-key="planoZenite">
+              <span>Quero o Zênite</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ZODÍACO -->
+      <section class="plan-block" id="zodiaco">
+        <div class="section-shell">
+          <div class="plan-head">
+            <div>
+              <div class="plan-num">03 · Foco — Domínio de mercado</div>
+              <div class="plan-name">ZODÍACO</div>
+              <div class="plan-tagline">Para quem quer ser referência na categoria.</div>
+            </div>
+            <div class="plan-price-box">
+              <div class="label">R$</div>
+              <div class="amount">4.087</div>
+              <div class="per">/mês</div>
+            </div>
+          </div>
+          <div class="plan-grid">
+            <div class="plan-card"><div class="idx">01</div><h4>Presença</h4><p>Site premium com SEO técnico contínuo, ranqueando nas primeiras posições do Google para o seu mercado.</p></div>
+            <div class="plan-card"><div class="idx">02</div><h4>Aquisição</h4><p>Presença em todos os canais relevantes, com alocação estratégica de verba conforme o que está performando.</p></div>
+            <div class="plan-card"><div class="idx">03</div><h4>Comercial</h4><p>CRM ativo, agente de IA em produção e análise semanal profunda de cada etapa do funil de conversão.</p></div>
+            <div class="plan-card"><div class="idx">04</div><h4>Conteúdo</h4><p>16 vídeos por mês, 12 posts estáticos, 3 formatos exclusivos e monitoramento diário de tendências.</p></div>
+            <div class="plan-card"><div class="idx">05</div><h4>Direção</h4><p>Reunião semanal de alta liderança e dashboard em tempo real com os KPIs do crescimento.</p></div>
+          </div>
+          <div class="plan-cta">
+            <a class="btn btn-primary js-whatsapp" href="#" data-message-key="planoZodiaco">
+              <span>Quero o Zodíaco</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ZEUS -->
+      <section class="plan-block is-featured" id="zeus">
+        <div class="section-shell">
+          <p class="eyebrow" style="margin-bottom:24px;">Recomendado · Onde a maioria dos clientes chega em 6 meses</p>
+          <div class="plan-head">
+            <div>
+              <div class="plan-num">04 · Foco — Escala com mentoria executiva</div>
+              <div class="plan-name">ZEUS</div>
+              <div class="plan-tagline">Não é só tráfego. É ter os sócios da Zunno no seu board.</div>
+            </div>
+            <div class="plan-price-box">
+              <div class="label">A partir de</div>
+              <div class="amount">R$ 6.500</div>
+              <div class="per">/mês</div>
+            </div>
+          </div>
+          <div class="plan-grid">
+            <div class="plan-card"><div class="idx">01</div><h4>Presença &amp; Aquisição</h4><p>Ecossistema digital completo com omnicanalidade total, automações avançadas e infraestrutura de conversão.</p></div>
+            <div class="plan-card"><div class="idx">02</div><h4>Comercial</h4><p>CRM integrado ao WhatsApp com automação total da mesa de negócios e acompanhamento diário.</p></div>
+            <div class="plan-card"><div class="idx">03</div><h4>Conteúdo em vídeo</h4><p>20 reels por mês focados em autoridade e viralização. Sem estáticos, só vídeo, porque é o que escala hoje.</p></div>
+            <div class="plan-card"><div class="idx">04</div><h4>Direção &amp; Mentoria</h4><p>Reuniões semanais diretamente com os sócios, auditoria de processos e integração com a mesa de negócios.</p></div>
+          </div>
+          <div class="plan-callout">
+            <span class="bolt">⚡</span>
+            <div>
+              <strong>Por dentro do Zeus: mentoria executiva semanal.</strong>
+              <p>Você senta com Andrew, Marcello e Lucas para desenhar a estratégia de negócio, treinar a sua
+              equipe e construir um roadmap de 12 meses. Não somos fornecedor, somos braço direito digital.</p>
+            </div>
+          </div>
+          <div class="plan-cta">
+            <a class="btn btn-primary js-whatsapp" href="#" data-message-key="planoZeus">
+              <span>Quero o Zeus</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- INVESTIMENTO -->
+      <section class="section-pad" id="investimento" style="border-top:1px solid var(--line);">
+        <div class="section-shell">
+          <div class="section-head section-head--center">
+            <p class="eyebrow">07 · Investimento</p>
+            <h2>Duas formas de fechar. <span class="serif-italic accent" style="font-size:0.85em;">A mesma entrega.</span></h2>
+            <p class="section-desc">Escolha o formato que faz mais sentido para o fluxo de caixa do seu negócio.</p>
+          </div>
+
+          <div class="invest-grid" data-reveal>
+            <div class="invest-card">
+              <span class="pill">Recorrente</span>
+              <h3>Mensal</h3>
+              <p>Cobrança todo mês, dentro de um contrato de 3, 6, 9 ou 12 meses. Sem renovação automática surpresa.</p>
+              <ul>
+                <li>Contrato mínimo de 3 meses</li>
+                <li>Prazos maiores: 6, 9 ou 12 meses, com melhores condições</li>
+                <li>Sem entrada, sem burocracia</li>
+              </ul>
+            </div>
+            <div class="invest-card is-featured">
+              <span class="pill">5% off</span>
+              <h3>À vista</h3>
+              <p>Contrato de 3 meses com pagamento total adiantado. A gente devolve 5% do valor como desconto.</p>
+              <ul>
+                <li>Exemplo: Zoom avulso R$ 1.787/mês. No pacote de 3 meses: R$ 5.092,95 (5% off)</li>
+                <li>Trava o preço pelo período do contrato, sem reajuste</li>
+                <li>Onboarding começa antes, com prioridade no calendário da equipe</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="plan-callout" style="margin-top:24px;" data-reveal>
+            <span class="bolt">⚡</span>
+            <div>
+              <strong>Plano Zeus é contrato de 6 ou 12 meses.</strong>
+              <p>Como o Zeus inclui mentoria executiva semanal com os sócios, o tempo mínimo é de 6 meses para
+              a operação fazer sentido. Prazo ideal: 12 meses, com roadmap estratégico fechado.</p>
+            </div>
+          </div>
+
+          <p style="text-align:center; margin-top:36px; font-style:italic; color:rgba(255,255,255,0.35); max-width:520px; margin-left:auto; margin-right:auto;">
+            A gente monta o contrato de acordo com a sua necessidade. Sem letra miúda, sem surpresa.
+          </p>
+        </div>
+      </section>
+
+      <!-- COMPARATIVO -->
+      <section class="section-pad" id="comparativo" style="border-top:1px solid var(--line);">
+        <div class="section-shell">
+          <div class="section-head">
+            <p class="eyebrow">08 · Comparativo</p>
+            <h2>Os quatro planos,<br><span class="serif-italic accent" style="font-size:0.85em;">lado a lado.</span></h2>
+            <p class="section-desc">Tudo é ajustável. Esta é a régua que usamos como ponto de partida.</p>
+          </div>
+
+          <div class="comp-table-wrap" data-reveal>
+            <table class="comp-table">
+              <thead>
+                <tr>
+                  <th>Pilar</th>
+                  <th>Zoom</th>
+                  <th>Zênite</th>
+                  <th>Zodíaco</th>
+                  <th class="zeus-col">Zeus</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Presença</td>
+                  <td>Site institucional</td>
+                  <td>Site + Blog</td>
+                  <td>Premium + SEO técnico</td>
+                  <td class="zeus-col">Ecossistema omnicanal</td>
+                </tr>
+                <tr>
+                  <td>Aquisição</td>
+                  <td>Meta + Google</td>
+                  <td>Meta + Google + TikTok</td>
+                  <td>Todos os canais</td>
+                  <td class="zeus-col">Escala máxima</td>
+                </tr>
+                <tr>
+                  <td>Comercial</td>
+                  <td>Funil WhatsApp</td>
+                  <td>CRM + Agente IA</td>
+                  <td>CRM + IA + análise</td>
+                  <td class="zeus-col">CRM integrado + mesa diária</td>
+                </tr>
+                <tr>
+                  <td>Conteúdo</td>
+                  <td>8 vídeos + 8 estáticos</td>
+                  <td>12 vídeos + stories</td>
+                  <td>16 vídeos + 12 estáticos</td>
+                  <td class="zeus-col">20 reels em vídeo</td>
+                </tr>
+                <tr>
+                  <td>Direção</td>
+                  <td>Quinzenal + dashboard</td>
+                  <td>Semanal + tempo real</td>
+                  <td>Semanal + alta liderança</td>
+                  <td class="zeus-col">Mentoria semanal com os sócios</td>
+                </tr>
+                <tr class="invest-row">
+                  <td>Investimento</td>
+                  <td>R$ 1.787</td>
+                  <td>R$ 2.787</td>
+                  <td>R$ 4.087</td>
+                  <td class="zeus-col">A partir de R$ 6.500</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top:20px; font-size:0.88rem; color:var(--muted-2);">Ajuste de verba, canais e formato de conteúdo sob medida, a gente conversa.</p>
+        </div>
+      </section>
+
+      <!-- CTA FINAL -->
+      <section class="final-cta" id="contato" style="border-top:1px solid var(--line);">
+        <div class="section-shell">
+          <p class="eyebrow" style="margin-left:auto; margin-right:auto;">Próximo passo</p>
+          <h2>A sua próxima venda está a uma <span class="serif-italic accent" style="font-size:0.85em;">mensagem de distância.</span></h2>
+          <p>Sem compromisso. A gente escuta o seu negócio e devolve uma análise honesta: o que dá para
+          melhorar, onde está vazando venda, qual plano faz sentido para o seu momento agora.</p>
+          <a class="btn btn-primary btn-lg js-whatsapp" href="#" data-message-key="orcamento">
+            <span>Falar com a Zunno</span>
+            <span class="btn-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-shell footer-inner">
+        <div class="footer-brand">
+          <a class="brand" href="#top" aria-label="Zunno.Digital">
+            <img src="./logo.svg" alt="Zunno Digital" style="height:22px;display:block">
+          </a>
+          <p>Marketing digital sob medida para negócios que querem vender com mais estrutura e menos achismo.</p>
+        </div>
+        <nav class="footer-nav">
+          <strong>Navegação</strong>
+          <a href="#planos">Planos</a>
+          <a href="#comparativo">Comparativo</a>
+          <a href="#investimento">Investimento</a>
+        </nav>
+        <div class="footer-contact">
+          <strong>Contato</strong>
+          <a class="js-whatsapp" href="#" data-message-key="orcamento">WhatsApp</a>
+          <a href="https://www.instagram.com/zunno.digital/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
+      </div>
+      <div class="section-shell footer-bottom">
+        <span>© 2026 Zunno.Digital. Todos os direitos reservados.</span>
+        <span class="footer-tag">+70 empresas atendidas · Atendimento nacional</span>
+      </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>

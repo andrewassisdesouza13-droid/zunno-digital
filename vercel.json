@@ -3,6 +3,15 @@
   "buildCommand": null,
   "rewrites": [
     {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "orcamento.zunno.digital" }],
+      "destination": "/orcamento.html"
+    },
+    {
+      "source": "/orcamento",
+      "destination": "/orcamento.html"
+    },
+    {
       "source": "/proposta-alfredo",
       "destination": "/proposta-alfredo.html"
     },
