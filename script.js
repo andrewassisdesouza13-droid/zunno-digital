@@ -1,6 +1,6 @@
 const DEFAULT_CONFIG = {
   brand: "Zunno.Digital",
-  whatsappPhone: "5500000000000",
+  whatsappPhone: "5516997735388",
   seo: {
     title: "Zunno.Digital | Marketing digital sob medida para garagens",
     description:
