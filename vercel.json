@@ -1,6 +1,14 @@
 {
   "outputDirectory": ".",
   "buildCommand": null,
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "nfc.zunno.digital" }],
+      "destination": "/nfc.html",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
