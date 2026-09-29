@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso NFC · Em construção</title>
+<meta name="description" content="Curso de como vender Plaquinha NFC — em construção.">
+<link rel="icon" href="favicon.png">
+<style>
+  :root {
+    --bg: #0a0a09;
+    --bg-2: #111110;
+    --accent: #d8ff5a;
+    --text: #f4efe5;
+    --text-dim: #9a978c;
+    --border: rgba(216,255,90,0.18);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 48px 20px 80px;
+    min-height: 100vh;
+  }
+  .wrap { width: 100%; max-width: 420px; text-align: center; }
+  .badge {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    background: rgba(216,255,90,0.08);
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 27px;
+    line-height: 1.3;
+    margin: 0 0 10px;
+  }
+  h1 span { color: var(--accent); }
+  .sub {
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.55;
+    margin: 0 0 24px;
+  }
+  ul.list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px;
+    text-align: left;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  ul.list li {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text);
+    display: flex;
+    gap: 10px;
+  }
+  ul.list li:last-child { border-bottom: none; }
+  ul.list li::before { content: "→"; color: var(--accent); flex-shrink: 0; }
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 12px;
+    border: 1px solid transparent;
+  }
+  .btn-primary { background: var(--accent); color: #0a0a09; }
+  .btn-secondary { background: var(--bg-2); color: var(--text); border-color: var(--border); }
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  footer a { color: var(--text-dim); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="badge">Em construção</span>
+    <h1>O curso tá <span>chegando</span></h1>
+    <p class="sub">Vou gravar exatamente como vendo a placa a R$80 de verdade: técnica de abordagem, o que falar pro dono do negócio, e como fechar na hora.</p>
+
+    <ul class="list">
+      <li>Como abordar negócio local sem parecer chato</li>
+      <li>Script de venda que uso de verdade</li>
+      <li>Fornecedor e onde comprar mais barato</li>
+      <li>Como configurar a placa em 2 minutos</li>
+    </ul>
+
+    <a class="btn btn-primary" href="https://wa.me/5516981030458?text=Quero%20ser%20avisado%20quando%20o%20curso%20lan%C3%A7ar" target="_blank" rel="noopener">Me avisa quando sair</a>
+    <a class="btn btn-secondary" href="/">Voltar</a>
+
+    <footer>por <a href="https://zunno.digital" target="_blank" rel="noopener">Zunno Digital</a></footer>
+  </div>
+</body>
+</html>

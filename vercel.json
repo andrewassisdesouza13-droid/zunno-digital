@@ -8,6 +8,16 @@
       "destination": "/orcamento.html"
     },
     {
+      "source": "/curso",
+      "has": [{ "type": "host", "value": "nfc.zunno.digital" }],
+      "destination": "/nfc-curso.html"
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "nfc.zunno.digital" }],
+      "destination": "/nfc.html"
+    },
+    {
       "source": "/orcamento",
       "destination": "/orcamento.html"
     },
