@@ -1,14 +1,6 @@
 {
   "outputDirectory": ".",
   "buildCommand": null,
-  "redirects": [
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "nfc.zunno.digital" }],
-      "destination": "/nfc.html",
-      "permanent": false
-    }
-  ],
   "rewrites": [
     {
       "source": "/(.*)",
@@ -16,17 +8,12 @@
       "destination": "/orcamento.html"
     },
     {
-      "source": "/",
-      "has": [{ "type": "host", "value": "nfc.zunno.digital" }],
-      "destination": "/nfc.html"
-    },
-    {
       "source": "/curso",
       "has": [{ "type": "host", "value": "nfc.zunno.digital" }],
       "destination": "/nfc-curso.html"
     },
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "has": [{ "type": "host", "value": "nfc.zunno.digital" }],
       "destination": "/nfc.html"
     },
