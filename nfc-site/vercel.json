@@ -1,0 +1,10 @@
+{
+  "outputDirectory": ".",
+  "buildCommand": null,
+  "rewrites": [
+    {
+      "source": "/curso",
+      "destination": "/curso.html"
+    }
+  ]
+}
